@@ -1,0 +1,103 @@
+<project name="CliyCtas" basedir=".">
+	<description>
+        Build file de la GUI del Sistema Recepción de Trabajos.
+    </description>
+
+	<property file="./deploy/properties/build.properties" />
+	<property file="./deploy/properties/deploy-${env}.properties" />
+	<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+	
+	<echo message="despliegue.dir=${despliegue.dir}" />
+	
+	<fail unless="despliegue.dir" message="No se encontro el archivo de despliegue" />
+
+	<target name="deploy"
+	        depends="reemplazar,subirGUI"
+	        description="Despliega la GUI en el ambiente pasado como parametro">
+	</target>
+
+	<target name="reemplazar"
+	        description="reemplaza las propiedades para el ambiente pasado como parametro">
+	</target>
+
+	<target name="subirGUI" depends="generarMainJar,prepararJars,generarJnlp">
+		<copy todir="${work.dir}" overwrite="true">
+			<fileset dir="${deploy.dir}" includes="cajval_logo.jpg" />
+		</copy>
+		<delete dir="${despliegue.dir}/${env}" />
+		<copy todir="${despliegue.dir}/${env}">
+			<fileset dir="${work.dir}" />
+		</copy>
+	</target>
+
+	<target name="compilar">
+		<delete dir="${bin.dir}" />
+		<mkdir dir="${bin.dir}" />
+		<javac srcdir="${basedir}/src" destdir="${bin.dir}" target="1.5" source="1.5">
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+	<target name="limpiarTemporales">
+		<echo>Limpiando archivos temporales...</echo>
+		<delete dir="${work.dir}" />
+		<mkdir dir="${work.dir}" />
+	</target>
+
+	<target name="generarMainJar" depends="limpiarTemporales, reemplazar">
+		<echo>Generando jar del codigo fuente...</echo>
+		<echo>##Directorios del jar del codigo fuente... ${work.dir}/${main.file}</echo>
+		<jar destfile="${work.dir}/${main.file}" basedir="${bin.dir}" />
+	</target>
+
+	<target name="prepararJars">
+		<echo>Copiando librerias a ${work.dir}...</echo>
+		<copy todir="${work.dir}">
+			<fileset dir="${lib.dir}" includes="**/*.jar" />
+		</copy>
+		<echo>Firmando librerias...</echo>
+		<signjar alias="${sign.alias}"
+		         storepass="${storepass}"
+		         keystore="${keystore}"
+		         keypass="${dummypass}">
+			<fileset dir="${work.dir}" includes="**/*.jar" />
+		</signjar>
+		<chmod perm="-x" type="file">
+			<fileset dir="${work.dir}">
+				<include name="*.jar" />
+			</fileset>
+		</chmod>
+	</target>
+
+	<target name="generarJnlp">
+		<copy todir="${work.dir}" overwrite="true">
+			<fileset dir="${deploy.dir}" includes="${jnlp.file}" />
+		</copy>
+		<replace file="${work.dir}/${jnlp.file}"
+		         token="CODEBASE"
+		         value="${despliegue.url}"
+		         casesensitive="true" />
+		<replace file="${work.dir}/${jnlp.file}"
+		         token="@jars@"
+		         value="&lt;jar href=&quot;${main.file}&quot; main=&quot;true&quot;/&gt;${line.separator}        @jars@" />
+		<foreach target="escribirJarEnJnlp" param="file.sign">
+			<path>
+				<fileset dir="${work.dir}" includes="*.jar" excludes="${main.file}" />
+			</path>
+		</foreach>
+		<replace file="${work.dir}/${jnlp.file}" token="@jars@" value="" />
+	</target>
+
+	<target name="escribirJarEnJnlp">
+		<basename property="file.sign.name" file="${file.sign}" />
+		<echo>Escribiendo jar en jnlp: ${file.sign.name}</echo>
+		<replace file="${work.dir}/${jnlp.file}"
+		         token="@jars@"
+		         value="&lt;jar href=&quot;${file.sign.name}&quot;/&gt;${line.separator}        @jars@" />
+	</target>
+
+</project>

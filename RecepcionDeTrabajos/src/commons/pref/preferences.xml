@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<preferences version="4.1">
+	<tables>
+		<table name="Clientes" order="codigo">
+			<column name="codigo" alignment="LEFT" width="280"/>
+			<column name="denominacion" alignment="LEFT" width="280"/>
+			<column name="direccion" alignment="LEFT" width="280"/>
+			<column name="email" alignment="LEFT" width="280"/>
+		</table>
+		<table name="Pedidos" order="numero">
+			<column name="numero" alignment="LEFT" width="80"/>
+			<column name="cliente.codigo" alignment="LEFT" width="100"/>
+			<column name="cliente.denominacion" alignment="LEFT" width="200"/>
+			<column name="fecha" alignment="LEFT" width="300"/>
+		</table>
+		<table name="Items" order="orden">
+			<column name="cantidad" alignment="LEFT" width="80"/>
+			<column name="detalle" alignment="LEFT" width="100"/>
+			<column name="observaciones" alignment="LEFT" width="200"/>
+		</table>
+	</tables>
+</preferences>

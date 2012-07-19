@@ -1,0 +1,11 @@
+Ejecución local
+***************
+
+- Desde Eclipse Buscar en Run Configurations... la opción 'MainWindow' y ejecutarla
+
+- Esta configuración toma las propiedades del directorio 'local_config'
+
+Deploy
+*******
+
+TODO

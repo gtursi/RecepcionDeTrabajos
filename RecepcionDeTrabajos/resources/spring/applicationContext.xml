@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+		http://www.springframework.org/schema/jee
+		http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
+
+	<!--
+	<bean id="org.h2.tools.Server"
+            class="org.h2.tools.Server"
+            factory-method="createTcpServer"
+            init-method="start"
+            destroy-method="stop">
+    	<constructor-arg value="-tcp,-web,-browser,-baseDir,db" />
+	</bean>
+	-->
+	
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close"
+		autowire-candidate="false">
+		<property name="driverClass" value="org.h2.Driver"/>
+		<property name="jdbcUrl" value="jdbc:h2:tcp://localhost:9092/recepcionTrabajos;IFEXISTS=TRUE"/>
+		<property name="user" value="faby"/>
+		<property name="password" value="qwerty"/>
+		<property name="minPoolSize" value="1"/>
+		<property name="maxPoolSize" value="2"/>
+		<property name="initialPoolSize" value="1"/>
+		<property name="maxIdleTime" value="60"/>
+		<property name="acquireIncrement" value="1"/>
+		<property name="maxStatements" value="10"/>
+		<property name="idleConnectionTestPeriod" value="60"/>
+		<property name="acquireRetryAttempts" value="10"/>
+	</bean>
+
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+</beans>
