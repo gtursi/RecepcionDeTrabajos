@@ -1,5 +1,6 @@
 package recepciondetrabajos.domain;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -9,9 +10,13 @@ public class Pedido {
 
 	private Long numero;
 
+	public Pedido() {
+		super();
+	}
+
 	private Calendar fecha;
 
-	private List<PedidoItem> items;
+	private List<PedidoItem> items = new ArrayList<PedidoItem>();
 
 	public Pedido(Cliente cliente) {
 		setCliente(cliente);
@@ -48,6 +53,10 @@ public class Pedido {
 
 	public void setItems(List<PedidoItem> items) {
 		this.items = items;
+	}
+
+	public boolean nuevo() {
+		return getNumero() == null;
 	}
 
 }

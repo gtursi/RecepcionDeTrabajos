@@ -1,8 +1,7 @@
 package commons.gui;
 
-
 public interface Openable<T> {
 
-    boolean open(T element);
+	boolean open(T element);
 
 }

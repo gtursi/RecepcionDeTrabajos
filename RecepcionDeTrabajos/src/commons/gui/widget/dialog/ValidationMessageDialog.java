@@ -1,18 +1,3 @@
-/*
- * Licencia de Caja de Valores S.A., Versión 1.0
- *
- * Copyright (c) 2006 Caja de Valores S.A.
- * 25 de Mayo 362, Ciudad Autónoma de Buenos Aires, República Argentina
- * Todos los derechos reservados.
- *
- * Este software es información confidencial y propietaria de Caja de Valores S.A. ("Información
- * Confidencial"). Usted no divulgará tal Información Confidencial y la usará solamente de acuerdo a
- * los términos del acuerdo de licencia que posee con Caja de Valores S.A.
- */
-
-/*
- * $Id: ValidationMessageDialog.java,v 1.13 2008/03/17 12:20:55 cvsmdiaz Exp $
- */
 package commons.gui.widget.dialog;
 
 import java.util.List;
@@ -33,10 +18,6 @@ import org.springframework.util.CollectionUtils;
 import commons.gui.util.PageHelper;
 import commons.gui.util.TextJfaceUtils;
 
-/**
- * @author Gabriel Tursi
- * @version $Revision: 1.13 $ $Date: 2008/03/17 12:20:55 $
- */
 public class ValidationMessageDialog extends PopUpMessageDialog {
 
 	private static final String DIALOG_MESSAGE = "Validaciones:";
@@ -69,7 +50,7 @@ public class ValidationMessageDialog extends PopUpMessageDialog {
 	protected Control createCustomArea(Composite parent) {
 		Composite composite = null;
 		text = "";
-		if (validationMessages != null && validationMessages.length > 0) {
+		if ((validationMessages != null) && (validationMessages.length > 0)) {
 			composite = new Composite(parent, SWT.NONE);
 			composite.setLayout(new RowLayout(SWT.VERTICAL));
 			StyledText textbox = new StyledText(composite, SWT.LEFT);
@@ -90,6 +71,7 @@ public class ValidationMessageDialog extends PopUpMessageDialog {
 		Button button = createButton(parent, -1, "&Copiar Todo", false);
 		super.createButtonsForButtonBar(parent);
 		button.addSelectionListener(new SelectionAdapter() {
+
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				TextJfaceUtils.copyToClipboard(text);

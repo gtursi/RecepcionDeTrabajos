@@ -12,9 +12,6 @@ import java.util.logging.Level;
 
 import recepciondetrabajos.Constants;
 
-
-
-
 import commons.gui.table.ColumnInfo;
 import commons.gui.util.FileHelper;
 import commons.logging.AppLogger;
@@ -22,9 +19,6 @@ import commons.util.SbaStringUtils;
 
 /**
  * Clase que Maneja el almacenamiento y carga de las preferencias visuales del Sistema.
- * 
- * @author Margarita Buriano
- * @version $Revision: 1.19 $ $Date: 2007/05/28 17:17:04 $
  */
 public class PreferencesManager {
 
@@ -58,8 +52,8 @@ public class PreferencesManager {
 	 *            Ubicación del archivo de preferencias del usuario
 	 */
 	private PreferencesManager() {
-		this.userPreferenceFileName = SbaStringUtils.concat(FileHelper.OUTPUT_DIR, FileHelper
-				.getFileSeparator(), Constants.PREFERENCES_FILE);
+		this.userPreferenceFileName = SbaStringUtils.concat(FileHelper.OUTPUT_DIR,
+				FileHelper.getFileSeparator(), Constants.PREFERENCES_FILE);
 
 		this.loadDefaultPreferences();
 		this.loadUserPreferences();
@@ -75,7 +69,7 @@ public class PreferencesManager {
 		InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 		this.defaultPreferences = PreferencesHelper.readPreferences(inputStreamReader, null);
 	}
-	
+
 	/**
 	 * Actualiza las preferencias por default con las preferencias del usuario. Al mantener la
 	 * estructura del xml de preferencias por default y al tomar solo los atributos de las
@@ -94,7 +88,8 @@ public class PreferencesManager {
 				this.defaultPreferences = PreferencesHelper.readPreferences(userInputSreamReader,
 						this.defaultPreferences);
 			} catch (FileNotFoundException e) {
-				AppLogger.getLogger().severe("No encontró archivo en ubicado en : " + userPreferenceFileName);
+				AppLogger.getLogger().severe(
+						"No encontró archivo en ubicado en : " + userPreferenceFileName);
 			}
 		}
 	}

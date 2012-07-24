@@ -1,6 +1,3 @@
-/*
- * $Id: ClassUtils.java,v 1.40 2008/05/05 19:51:08 cvstursi Exp $
- */
 package commons.util;
 
 import java.lang.reflect.Constructor;
@@ -24,10 +21,8 @@ import commons.gui.util.ComboHelper;
 import commons.gui.widget.dialog.SWTCalendarDialog;
 import commons.logging.AppLogger;
 
-/**
- * @author H. Adrián Uribe
- */
 public abstract class ClassUtils {
+
 	public static Field[] getFields(Class clazz) {
 		Field[] fields = sm_fields.get(clazz);
 		if (fields == null) {
@@ -73,8 +68,8 @@ public abstract class ClassUtils {
 	 *            la clase a la cual pedirle el método.
 	 * @param methodName
 	 *            el nombre del método a obtener.
-	 * @return una instancia de la clase <code>Method</code> que representa al método que se quiere obtener, ó
-	 *         <code>null</code> en caso que el método no exista o no pueda ser accedido.
+	 * @return una instancia de la clase <code>Method</code> que representa al método que se quiere
+	 *         obtener, ó <code>null</code> en caso que el método no exista o no pueda ser accedido.
 	 */
 	public static Method getMethod(Class clazz, String methodName) {
 		Method result = null;
@@ -94,7 +89,8 @@ public abstract class ClassUtils {
 		try {
 			result = clazz.getDeclaredMethod(methodName);
 		} catch (Exception e) {
-			AppLogger.getLogger().log(Level.FINE, "getPublicMethod(" + clazz.getName() + ", " + methodName + ") falló");
+			AppLogger.getLogger().log(Level.FINE,
+					"getPublicMethod(" + clazz.getName() + ", " + methodName + ") falló");
 		}
 		return result;
 	}
@@ -104,7 +100,7 @@ public abstract class ClassUtils {
 		try {
 			Method[] methods = clazz.getDeclaredMethods();
 			boolean found = false;
-			for (int i = 0; !found && i < methods.length; i++) {
+			for (int i = 0; !found && (i < methods.length); i++) {
 				// toma la primera aparición del método
 				found = methodName.equals(methods[i].getName());
 				if (found) {
@@ -112,8 +108,8 @@ public abstract class ClassUtils {
 				}
 			}
 		} catch (Exception e) {
-			AppLogger.getLogger()
-					.log(Level.FINE, "getPrivateMethod(" + clazz.getName() + ", " + methodName + ") falló");
+			AppLogger.getLogger().log(Level.FINE,
+					"getPrivateMethod(" + clazz.getName() + ", " + methodName + ") falló");
 		}
 		return result;
 	}
@@ -126,8 +122,8 @@ public abstract class ClassUtils {
 		return clazz.getTypeParameters()[index].getClass();
 	}
 
-	public static Object newTypeParameterInstance(Field field) throws ClassNotFoundException, InstantiationException,
-			IllegalAccessException {
+	public static Object newTypeParameterInstance(Field field) throws ClassNotFoundException,
+			InstantiationException, IllegalAccessException {
 		String className = field.getGenericType().toString();
 		int index1 = className.indexOf('<');
 		int index2 = className.indexOf('>');
@@ -145,7 +141,8 @@ public abstract class ClassUtils {
 			for (Field element : declaredFields) {
 				declaredField = element;
 				mods = declaredField.getModifiers();
-				if ((mods & Modifier.STATIC) == 0 && (mods & Modifier.TRANSIENT) == 0 && !declaredField.isSynthetic()
+				if (((mods & Modifier.STATIC) == 0) && ((mods & Modifier.TRANSIENT) == 0)
+						&& !declaredField.isSynthetic()
 						&& !declaredField.getType().getSimpleName().equals("PK")) {
 					fields.add(declaredField);
 					declaredField.setAccessible(true);
@@ -170,13 +167,15 @@ public abstract class ClassUtils {
 	}
 
 	/**
-	 * Provee el objecto producto de haber navegado por la cadena de propiedades especificada por parámetro.
+	 * Provee el objecto producto de haber navegado por la cadena de propiedades especificada por
+	 * parámetro.
 	 * 
 	 * @param element
 	 *            objeto a partir del cual comenzar la navegación de propiedades.
 	 * @param chainOfProperties
 	 *            string con las propiedades separadas por puntos.
-	 * @return el valor producto de haber navegado por la cadena de propiedades especificada por parámetro.
+	 * @return el valor producto de haber navegado por la cadena de propiedades especificada por
+	 *         parámetro.
 	 */
 	public static Object getObject(Object element, String chainOfProperties) {
 		String[] properties = chainOfProperties.split(Pattern.quote("."));
@@ -186,7 +185,8 @@ public abstract class ClassUtils {
 				if (element2.endsWith("()")) {
 					// es un metodo
 					String methodName = element2.substring(0, element2.length() - 2);
-					Method method = ClassUtils.getPublicMethod(currentObject.getClass(), methodName);
+					Method method = ClassUtils
+							.getPublicMethod(currentObject.getClass(), methodName);
 					currentObject = method.invoke(currentObject, new Object[] {});
 				} else {
 					// es un atributo
@@ -194,8 +194,10 @@ public abstract class ClassUtils {
 					currentObject = field.get(currentObject);
 				}
 			} catch (Exception e) {
-				AppLogger.getLogger().log(Level.SEVERE,
-						"Error al recuperar " + chainOfProperties + " de la clase " + element.getClass().getName());
+				AppLogger.getLogger().log(
+						Level.SEVERE,
+						"Error al recuperar " + chainOfProperties + " de la clase "
+								+ element.getClass().getName());
 			}
 		}
 		return currentObject;
@@ -222,7 +224,7 @@ public abstract class ClassUtils {
 				String[] fields = labelKey.split(Pattern.quote("."));
 				for (int i = 0; i < fields.length; i++) {
 					field = getField(instance.getClass(), fields[i]);
-					if (i != fields.length - 1) {
+					if (i != (fields.length - 1)) {
 						// si es el ultimo atributo ya es el atributo a setear
 						instance = field.get(instance);
 					}
@@ -281,15 +283,16 @@ public abstract class ClassUtils {
 				result = false;
 			} catch (Exception exc) {
 				result = false;
-				AppLogger.getLogger().log(Level.SEVERE, instance.getClass().getName() + "." + labelKey, exc);
+				AppLogger.getLogger().log(Level.SEVERE,
+						instance.getClass().getName() + "." + labelKey, exc);
 			}
 		}
 		return result;
 	}
 
 	/**
-	 * Establece como valor del combo el establecido en atributo demarcado por labelKey de la instancia (valor atributo
-	 * de instancia --> combo).
+	 * Establece como valor del combo el establecido en atributo demarcado por labelKey de la
+	 * instancia (valor atributo de instancia --> combo).
 	 * 
 	 * @param model
 	 * @param labelKey
@@ -324,8 +327,8 @@ public abstract class ClassUtils {
 	}
 
 	/**
-	 * Retorna el valor establecido en el atributo demarcado por labelKey de la instancia (valor atributo de instancia
-	 * --> textbox).
+	 * Retorna el valor establecido en el atributo demarcado por labelKey de la instancia (valor
+	 * atributo de instancia --> textbox).
 	 * 
 	 * @param model
 	 * @param propertyName
@@ -340,13 +343,13 @@ public abstract class ClassUtils {
 				String[] fields = propertyName.split(Pattern.quote("."));
 				for (int i = 0; i < fields.length; i++) {
 					field = getField(instance.getClass(), fields[i]);
-					if (i != fields.length - 1) {
+					if (i != (fields.length - 1)) {
 						// si es el ultimo atributo ya es el atributo a setear
 						instance = field.get(instance);
 					}
 				}
 
-				if (field != null && field.get(instance) != null) {
+				if ((field != null) && (field.get(instance) != null)) {
 					if (field.getType() == BigDecimal.class) {
 						result = ((BigDecimal) field.get(instance)).toPlainString();
 					} else if (field.getType() == Integer.class) {
@@ -371,8 +374,8 @@ public abstract class ClassUtils {
 	}
 
 	/**
-	 * Establece como el estado del button(checked) en base al atributo demarcado por labelKey de la instancia (valor
-	 * atributo de instancia --> button).
+	 * Establece como el estado del button(checked) en base al atributo demarcado por labelKey de la
+	 * instancia (valor atributo de instancia --> button).
 	 * 
 	 * @param model
 	 * @param propertyName
@@ -399,12 +402,14 @@ public abstract class ClassUtils {
 			constructor.setAccessible(true);
 			result = constructor.newInstance((Object[]) null);
 		} catch (Exception e) {
-			AppLogger.getLogger().severe("No se pudo instanciar la clase " + aClass.getCanonicalName());
+			AppLogger.getLogger().severe(
+					"No se pudo instanciar la clase " + aClass.getCanonicalName());
 		}
 		return result;
 	}
 
-	public static void setDateByReflection(Object instance, String nombreAtributo, String dateAsString) {
+	public static void setDateByReflection(Object instance, String nombreAtributo,
+			String dateAsString) {
 		Field field = getField(instance.getClass(), nombreAtributo);
 		if (field.getType().equals(Calendar.class)) {
 			try {
@@ -419,11 +424,13 @@ public abstract class ClassUtils {
 				AppLogger.getLogger().log(Level.SEVERE, null, ex);
 			}
 		} else {
-			AppLogger.getLogger().log(Level.SEVERE, "Tipo de dato no soportado: " + field.getType().toString());
+			AppLogger.getLogger().log(Level.SEVERE,
+					"Tipo de dato no soportado: " + field.getType().toString());
 		}
 	}
 
-	public static void setDateByReflection(Object instance, String nombreAtributo, SWTCalendarDialog calendarDialog) {
+	public static void setDateByReflection(Object instance, String nombreAtributo,
+			SWTCalendarDialog calendarDialog) {
 		Field field = getField(instance.getClass(), nombreAtributo);
 		if (field.getType().equals(Calendar.class)) {
 			try {
@@ -438,7 +445,8 @@ public abstract class ClassUtils {
 				AppLogger.getLogger().log(Level.SEVERE, null, ex);
 			}
 		} else {
-			AppLogger.getLogger().log(Level.SEVERE, "Tipo de dato no soportado: " + field.getType().toString());
+			AppLogger.getLogger().log(Level.SEVERE,
+					"Tipo de dato no soportado: " + field.getType().toString());
 		}
 	}
 

@@ -1,6 +1,3 @@
-/*
- * $Id: GenericTable.java,v 1.27 2010/12/23 14:23:50 cvsmvera Exp $
- */
 package commons.gui.table;
 
 import java.lang.reflect.Field;
@@ -22,9 +19,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
 import recepciondetrabajos.Labels;
-
-
-
 
 import commons.pref.PreferencesManager;
 import commons.pref.TableInfo;

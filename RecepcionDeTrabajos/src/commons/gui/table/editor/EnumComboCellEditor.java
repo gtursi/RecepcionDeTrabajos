@@ -1,24 +1,10 @@
-/*
- * Licencia de Caja de Valores S.A., Versión 1.0
- *
- * Copyright (c) 2006 Caja de Valores S.A.
- * 25 de Mayo 362, Ciudad Autónoma de Buenos Aires, República Argentina
- * Todos los derechos reservados.
- *
- * Este software es información confidencial y propietaria de Caja de Valores S.A. ("Información
- * Confidencial"). Usted no divulgará tal Información Confidencial y la usará solamente de acuerdo a
- * los términos del acuerdo de licencia que posee con Caja de Valores S.A.
- */
-
-/*
- * $Id: EnumComboCellEditor.java,v 1.6 2007/06/27 18:30:51 cvschioc Exp $
- */
 package commons.gui.table.editor;
 
 import java.text.MessageFormat;
 
 import org.eclipse.jface.util.Assert;
 import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.ComboBoxCellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CCombo;
 import org.eclipse.swt.events.FocusAdapter;
@@ -35,15 +21,12 @@ import org.eclipse.swt.widgets.Control;
 
 import commons.gui.util.ComboHelper;
 
-/**
- * @author Gabriel Tursi
- * @version $Revision: 1.6 $ $Date: 2007/06/27 18:30:51 $
- */
 public class EnumComboCellEditor extends CellEditor {
 
 	/**
 	 * Creates a new cell editor with no control and no st of choices. Initially, the cell editor
 	 * has no cell validator.
+	 * 
 	 * @since 2.1
 	 * @see CellEditor#setStyle
 	 * @see CellEditor#create
@@ -59,6 +42,7 @@ public class EnumComboCellEditor extends CellEditor {
 	 * Creates a new cell editor with a combo containing the given list of choices and parented
 	 * under the given control. The cell editor value is the zero-based index of the selected item.
 	 * Initially, the cell editor has no cell validator and the first item in the list is selected.
+	 * 
 	 * @param parent
 	 *            the parent control
 	 * @param items
@@ -73,6 +57,7 @@ public class EnumComboCellEditor extends CellEditor {
 	 * Creates a new cell editor with a combo containing the given list of choices and parented
 	 * under the given control. The cell editor value is the zero-based index of the selected item.
 	 * Initially, the cell editor has no cell validator and the first item in the list is selected.
+	 * 
 	 * @param parent
 	 *            the parent control
 	 * @param items
@@ -98,6 +83,7 @@ public class EnumComboCellEditor extends CellEditor {
 
 	/**
 	 * Returns the list of choices for the combo box
+	 * 
 	 * @return the list of choices for the combo box
 	 */
 	public Enum[] getItems() {
@@ -106,6 +92,7 @@ public class EnumComboCellEditor extends CellEditor {
 
 	/**
 	 * Sets the list of choices for the combo box
+	 * 
 	 * @param enums
 	 *            the list of choices for the combo box
 	 */
@@ -116,11 +103,11 @@ public class EnumComboCellEditor extends CellEditor {
 	}
 
 	/**
-	 * The <code>ComboBoxCellEditor</code> implementation of this <code>CellEditor</code>
-	 * framework method sets the minimum width of the cell. The minimum width is 10 characters if
-	 * <code>comboBox</code> is not <code>null</code> or <code>disposed</code> eles it is 60
-	 * pixels to make sure the arrow button and some text is visible. The list of CCombo will be
-	 * wide enough to show its longest item.
+	 * The <code>ComboBoxCellEditor</code> implementation of this <code>CellEditor</code> framework
+	 * method sets the minimum width of the cell. The minimum width is 10 characters if
+	 * <code>comboBox</code> is not <code>null</code> or <code>disposed</code> eles it is 60 pixels
+	 * to make sure the arrow button and some text is visible. The list of CCombo will be wide
+	 * enough to show its longest item.
 	 */
 	@Override
 	public LayoutData getLayoutData() {
@@ -143,6 +130,7 @@ public class EnumComboCellEditor extends CellEditor {
 		comboBox.setFont(parent.getFont());
 
 		comboBox.addKeyListener(new KeyAdapter() {
+
 			// hook key pressed - see PR 14201
 			@Override
 			public void keyPressed(KeyEvent event) {
@@ -151,6 +139,7 @@ public class EnumComboCellEditor extends CellEditor {
 		});
 
 		comboBox.addSelectionListener(new SelectionAdapter() {
+
 			@Override
 			public void widgetDefaultSelected(SelectionEvent event) {
 				applyEditorValueAndDeactivate();
@@ -163,14 +152,16 @@ public class EnumComboCellEditor extends CellEditor {
 		});
 
 		comboBox.addTraverseListener(new TraverseListener() {
+
 			public void keyTraversed(TraverseEvent event) {
-				if (event.detail == SWT.TRAVERSE_ESCAPE || event.detail == SWT.TRAVERSE_RETURN) {
+				if ((event.detail == SWT.TRAVERSE_ESCAPE) || (event.detail == SWT.TRAVERSE_RETURN)) {
 					event.doit = false;
 				}
 			}
 		});
 
 		comboBox.addFocusListener(new FocusAdapter() {
+
 			@Override
 			public void focusLost(FocusEvent event) {
 				EnumComboCellEditor.this.focusLost();
@@ -180,8 +171,9 @@ public class EnumComboCellEditor extends CellEditor {
 	}
 
 	/**
-	 * The <code>ComboBoxCellEditor</code> implementation of this <code>CellEditor</code>
-	 * framework method returns the zero-based index of the current selection.
+	 * The <code>ComboBoxCellEditor</code> implementation of this <code>CellEditor</code> framework
+	 * method returns the zero-based index of the current selection.
+	 * 
 	 * @return the zero-based index of the current selection wrapped as an <code>Integer</code>
 	 */
 	@Override
@@ -195,8 +187,9 @@ public class EnumComboCellEditor extends CellEditor {
 	}
 
 	/**
-	 * The <code>ComboBoxCellEditor</code> implementation of this <code>CellEditor</code>
-	 * framework method accepts a zero-based index of a selection.
+	 * The <code>ComboBoxCellEditor</code> implementation of this <code>CellEditor</code> framework
+	 * method accepts a zero-based index of a selection.
+	 * 
 	 * @param value
 	 *            the zero-based index of the selection wrapped as an <code>Integer</code>
 	 */
@@ -225,15 +218,15 @@ public class EnumComboCellEditor extends CellEditor {
 	 * Updates the list of choices for the combo box for the current control.
 	 */
 	private void populateComboBoxItems() {
-		if (comboBox != null && enums != null) {
+		if ((comboBox != null) && (enums != null)) {
 			comboBox.removeAll();
 
 			if (emptyOptionEnabled) {
 				comboBox.add(ComboHelper.EMPTY_ITEM, 0);
 			}
 
-			for (int i = 0; i < enums.length; i++) {
-				comboBox.add(enums[i].toString());
+			for (Enum enum1 : enums) {
+				comboBox.add(enum1.toString());
 			}
 			setValueValid(true);
 			selection = 0;
@@ -253,15 +246,15 @@ public class EnumComboCellEditor extends CellEditor {
 
 		if (!isValid) {
 			// Only format if the 'index' is valid
-			if (enums.length > 0 && selection >= 0 && selection < enums.length) {
+			if ((enums.length > 0) && (selection >= 0) && (selection < enums.length)) {
 				// try to insert the current value into the error message.
 				setErrorMessage(MessageFormat.format(getErrorMessage(),
 						new Object[] { enums[selection] }));
 			} else {
 				// Since we don't have a valid index, assume we're using an 'edit'
 				// combo so format using its text value
-				setErrorMessage(MessageFormat.format(getErrorMessage(), new Object[] { comboBox
-						.getText() }));
+				setErrorMessage(MessageFormat.format(getErrorMessage(),
+						new Object[] { comboBox.getText() }));
 			}
 		}
 

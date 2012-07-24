@@ -1,19 +1,3 @@
-/*
- * Licencia de Caja de Valores S.A., Versión 1.0
- *
- * Copyright (c) 2006 Caja de Valores S.A.
- * 25 de Mayo 362, Ciudad Autónoma de Buenos Aires, República Argentina
- * Todos los derechos reservados.
- *
- * Este software es información confidencial y propietaria de Caja de Valores S.A. ("Información
- * Confidencial"). Usted no divulgará tal Información Confidencial y la usará solamente de acuerdo a
- * los términos del acuerdo de licencia que posee con Caja de Valores S.A.
- */
-
-/*
- * $Id: CalendarComposite.java,v 1.5 2008/05/19 18:33:50 cvstursi Exp $
- */
-
 package commons.gui.widget.composite;
 
 import java.util.Calendar;
@@ -45,13 +29,11 @@ import commons.util.DateUtils;
 /**
  * Modela un calendario.
  * 
- * @author Jonathan Chiocchio
- * @version $Revision: 1.5 $ $Date: 2008/05/19 18:33:50 $
  */
-
 public class CalendarComposite extends SimpleComposite {
 
-	public CalendarComposite(Composite parent, final Object instance, final String nombreAtributo, boolean readOnly) {
+	public CalendarComposite(Composite parent, final Object instance, final String nombreAtributo,
+			boolean readOnly) {
 		super(parent, readOnly, 2);
 		this.instance = instance;
 		this.nombreAtributo = nombreAtributo;
@@ -100,10 +82,12 @@ public class CalendarComposite extends SimpleComposite {
 
 	private FocusListener getFocusLostListener() {
 		FocusListener focusListener = new FocusAdapter() {
+
 			@Override
 			public void focusLost(FocusEvent e) {
 				String text = calendarText.getText();
-				if (calendarText.getForeground().equals(PageHelper.getInvalidColor()) || StringUtils.isBlank(text)) {
+				if (calendarText.getForeground().equals(PageHelper.getInvalidColor())
+						|| StringUtils.isBlank(text)) {
 					ClassUtils.setValueByReflection(instance, nombreAtributo, null);
 				} else {
 					ClassUtils.setDateByReflection(instance, nombreAtributo, text);
@@ -117,18 +101,20 @@ public class CalendarComposite extends SimpleComposite {
 		this.changeDateButton = new Button(parent, SWT.ARROW | SWT.RIGHT);
 
 		this.changeDateButton.addSelectionListener(new SelectionAdapter() {
+
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				Point dialogLocation = PageHelper.getDisplay().map(changeDateButton, null, 0, 0);
 				Calendar today = DateUtils.getCurrentDatetimeAsCalendar();
-				SWTCalendarDialog calendarDialog = new SWTCalendarDialog(getShell(), dialogLocation,
-						previousSelectedDate, today);
+				SWTCalendarDialog calendarDialog = new SWTCalendarDialog(getShell(),
+						dialogLocation, previousSelectedDate, today);
 
 				if (calendarDialog.open() == Window.OK) {
 					if (instance != null) {
 						ClassUtils.setDateByReflection(instance, nombreAtributo, calendarDialog);
 					}
-					calendarText.setText(DateUtils.formatCalendar(calendarDialog.getSelectedCalendar()));
+					calendarText.setText(DateUtils.formatCalendar(calendarDialog
+							.getSelectedCalendar()));
 				}
 			}
 		});

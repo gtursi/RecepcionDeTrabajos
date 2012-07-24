@@ -4,9 +4,6 @@ import java.util.ResourceBundle;
 
 import recepciondetrabajos.Constants;
 
-
-
-
 public abstract class Messages {
 
 	public static String getString(String key) {

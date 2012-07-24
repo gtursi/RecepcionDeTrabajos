@@ -1,10 +1,5 @@
 package recepciondetrabajos.domain;
 
-/**
- * 
- * @author Gabriel Tursi
- * @version $Revision$ $Date$
- */
 public class Cliente {
 
 	private Long codigo;

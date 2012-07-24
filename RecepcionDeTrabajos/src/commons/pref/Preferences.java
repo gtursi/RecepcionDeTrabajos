@@ -1,17 +1,3 @@
-/*
- * Licencia de Caja de Valores S.A., Versión 1.0
- *
- * Copyright (c) 2006 Caja de Valores S.A.
- * 25 de Mayo 362, Ciudad Autónoma de Buenos Aires, República Argentina
- * Todos los derechos reservados.
- *
- * Este software es información confidencial y propietaria de Caja de Valores S.A. ("Información
- * Confidencial"). Usted no divulgará tal Información Confidencial y la usará solamente de acuerdo a
- * los términos del acuerdo de licencia que posee con Caja de Valores S.A.
- */
-/*
- * $Id: Preferences.java,v 1.10 2007/05/28 17:17:04 cvstursi Exp $
- */
 package commons.pref;
 
 import java.util.ArrayList;
@@ -27,14 +13,14 @@ import commons.gui.table.ColumnInfo;
 /**
  * Esta clase representa un arbol de objetos dinámicos con acceso rápido a objetos previamente
  * accedidos
- * @author Margarita Buriano
- * @version $Revision: 1.10 $ $Date: 2007/05/28 17:17:04 $
  */
 public class Preferences extends XMLMemento {
 
 	/**
-	 * @param document XML de preferencias por default
-	 * @param element ???
+	 * @param document
+	 *            XML de preferencias por default
+	 * @param element
+	 *            ???
 	 */
 	public Preferences(Document document, Element element, Preferences defaultUserPreferences) {
 		super(document, element);
@@ -44,6 +30,7 @@ public class Preferences extends XMLMemento {
 
 	/**
 	 * Establece nueva informacion sobre una columna de una tabla
+	 * 
 	 * @param tableName
 	 * @param info
 	 */
@@ -51,9 +38,10 @@ public class Preferences extends XMLMemento {
 		IMemento root = this.getRootOfElement(XmlConstants.TABLES);
 		PreferencesElementHelper.modifyColumnInfo(root, tableName, columnInfo);
 	}
-	
+
 	/**
 	 * Establece nueva informacion sobre una tabla
+	 * 
 	 * @param tableName
 	 * @param ordeColumnName
 	 */
@@ -69,7 +57,7 @@ public class Preferences extends XMLMemento {
 		} else {
 			tableInfo = PreferencesElementHelper.getTableInfo(this.getChild(XmlConstants.TABLES),
 					tableName);
-			this.putForFastAccess(tableName, tableInfo);			
+			this.putForFastAccess(tableName, tableInfo);
 		}
 		return tableInfo;
 	}
@@ -77,10 +65,11 @@ public class Preferences extends XMLMemento {
 	private void mergeTables() {
 		List<TableInfo> defaultUserPreferencesTables = defaultUserPreferences.getTables();
 		for (TableInfo defaultTableInfo : defaultUserPreferencesTables) {
-			PreferencesElementHelper.updateDefaultableInfo(this.getRootOfElement(XmlConstants.TABLES), defaultTableInfo);
-			putForFastAccess(defaultTableInfo.getName(), defaultTableInfo);//TODO hace falta?
+			PreferencesElementHelper.updateDefaultableInfo(
+					this.getRootOfElement(XmlConstants.TABLES), defaultTableInfo);
+			putForFastAccess(defaultTableInfo.getName(), defaultTableInfo);// TODO hace falta?
 		}
-		
+
 	}
 
 	private List<TableInfo> getTables() {
@@ -88,8 +77,8 @@ public class Preferences extends XMLMemento {
 		IMemento tablesElement = this.getChild("tables");
 		IMemento[] tables = tablesElement.getChildren("table");
 		for (IMemento aTable : tables) {
-			TableInfo table = PreferencesElementHelper.getTableInfo(tablesElement, aTable
-					.getString(XmlConstants.NAME));
+			TableInfo table = PreferencesElementHelper.getTableInfo(tablesElement,
+					aTable.getString(XmlConstants.NAME));
 			result.add(table);
 		}
 		return result;
@@ -114,8 +103,8 @@ public class Preferences extends XMLMemento {
 
 	private boolean alreadyExistInfo(String key) {
 		return (this.fastAccess.get(key) != null);
-	}	
-	
+	}
+
 	private final Map<String, Object> fastAccess = new HashMap<String, Object>();
 
 	private final Preferences defaultUserPreferences;

@@ -1,17 +1,3 @@
-/*
- * Licencia de Caja de Valores S.A., Versión 1.0
- *
- * Copyright (c) 2006 Caja de Valores S.A.
- * 25 de Mayo 362, Ciudad Autónoma de Buenos Aires, República Argentina
- * Todos los derechos reservados.
- *
- * Este software es información confidencial y propietaria de Caja de Valores S.A. ("Información
- * Confidencial"). Usted no divulgará tal Información Confidencial y la usará solamente de acuerdo a
- * los términos del acuerdo de licencia que posee con Caja de Valores S.A.
- */
-/*
- * $Id: PreferencesElementHelper.java,v 1.10 2008/09/09 19:05:03 cvsmdiaz Exp $
- */
 package commons.pref;
 
 import org.eclipse.swt.SWT;
@@ -19,10 +5,6 @@ import org.eclipse.swt.SWT;
 import commons.gui.table.ColumnInfo;
 import commons.logging.AppLogger;
 
-/**
- * @author Margarita Buriano
- * @version $Revision: 1.10 $ $Date: 2008/09/09 19:05:03 $
- */
 public abstract class PreferencesElementHelper {
 
 	public static void createTableNode(IMemento root, TableInfo table) {
@@ -47,7 +29,7 @@ public abstract class PreferencesElementHelper {
 	/**
 	 * Toma la estructura de las preferencias por default, y las modifica con los atributos de las
 	 * preferencias del usuario.
-	 *
+	 * 
 	 * @param root
 	 * @param defaultTableInfo
 	 * @return La información de las tablas ya mergeada
@@ -57,7 +39,8 @@ public abstract class PreferencesElementHelper {
 		AppLogger.getLogger().finer("Actualizando la tabla " + defaultTableInfo.getName());
 
 		if (PreferencesElementHelper.existsTableNode(root, defaultTableInfo.getName())) {
-			IMemento userTableNode = PreferencesElementHelper.getTableNode(root, defaultTableInfo.getName());
+			IMemento userTableNode = PreferencesElementHelper.getTableNode(root,
+					defaultTableInfo.getName());
 
 			for (int i = 0; i < defaultTableInfo.getColumnsInfo().length; i++) {
 				PreferencesElementHelper.updateDefaultColumnInfo(userTableNode,
@@ -73,9 +56,11 @@ public abstract class PreferencesElementHelper {
 	/**
 	 * Actualiza la información actual (root) con la información del archivo de preferencias del
 	 * usuario.
-	 *
-	 * @param root Preferencias por defector
-	 * @param defaultColumnInfo Información de las preferencias del usuario
+	 * 
+	 * @param root
+	 *            Preferencias por defector
+	 * @param defaultColumnInfo
+	 *            Información de las preferencias del usuario
 	 * @return
 	 */
 	public static void updateDefaultColumnInfo(IMemento root, ColumnInfo defaultColumnInfo) {
@@ -83,7 +68,8 @@ public abstract class PreferencesElementHelper {
 
 		if (PreferencesElementHelper.existsColumnNode(root, defaultColumnInfo.fieldName)) {
 			// me quedo con la estructura default pero con la información del usuario
-			IMemento rootColumnInfo = PreferencesElementHelper.getColumnNode(root, defaultColumnInfo.fieldName);
+			IMemento rootColumnInfo = PreferencesElementHelper.getColumnNode(root,
+					defaultColumnInfo.fieldName);
 			if (rootColumnInfo.getString(XmlConstants.WIDTH) != null) {
 				defaultColumnInfo.width = rootColumnInfo.getInteger(XmlConstants.WIDTH);
 			}
@@ -150,7 +136,7 @@ public abstract class PreferencesElementHelper {
 
 	/**
 	 * A partir del xml genera el objeto TableInfo
-	 *
+	 * 
 	 * @param aTable
 	 * @return
 	 */
@@ -164,13 +150,13 @@ public abstract class PreferencesElementHelper {
 			ColumnInfo column = PreferencesElementHelper.getColumnInfo(col);
 			cols[i] = column;
 		}
-		return new TableInfo(root.getString(XmlConstants.NAME), root
-				.getString(XmlConstants.ORDER_BY), cols);
+		return new TableInfo(root.getString(XmlConstants.NAME),
+				root.getString(XmlConstants.ORDER_BY), cols);
 	}
 
 	/**
 	 * A partir del xml genera el objeto ColumnInfo
-	 *
+	 * 
 	 * @param column
 	 * @return
 	 */
@@ -182,13 +168,13 @@ public abstract class PreferencesElementHelper {
 		} else {
 			code = PreferencesHelper.getStyleCode(alignment);
 		}
-		return new ColumnInfo(column.getString(XmlConstants.NAME), code, column
-				.getInteger(XmlConstants.WIDTH));
+		return new ColumnInfo(column.getString(XmlConstants.NAME), code,
+				column.getInteger(XmlConstants.WIDTH));
 	}
 
 	/**
 	 * Pisa la información de columna sobre la tabla por la nueva información
-	 *
+	 * 
 	 * @param root
 	 * @param tableName
 	 * @param columnInfo
@@ -198,11 +184,11 @@ public abstract class PreferencesElementHelper {
 		IMemento tableNode = PreferencesElementHelper.getTableNode(root, tableName);
 		if (tableNode != null) {
 			IMemento[] columns = tableNode.getChildren(XmlConstants.COLUMN);
-			for (int i = 0; i < columns.length; i++) {
-				IMemento col = columns[i];
+			for (IMemento col : columns) {
 				if (col.getString(XmlConstants.NAME).equals(columnInfo.fieldName)) {
 					col.putInteger(XmlConstants.WIDTH, columnInfo.width);
-					col.putString(XmlConstants.ALIGNMENT, PreferencesHelper.getStyle(columnInfo.style));
+					col.putString(XmlConstants.ALIGNMENT,
+							PreferencesHelper.getStyle(columnInfo.style));
 				}
 			}
 		}
@@ -210,7 +196,7 @@ public abstract class PreferencesElementHelper {
 
 	/**
 	 * Mantiene el nuevo orden de la tabla
-	 *
+	 * 
 	 * @param root
 	 * @param tableName
 	 * @param columnInfo

@@ -7,8 +7,6 @@ package recepciondetrabajos.domain;
  */
 public class PedidoItem implements Cloneable {
 
-	private Pedido pedido;
-
 	private Integer orden;
 
 	private Integer cantidad = 1;
@@ -17,14 +15,16 @@ public class PedidoItem implements Cloneable {
 
 	private String observaciones;
 
-	public PedidoItem(Pedido pedido) {
-		this.pedido = pedido;
+	public PedidoItem() {
+		super();
 	}
 
-	private PedidoItem(Pedido pedido, Integer orden, Integer cantidad, String detalle,
-			String observaciones) {
+	public PedidoItem(Pedido pedido) {
+		pedido.getItems().add(this);
+	}
+
+	private PedidoItem(Integer orden, Integer cantidad, String detalle, String observaciones) {
 		super();
-		this.pedido = pedido;
 		this.orden = orden;
 		this.cantidad = cantidad;
 		this.detalle = detalle;
@@ -32,16 +32,7 @@ public class PedidoItem implements Cloneable {
 	}
 
 	public PedidoItem(PedidoItem item) {
-		this(item.getPedido(), item.getOrden(), item.getCantidad(), item.getDetalle(), item
-				.getObservaciones());
-	}
-
-	public Pedido getPedido() {
-		return pedido;
-	}
-
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
+		this(item.getOrden(), item.getCantidad(), item.getDetalle(), item.getObservaciones());
 	}
 
 	public Integer getOrden() {

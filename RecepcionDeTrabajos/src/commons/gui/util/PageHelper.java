@@ -1,19 +1,3 @@
-/*
- * Licencia de Caja de Valores S.A., Versión 1.0
- *
- * Copyright (c) 2006 Caja de Valores S.A.
- * 25 de Mayo 362, Ciudad Autónoma de Buenos Aires, República Argentina
- * Todos los derechos reservados.
- *
- * Este software es información confidencial y propietaria de Caja de Valores S.A. ("Información
- * Confidencial"). Usted no divulgará tal Información Confidencial y la usará solamente de acuerdo a
- * los términos del acuerdo de licencia que posee con Caja de Valores S.A.
- */
-
-/*
- * $Id: PageHelper.java,v 1.94 2009/02/23 18:01:09 cvstursi Exp $
- */
-
 package commons.gui.util;
 
 import org.eclipse.jface.resource.FontRegistry;
@@ -32,7 +16,7 @@ public abstract class PageHelper {
 
 	/**
 	 * Configura PageHelper.
-	 *
+	 * 
 	 * @param mainShell
 	 *            shell de la ventana Principal de la aplicación
 	 * @return
@@ -41,12 +25,12 @@ public abstract class PageHelper {
 		GC graphicsContext = new GC(mainShell);
 		graphicsContext.setFont(JFaceResources.getDialogFont());
 		fontMetrics = graphicsContext.getFontMetrics();
-	    initFonts();
+		initFonts();
 	}
 
 	private static void initFonts() {
 		fontRegistry = new FontRegistry(getDisplay());
-	    fontRegistry.put("non-editable", new FontData[]{new FontData("Arial", 9, SWT.BOLD)} );
+		fontRegistry.put("non-editable", new FontData[] { new FontData("Arial", 9, SWT.BOLD) });
 	}
 
 	public static Font getNonEditableFont() {
@@ -100,6 +84,5 @@ public abstract class PageHelper {
 	private static FontMetrics fontMetrics;
 
 	private static FontRegistry fontRegistry;
-
 
 }

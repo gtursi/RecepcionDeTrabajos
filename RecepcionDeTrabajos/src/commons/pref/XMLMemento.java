@@ -1,17 +1,3 @@
-/*
- * Licencia de Caja de Valores S.A., Versión 1.0
- *
- * Copyright (c) 2006 Caja de Valores S.A.
- * 25 de Mayo 362, Ciudad Autónoma de Buenos Aires, República Argentina
- * Todos los derechos reservados.
- *
- * Este software es información confidencial y propietaria de Caja de Valores S.A. ("Información
- * Confidencial"). Usted no divulgará tal Información Confidencial y la usará solamente de acuerdo a
- * los términos del acuerdo de licencia que posee con Caja de Valores S.A.
- */
-/*
- * $Id: XMLMemento.java,v 1.13 2007/06/27 18:30:51 cvschioc Exp $
- */
 package commons.pref;
 
 import java.io.PrintWriter;
@@ -28,10 +14,6 @@ import org.w3c.dom.Text;
 
 import commons.logging.AppLogger;
 
-/**
- * @author Margarita Buriano
- * @version $Revision: 1.13 $ $Date: 2007/06/27 18:30:51 $
- */
 public class XMLMemento implements IMemento {
 
 	private static final class DOMWriter extends PrintWriter {

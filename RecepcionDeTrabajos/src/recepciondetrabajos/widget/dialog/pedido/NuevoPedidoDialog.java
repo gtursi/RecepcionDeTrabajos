@@ -1,27 +1,15 @@
-/*
- * Licencia de Caja de Valores S.A., Versión 1.0
- *
- * Copyright (c) 2006 Caja de Valores S.A.
- * 25 de Mayo 362, Ciudad Autónoma de Buenos Aires, República Argentina
- * Todos los derechos reservados.
- *
- * Este software es información confidencial y propietaria de Caja de Valores S.A. ("Información
- * Confidencial"). Usted no divulgará tal Información Confidencial y la usará solamente de acuerdo a
- * los términos del acuerdo de licencia que posee con Caja de Valores S.A.
- */
-
-/*
- * $Id: ClienteDetailUpdateDialog.java,v 1.19 2011/01/03 14:18:41 cvsmvera Exp $
- */
 package recepciondetrabajos.widget.dialog.pedido;
 
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 import recepciondetrabajos.domain.Pedido;
 import recepciondetrabajos.service.PedidoService;
 import recepciondetrabajos.widget.page.pedido.NuevoPedidoPage;
-
 
 import commons.gui.widget.dialog.BasePreferenceDialog;
 
@@ -31,6 +19,8 @@ import commons.gui.widget.dialog.BasePreferenceDialog;
  * @version $Revision: 1.19 $ $Date: 2011/01/03 14:18:41 $
  */
 public class NuevoPedidoDialog extends BasePreferenceDialog {
+
+	private Button printButton;
 
 	public NuevoPedidoDialog(Pedido pedido) {
 		super(null, "Nuevo Pedido", false);
@@ -48,8 +38,30 @@ public class NuevoPedidoDialog extends BasePreferenceDialog {
 
 	@Override
 	protected boolean performOK() {
-		PedidoService.crearPedido(pedido);
+		if (pedido.nuevo()) {
+			PedidoService.crearPedido(pedido);
+		} else {
+			PedidoService.actualizarPedido(pedido);
+		}
+
 		return true;
+	}
+
+	@Override
+	protected void createButtonsForButtonBar(Composite parent) {
+		printButton = createButton(parent, 100, "Imprimir", false);
+		printButton.addSelectionListener(getPrintButtonSelectionListener());
+		super.createButtonsForButtonBar(parent);
+	}
+
+	private SelectionListener getPrintButtonSelectionListener() {
+		return new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+				System.out.println("Imprimir pedido nro: " + pedido.getNumero());
+			}
+		};
 	}
 
 	private final Pedido pedido;

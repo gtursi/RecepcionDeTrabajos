@@ -1,16 +1,3 @@
-/*
- * $Id: FakeBinding.java,v 1.9 2009/09/18 20:37:25 cvsgalea Exp $
- *
- * Copyright (c) 2003 Caja de Valores S.A.
- * 25 de Mayo 362, Buenos Aires, República Argentina.
- * Todos los derechos reservados.
- *
- * Este software es información confidencial y propietaria de Caja de Valores
- * S.A. ("Información Confidencial"). Usted no divulgará tal Información
- * Confidencial y solamente la usará conforme a los terminos del Acuerdo que Ud.
- * posee con Caja de Valores S.A.
- */
-
 package commons.gui.widget.creation.binding;
 
 import org.eclipse.swt.events.SelectionAdapter;
@@ -24,12 +11,8 @@ import org.eclipse.swt.widgets.Text;
 
 import commons.gui.form.BasicPublisher;
 
-/**
- * @author Rodrigo Alonso
- * @version $Revision: 1.9 $ $Date: 2009/09/18 20:37:25 $
- */
-
 public class FakeBinding extends BasicPublisher implements Binding {
+
 	public FakeBinding(Object value, String propertyName) {
 		super();
 		this.value = (value == null) ? " " : value.toString();
@@ -68,6 +51,7 @@ public class FakeBinding extends BasicPublisher implements Binding {
 
 	public void bind(final Button button) {
 		SelectionListener listener = new SelectionAdapter() {
+
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				String data = Boolean.valueOf(button.getSelection()).toString();
@@ -79,11 +63,11 @@ public class FakeBinding extends BasicPublisher implements Binding {
 	}
 
 	public void doProcess(String newValue) {
-		//do nothing
+		// do nothing
 	}
 
 	public void change(String key, Object aValue) {
-		if (control instanceof Label && aValue != null) {
+		if ((control instanceof Label) && (aValue != null)) {
 			((Label) control).setText(aValue.toString());
 		}
 	}
@@ -97,14 +81,11 @@ public class FakeBinding extends BasicPublisher implements Binding {
 			control.setVisible(enabled);
 		}
 	}
-	
+
 	private final String value;
 
 	private Control control;
 
 	private final String propertyName;
 
-
-
-	
 }

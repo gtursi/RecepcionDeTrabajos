@@ -1,6 +1,3 @@
-/**
- * 
- */
 package commons.gui.table;
 
 import java.lang.reflect.Field;
@@ -19,11 +16,6 @@ import commons.util.DateUtils;
 
 class GenericLabelProvider<T> implements ITableLabelProvider {
 
-	/**
-	 * @param fields
-	 * @param columnsInfo
-	 * @param viewer
-	 */
 	GenericLabelProvider(Field[] fields, ColumnInfo[] columnsInfo) {
 		super();
 		this.m_fields = fields;
@@ -42,7 +34,7 @@ class GenericLabelProvider<T> implements ITableLabelProvider {
 
 	private String getColumnTextFromObject(Object element, int index) {
 		String value = "";
-		if (m_fields != null && m_fields.length != 0) {
+		if ((m_fields != null) && (m_fields.length != 0)) {
 			try {
 				Object obj = null;
 				if (m_fields[index] == null) {

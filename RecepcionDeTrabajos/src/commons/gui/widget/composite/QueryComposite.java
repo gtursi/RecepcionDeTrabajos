@@ -1,18 +1,3 @@
-/*
- * Licencia de Caja de Valores S.A., Versión 1.0
- *
- * Copyright (c) 2006 Caja de Valores S.A.
- * 25 de Mayo 362, Ciudad Autónoma de Buenos Aires, República Argentina
- * Todos los derechos reservados.
- *
- * Este software es información confidencial y propietaria de Caja de Valores S.A. ("Información
- * Confidencial"). Usted no divulgará tal Información Confidencial y la usará solamente de acuerdo a
- * los términos del acuerdo de licencia que posee con Caja de Valores S.A.
- */
-
-/*
- * $Id: QueryComposite.java,v 1.12 2010/12/23 14:23:59 cvsmvera Exp $
- */
 package commons.gui.widget.composite;
 
 import java.util.List;
@@ -32,9 +17,6 @@ import org.eclipse.swt.widgets.Group;
 
 import recepciondetrabajos.MainWindow;
 
-
-
-
 import commons.gui.table.GenericTable;
 import commons.gui.thread.QueryCompositeBackgroundThread;
 import commons.gui.widget.group.SimpleGroup;
@@ -44,15 +26,9 @@ import commons.gui.widget.group.query.FilterButtonsGroup;
  * Composite base para todas las consultas que tengan un filtro sobre lo consultado y acciones a
  * realizar sobre los items seleccionados;
  * 
- * @author Gabriel Tursi
- * @version $Revision: 1.12 $ $Date: 2010/12/23 14:23:59 $
  */
 public abstract class QueryComposite extends Composite {
 
-	/**
-	 * @param parent
-	 * @param name
-	 */
 	public QueryComposite(Composite parent, String name) {
 		super(parent, SWT.NONE);
 		this.instanceKey = name;

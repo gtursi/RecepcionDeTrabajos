@@ -1,15 +1,3 @@
-/*
- * $Id: ClienteQueryComposite.java,v 1.58 2010/12/23 14:21:47 cvsmvera Exp $
- *
- * Copyright (c) 2003 Caja de Valores S.A.
- * 25 de Mayo 362, Buenos Aires, República Argentina.
- * Todos los derechos reservados.
- *
- * Este software es información confidencial y propietaria de Caja de Valores
- * S.A. ("Información Confidencial"). Usted no divulgará tal Información
- * Confidencial y solamente la usará conforme a los terminos del Acuerdo que Ud.
- * posee con Caja de Valores S.A.
- */
 package recepciondetrabajos.widget.composite.queries.clientes;
 
 import java.util.ArrayList;
@@ -49,13 +37,6 @@ import commons.gui.widget.composite.SimpleComposite;
 import commons.gui.widget.creation.metainfo.StringValueMetaInfo;
 import commons.gui.widget.creation.metainfo.TextFieldMetainfo;
 
-/**
- * Composite Consulta de clientes
- * 
- * @author Miguel Díaz
- * @author Jonathan Chiocchio
- * @version $Revision: 1.58 $ - $Date: 2010/12/23 14:21:47 $
- */
 public class ClienteQueryComposite extends QueryComposite {
 
 	public static ClienteQueryComposite getInstance(Composite parent) {
@@ -210,11 +191,9 @@ public class ClienteQueryComposite extends QueryComposite {
 		this.botonEditarCliente = createButton(panelBotones,
 				getEditarClienteButtonSelectionListener(), Constants.CONSULTAS_EDITAR_BUTTON_TEXT);
 		this.botonEliminarCliente = createButton(panelBotones,
-				getEliminarClienteButtonSelectionListener(),
-				Constants.ELIMINAR_CLIENTE_BUTTON_TEXT);
+				getEliminarClienteButtonSelectionListener(), Constants.ELIMINAR_CLIENTE_BUTTON_TEXT);
 		this.botonAgregarPedido = createButton(panelBotones,
-				getAgregarPedidoButtonSelectionListener(),
-				Constants.AGREGAR_PEDIDO_BUTTON_TEXT);
+				getAgregarPedidoButtonSelectionListener(), Constants.AGREGAR_PEDIDO_BUTTON_TEXT);
 	}
 
 	/**

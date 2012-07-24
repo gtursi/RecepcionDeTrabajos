@@ -1,27 +1,22 @@
-/*
- * $Id: SystemUtils.java,v 1.3 2007/04/16 18:04:28 cvschioc Exp $
- */
 package commons.util;
 
 import java.io.File;
 import java.io.IOException;
 
-/**
- * @author Adrian
- */
 public abstract class SystemUtils {
+
 	/*
-	 * TODO: Por ahora solo sirve para Windows.  
+	 * TODO: Por ahora solo sirve para Windows.
 	 */
-	
-	public static void exec(String command, final String... args)
-			throws IOException, InterruptedException {
+
+	public static void exec(String command, final String... args) throws IOException,
+			InterruptedException {
 		String[] cmdArgs = new String[5 + args.length];
 		int cmdArgIndex = 0;
 		// cmd.exe => Inicia una nueva instancia del intérprete de comandos de Windows.
 		cmdArgs[cmdArgIndex++] = WIN_CMD;
 		// /C => Ejecuta el comando especificado en cadena y luego finaliza
-		cmdArgs[cmdArgIndex++] = "/c"; 
+		cmdArgs[cmdArgIndex++] = "/c";
 		// Start => Inicia una ventana aparte para ejecutar un programa o un comando especificado.
 		cmdArgs[cmdArgIndex++] = "start";
 		// "título" => Texto que se mostrará en la barra de título de la ventana.
@@ -30,8 +25,8 @@ public abstract class SystemUtils {
 		// por contener espacios en blanco.)
 		cmdArgs[cmdArgIndex++] = "\"\"";
 		cmdArgs[cmdArgIndex++] = command;
-		for (int i = 0; i < args.length; i++) {
-			cmdArgs[cmdArgIndex++] = args[i];
+		for (String arg : args) {
+			cmdArgs[cmdArgIndex++] = arg;
 		}
 		Runtime.getRuntime().exec(cmdArgs).waitFor();
 	}
@@ -43,10 +38,9 @@ public abstract class SystemUtils {
 	}
 
 	/**
-	 * En Windows 95/98 el intérprete de comandos es "COMMAND.COM".
-	 * En los Windows posteriores es "cmd.exe"  
+	 * En Windows 95/98 el intérprete de comandos es "COMMAND.COM". En los Windows posteriores es
+	 * "cmd.exe"
 	 */
-	private static final String WIN_CMD =
-		System.getProperty("os.name").toUpperCase().startsWith("WINDOWS 9")
-		? "COMMAND.COM" : "cmd.exe";
+	private static final String WIN_CMD = System.getProperty("os.name").toUpperCase()
+			.startsWith("WINDOWS 9") ? "COMMAND.COM" : "cmd.exe";
 }

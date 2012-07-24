@@ -1,18 +1,3 @@
-/*
- * Licencia de Caja de Valores S.A., Versión 1.0
- *
- * Copyright (c) 2006 Caja de Valores S.A.
- * 25 de Mayo 362, Ciudad Autónoma de Buenos Aires, República Argentina
- * Todos los derechos reservados.
- *
- * Este software es información confidencial y propietaria de Caja de Valores S.A. ("Información
- * Confidencial"). Usted no divulgará tal Información Confidencial y la usará solamente de acuerdo a
- * los términos del acuerdo de licencia que posee con Caja de Valores S.A.
- */
-
-/*
- * $Id: ComboMetainfo.java,v 1.10 2007/05/29 21:42:14 cvsalons Exp $
- */
 package commons.gui.widget.creation.metainfo;
 
 import org.eclipse.swt.widgets.Composite;
@@ -21,10 +6,6 @@ import org.eclipse.swt.widgets.Control;
 import commons.gui.util.ComboHelper;
 import commons.gui.widget.creation.binding.Binding;
 
-/**
- * @author Gabriel Tursi
- * @version $Revision: 1.10 $ $Date: 2007/05/29 21:42:14 $
- */
 public class ComboMetainfo extends ControlMetainfo {
 
 	private static final ComboMetainfo instance = new ComboMetainfo();
@@ -38,8 +19,8 @@ public class ComboMetainfo extends ControlMetainfo {
 		return instance;
 	}
 
-	public static ComboMetainfo create(Composite composite, String labelKey,
-			Binding bindingInfo, ComboValuesMetainfo comboValuesMetainfo, boolean readOnly) {
+	public static ComboMetainfo create(Composite composite, String labelKey, Binding bindingInfo,
+			ComboValuesMetainfo comboValuesMetainfo, boolean readOnly) {
 		ControlMetainfo.setValues(instance, composite, labelKey, readOnly);
 		instance.bindingInfo = bindingInfo;
 		instance.comboValuesMI = comboValuesMetainfo;

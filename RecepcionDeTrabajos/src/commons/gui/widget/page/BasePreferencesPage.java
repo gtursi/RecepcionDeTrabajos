@@ -9,17 +9,9 @@ import org.eclipse.swt.widgets.Control;
 
 import recepciondetrabajos.MainWindow;
 
-
-
-
 import commons.gui.form.Form;
 import commons.gui.widget.DefaultLayoutFactory;
 import commons.gui.widget.creation.binding.Binding;
-
-/**
- * @author Gabriel Tursi
- * @version $Revision: 1.42 $ $Date: 2007/12/11 17:54:24 $
- */
 
 public abstract class BasePreferencesPage<T> extends PreferencePage {
 

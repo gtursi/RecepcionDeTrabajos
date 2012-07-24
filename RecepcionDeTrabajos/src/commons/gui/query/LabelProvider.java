@@ -1,6 +1,3 @@
-/*
- * $Id: LabelProvider.java,v 1.4 2007/03/28 17:00:37 cvschioc Exp $
- */
 package commons.gui.query;
 
 import java.lang.reflect.Field;
@@ -12,13 +9,11 @@ import org.eclipse.swt.graphics.Image;
 
 import recepciondetrabajos.Labels;
 
-
-
-
 import commons.logging.AppLogger;
 import commons.util.ClassUtils;
 
 public class LabelProvider implements ITableLabelProvider {
+
 	public Image getColumnImage(Object arg0, int arg1) {
 		return null;
 	}

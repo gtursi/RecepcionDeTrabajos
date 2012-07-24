@@ -1,19 +1,3 @@
-/*
- * Licencia de Caja de Valores S.A., Versión 1.0
- *
- * Copyright (c) 2006 Caja de Valores S.A.
- * 25 de Mayo 362, Ciudad Autónoma de Buenos Aires, República Argentina
- * Todos los derechos reservados.
- *
- * Este software es información confidencial y propietaria de Caja de Valores S.A. ("Información
- * Confidencial"). Usted no divulgará tal Información Confidencial y la usará solamente de acuerdo a
- * los términos del acuerdo de licencia que posee con Caja de Valores S.A.
- */
-
-/*
- * $Id: CuitComposite.java,v 1.4 2008/12/10 18:40:43 cvstursi Exp $
- */
-
 package commons.gui.widget.composite;
 
 import org.eclipse.swt.SWT;
@@ -35,8 +19,6 @@ import commons.util.SbaStringUtils;
  * Modela un campo de CUIT / CUIL con las restricciones numéricas necesarias y el layout usual para
  * este tipo de campos.
  * 
- * @author Jonathan Chiocchio
- * @version $Revision: 1.4 $ $Date: 2008/12/10 18:40:43 $
  */
 public class CuitComposite extends SimpleComposite {
 

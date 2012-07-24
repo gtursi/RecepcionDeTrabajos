@@ -1,7 +1,3 @@
-/*
- * $Id: AppLogger.java,v 1.7 2008/11/05 13:05:48 cvstursi Exp $
- */
-
 package commons.logging;
 
 import java.io.IOException;

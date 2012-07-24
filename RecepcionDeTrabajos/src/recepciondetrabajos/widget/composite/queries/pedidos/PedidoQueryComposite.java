@@ -27,8 +27,6 @@ import recepciondetrabajos.domain.Pedido;
 import recepciondetrabajos.service.PedidoService;
 import recepciondetrabajos.widget.dialog.pedido.NuevoPedidoDialog;
 
-
-
 import commons.gui.table.GenericTable;
 import commons.gui.thread.QueryCompositeBackgroundThread;
 import commons.gui.util.TextFieldHelper;
@@ -182,6 +180,7 @@ public class PedidoQueryComposite extends QueryComposite {
 
 		this.botonEditar = createButton(panelBotones, getEditarButtonSelectionListener(),
 				Constants.CONSULTAS_EDITAR_BUTTON_TEXT);
+
 	}
 
 	private Button createButton(Composite panelBotones, SelectionListener buttonSelectionListener,
@@ -199,6 +198,8 @@ public class PedidoQueryComposite extends QueryComposite {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				Pedido pedido = (Pedido) getTable().getSelectedElement();
+				pedido = PedidoService.obtenerPedido(pedido.getNumero(), pedido.getCliente()
+						.getCodigo());
 				NuevoPedidoDialog dialog = new NuevoPedidoDialog(pedido);
 				dialog.open();
 			}

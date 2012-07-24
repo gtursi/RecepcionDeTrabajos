@@ -1,6 +1,3 @@
-/**
- * 
- */
 package commons.gui.table;
 
 import org.eclipse.swt.SWT;
@@ -30,7 +27,7 @@ public class ColumnInfo {
 		}
 		return iguales;
 	}
-	
+
 	private boolean equalsTo(ColumnInfo columnInfo) {
 		return columnInfo.fieldName.equals(this.fieldName);
 	}
@@ -39,11 +36,11 @@ public class ColumnInfo {
 	public int hashCode() {
 		int result = 17;
 		if (this.fieldName != null) {
-			result = 37 * result + this.fieldName.hashCode();
+			result = (37 * result) + this.fieldName.hashCode();
 		}
 		return result;
 	}
-	
+
 	public String fieldName;
 
 	public Integer style;

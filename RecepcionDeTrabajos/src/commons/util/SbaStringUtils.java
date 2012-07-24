@@ -1,6 +1,3 @@
-/*
- * $Id: SbaStringUtils.java,v 1.4 2008/05/05 19:51:08 cvstursi Exp $
- */
 package commons.util;
 
 import java.util.ArrayList;
@@ -12,10 +9,8 @@ import java.util.regex.Pattern;
 import org.eclipse.swt.SWT;
 
 /**
- * Utilidades para la manipulación de Strings en forma eficiente, y operaciones que complementan el API de la clase
- * {@link String}.
- * 
- * @author H. Adrián Uribe
+ * Utilidades para la manipulación de Strings en forma eficiente, y operaciones que complementan el
+ * API de la clase {@link String}.
  */
 public abstract class SbaStringUtils {
 
@@ -42,7 +37,8 @@ public abstract class SbaStringUtils {
 	}
 
 	/**
-	 * Crea un mensaje a partir de los mensajes recibidos, para poder ser mostrado en un diálogo como un único String
+	 * Crea un mensaje a partir de los mensajes recibidos, para poder ser mostrado en un diálogo
+	 * como un único String
 	 * 
 	 * @param errorMessages
 	 *            Mensajes a mostrar en un diálogo
@@ -71,7 +67,7 @@ public abstract class SbaStringUtils {
 		if (str != null) {
 			int last = str.length() - 1;
 			int index = last;
-			while (index >= 0 && str.charAt(index) <= ' ') {
+			while ((index >= 0) && (str.charAt(index) <= ' ')) {
 				--index;
 			}
 
@@ -101,8 +97,8 @@ public abstract class SbaStringUtils {
 	}
 
 	/**
-	 * Comprime secuencias de 1 ó más de caracteres de espaciado en un carácter de espacio, o las suprime en caso de
-	 * encontrarse entre 2 caracteres que no sean ambos alfanuméricos.
+	 * Comprime secuencias de 1 ó más de caracteres de espaciado en un carácter de espacio, o las
+	 * suprime en caso de encontrarse entre 2 caracteres que no sean ambos alfanuméricos.
 	 * 
 	 * @param str
 	 *            Valor a compactar.
@@ -179,7 +175,8 @@ public abstract class SbaStringUtils {
 			if (array.length == 0) {
 				result = ARR_EMPTY;
 			} else {
-				int len = ARR_BEGIN.length() + ARR_END.length() + (array.length - 1) * ARR_SEPARATOR.length();
+				int len = ARR_BEGIN.length() + ARR_END.length()
+						+ ((array.length - 1) * ARR_SEPARATOR.length());
 
 				Object val;
 				Object[] strArray = new String[array.length];
@@ -225,7 +222,8 @@ public abstract class SbaStringUtils {
 			if (collection.isEmpty()) {
 				result = ARR_EMPTY;
 			} else {
-				int len = ARR_BEGIN.length() + ARR_END.length() + (collection.size() - 1) * ARR_SEPARATOR.length();
+				int len = ARR_BEGIN.length() + ARR_END.length()
+						+ ((collection.size() - 1) * ARR_SEPARATOR.length());
 
 				Object val;
 				Object[] strArray = new String[collection.size()];
@@ -267,13 +265,14 @@ public abstract class SbaStringUtils {
 	}
 
 	/**
-	 * @return <code>true</code> si y solo si todos los caracteres del String son imprimibles, esto es, no son
-	 *         caracteres de control. Técnicamente, verifica que todos los caracteres estén en el rango [32-175] de
-	 *         código ASCII. Algunos ejemplos de invocación del método:
+	 * @return <code>true</code> si y solo si todos los caracteres del String son imprimibles, esto
+	 *         es, no son caracteres de control. Técnicamente, verifica que todos los caracteres
+	 *         estén en el rango [32-175] de código ASCII. Algunos ejemplos de invocación del
+	 *         método:
 	 *         <ul>
-	 *         <li> isPrintable("@?$lajk#") = <code>true</code>
-	 *         <li> isPrintable("_¡+}´") = <code>true</code>
-	 *         <li> isPrintable(" |"()áéíóúñ") = <code>true</code>
+	 *         <li>isPrintable("@?$lajk#") = <code>true</code>
+	 *         <li>isPrintable("_¡+}´") = <code>true</code>
+	 *         <li>isPrintable(" |"()áéíóúñ") = <code>true</code>
 	 *         </ul>
 	 */
 	public static boolean isPrintable(String str) {
@@ -282,7 +281,7 @@ public abstract class SbaStringUtils {
 			char charActual;
 			boolean estaEnRangoUno;
 			boolean estaEnRangoDos;
-			for (int i = 0; isPrintable && i < str.length(); i++) {
+			for (int i = 0; isPrintable && (i < str.length()); i++) {
 				charActual = str.charAt(i);
 				estaEnRangoUno = (charActual >= 32) && (charActual <= 126);
 				estaEnRangoDos = (charActual >= 161) && (charActual <= 255);
@@ -295,7 +294,7 @@ public abstract class SbaStringUtils {
 	public static boolean containsSpecialCharacter(String str) {
 		boolean contains = false;
 		if (str != null) {
-			for (int i = 0; !contains && i < str.length(); i++) {
+			for (int i = 0; !contains && (i < str.length()); i++) {
 				contains = contains || isSpecialCharacter(str.charAt(i));
 			}
 		}
@@ -303,7 +302,8 @@ public abstract class SbaStringUtils {
 	}
 
 	/**
-	 * @return Devuelve verdadero si y solo si el char dado corresponde con alguna de las siguientes teclas:
+	 * @return Devuelve verdadero si y solo si el char dado corresponde con alguna de las siguientes
+	 *         teclas:
 	 *         <ul>
 	 *         <li><code>BACKSPACE</code></li>
 	 *         <li><code>DELETE</code></li>
@@ -314,14 +314,14 @@ public abstract class SbaStringUtils {
 	 *         </ul>
 	 */
 	public static boolean isSpecialCharacter(char character) {
-		return character == SWT.BS || character == SWT.DEL || character == SWT.ALT || character == SWT.CTRL
-				|| character == SWT.CR || character == SWT.KEYPAD_CR;
+		return (character == SWT.BS) || (character == SWT.DEL) || (character == SWT.ALT)
+				|| (character == SWT.CTRL) || (character == SWT.CR) || (character == SWT.KEYPAD_CR);
 	}
 
 	public static boolean containsSpecialKey(String str) {
 		boolean contains = false;
 		if (str != null) {
-			for (int i = 0; !contains && i < str.length(); i++) {
+			for (int i = 0; !contains && (i < str.length()); i++) {
 				contains = contains || isSpecialKey(str.charAt(i));
 			}
 		}
@@ -329,11 +329,13 @@ public abstract class SbaStringUtils {
 	}
 
 	/**
-	 * @return Devuelve verdadero si y solo si el <b>keyCode</b> dado corresponde a una <code>flecha a izquierda</code>,
-	 *         a una <code>flecha a derecha</code>, a la tecla <code>inicio</code> o a la tecla <code>fin</code>
+	 * @return Devuelve verdadero si y solo si el <b>keyCode</b> dado corresponde a una
+	 *         <code>flecha a izquierda</code>, a una <code>flecha a derecha</code>, a la tecla
+	 *         <code>inicio</code> o a la tecla <code>fin</code>
 	 */
 	public static boolean isSpecialKey(int keyCode) {
-		return keyCode == SWT.ARROW_LEFT || keyCode == SWT.ARROW_RIGHT || keyCode == SWT.HOME || keyCode == SWT.END;
+		return (keyCode == SWT.ARROW_LEFT) || (keyCode == SWT.ARROW_RIGHT) || (keyCode == SWT.HOME)
+				|| (keyCode == SWT.END);
 	}
 
 	public static boolean isDateSeparatorCharacter(char character) {
@@ -365,8 +367,8 @@ public abstract class SbaStringUtils {
 
 	private static final Pattern SQUEEZE_PATTERN = Pattern.compile("\\s+", Pattern.DOTALL);
 
-	private static final Pattern[] SQUEEZE_FULLY_PATTERNS = { Pattern.compile("(\\W) ", Pattern.DOTALL),
-			Pattern.compile(" (\\W)", Pattern.DOTALL), };
+	private static final Pattern[] SQUEEZE_FULLY_PATTERNS = {
+			Pattern.compile("(\\W) ", Pattern.DOTALL), Pattern.compile(" (\\W)", Pattern.DOTALL), };
 
 	private static final char DATE_SEPARATOR = '/';
 

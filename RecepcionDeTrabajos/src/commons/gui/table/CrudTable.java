@@ -1,6 +1,3 @@
-/*
- * $Id: CrudTable.java,v 1.22 2007/08/30 19:29:34 cvsmdiaz Exp $
- */
 package commons.gui.table;
 
 import java.util.Properties;

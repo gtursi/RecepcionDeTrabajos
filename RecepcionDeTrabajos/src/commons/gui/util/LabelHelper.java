@@ -1,18 +1,3 @@
-/*
- * Licencia de Caja de Valores S.A., Versión 1.0
- *
- * Copyright (c) 2006 Caja de Valores S.A.
- * 25 de Mayo 362, Ciudad Autónoma de Buenos Aires, República Argentina
- * Todos los derechos reservados.
- *
- * Este software es información confidencial y propietaria de Caja de Valores S.A. ("Información
- * Confidencial"). Usted no divulgará tal Información Confidencial y la usará solamente de acuerdo a
- * los términos del acuerdo de licencia que posee con Caja de Valores S.A.
- */
-
-/*
- * $Id: LabelHelper.java,v 1.19 2009/09/16 20:22:56 cvsgalea Exp $
- */
 package commons.gui.util;
 
 import org.apache.commons.lang.StringUtils;
@@ -23,17 +8,11 @@ import org.eclipse.swt.widgets.Label;
 
 import recepciondetrabajos.Labels;
 
-
-
-
-/**
- * @author Gabriel Tursi
- * @version $Revision: 1.19 $ $Date: 2009/09/16 20:22:56 $
- */
 public abstract class LabelHelper {
 
 	/**
 	 * Crea un campo read-only que consta de un Label y un <i>value</i> de sólo lectura.
+	 * 
 	 * @param composite
 	 *            el composite donde se inserta el campo.
 	 * @param value
@@ -45,12 +24,13 @@ public abstract class LabelHelper {
 	public static Label createReadOnlyField(Composite composite, String value, String labelKey) {
 		if (!StringUtils.isBlank(labelKey)) {
 			createLabel(composite, labelKey);
-		}		
+		}
 		return createValue(composite, value);
 	}
 
 	/**
 	 * Crea un Label seguido de dos puntos (":")
+	 * 
 	 * @param composite
 	 *            el composite donde se inserta el Label.
 	 * @param labelKey
@@ -63,11 +43,10 @@ public abstract class LabelHelper {
 		return label;
 	}
 
-
 	/**
-	 * Crea un Label cuyo texto es obtenido de un properties
-	 * <br/>
+	 * Crea un Label cuyo texto es obtenido de un properties <br/>
 	 * <code>Nota: NO agrega los dos puntos (":")</code>
+	 * 
 	 * @param composite
 	 *            el composite donde se inserta el Label.
 	 * @param labelKey
@@ -82,9 +61,9 @@ public abstract class LabelHelper {
 	}
 
 	/**
-	 * Crea un Label cuyo texto es suministrado
-	 * <br/>
+	 * Crea un Label cuyo texto es suministrado <br/>
 	 * <code>Nota: NO agrega los dos puntos (":")</code>
+	 * 
 	 * @param composite
 	 *            el composite donde se inserta el Label.
 	 * @param label
@@ -100,9 +79,9 @@ public abstract class LabelHelper {
 		return label;
 	}
 
-
 	/**
 	 * Crea un campo del tipo "value", es decir, un simple texto de sólo lectura.
+	 * 
 	 * @param composite
 	 *            el composite donde se inserta el campo.
 	 * @param value
@@ -120,6 +99,7 @@ public abstract class LabelHelper {
 
 	/**
 	 * Crea un campo del tipo "value", es decir, un simple texto de sólo lectura.
+	 * 
 	 * @param composite
 	 *            el composite donde se inserta el campo.
 	 * @param value
@@ -130,7 +110,7 @@ public abstract class LabelHelper {
 	 */
 	public static Label createValueBasic(Composite composite, String value) {
 		final Label label = new Label(composite, SWT.LEFT);
-		if(composite.getLayoutData() instanceof GridData){
+		if (composite.getLayoutData() instanceof GridData) {
 			label.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		}
 		label.setFont(PageHelper.getNonEditableFont());

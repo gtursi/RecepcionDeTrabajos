@@ -1,6 +1,3 @@
-/*
- * $Id: DateUtils.java,v 1.13 2008/05/19 18:33:50 cvstursi Exp $
- */
 package commons.util;
 
 import java.text.DateFormat;

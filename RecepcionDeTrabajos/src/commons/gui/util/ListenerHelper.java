@@ -1,19 +1,3 @@
-/*
- * Licencia de Caja de Valores S.A., Versión 1.0
- *
- * Copyright (c) 2006 Caja de Valores S.A.
- * 25 de Mayo 362, Ciudad Autónoma de Buenos Aires, República Argentina
- * Todos los derechos reservados.
- *
- * Este software es información confidencial y propietaria de Caja de Valores S.A. ("Información
- * Confidencial"). Usted no divulgará tal Información Confidencial y la usará solamente de acuerdo a
- * los términos del acuerdo de licencia que posee con Caja de Valores S.A.
- */
-
-/*
- * $Id: ListenerHelper.java,v 1.27 2009/02/21 15:39:46 cvsgalea Exp $
- */
-
 package commons.gui.util;
 
 import java.math.BigDecimal;
@@ -37,16 +21,8 @@ import org.eclipse.swt.widgets.Text;
 
 import recepciondetrabajos.MainWindow;
 
-
-
-
 import commons.gui.validators.Validations;
 import commons.util.SbaStringUtils;
-
-/**
- * @author
- * @version $Revision: 1.27 $ $Date: 2009/02/21 15:39:46 $
- */
 
 public abstract class ListenerHelper {
 
@@ -70,9 +46,11 @@ public abstract class ListenerHelper {
 	 */
 	public static void addNumberFieldKeyPressListener(final Text textBox) {
 		KeyListener listener = new KeyAdapter() {
+
 			@Override
 			public void keyPressed(KeyEvent event) {
-				boolean isNumeric = org.apache.commons.lang.StringUtils.isNumeric(String.valueOf(event.character));
+				boolean isNumeric = org.apache.commons.lang.StringUtils.isNumeric(String
+						.valueOf(event.character));
 				if (!isNumeric && !SbaStringUtils.isSpecialCharacter(event.character)
 						&& !SbaStringUtils.isSpecialKey(event.keyCode)) {
 					event.doit = false;
@@ -84,6 +62,7 @@ public abstract class ListenerHelper {
 
 	public static void addNumberFieldModifyListener(final Text textBox) {
 		ModifyListener listener = new ModifyListener() {
+
 			public void modifyText(ModifyEvent event) {
 				String text = org.apache.commons.lang.StringUtils.trimToEmpty(textBox.getText());
 				try {
@@ -103,6 +82,7 @@ public abstract class ListenerHelper {
 
 	public static void addIntegerFieldModifyListener(final Text textBox) {
 		ModifyListener listener = new ModifyListener() {
+
 			public void modifyText(ModifyEvent event) {
 				String text = org.apache.commons.lang.StringUtils.trimToEmpty(textBox.getText());
 				try {
@@ -122,6 +102,7 @@ public abstract class ListenerHelper {
 
 	public static <T> void addIntegerFieldFocusListener(Text textBox) {
 		FocusListener focusListener = new FocusAdapter() {
+
 			@Override
 			public void focusLost(FocusEvent event) {
 				Text textField = (Text) event.getSource();
@@ -143,11 +124,13 @@ public abstract class ListenerHelper {
 		textBox.addFocusListener(focusListener);
 	}
 
-	public static void addIntegerRangeValidationListener(final Text textBox, final int infimo, final int supremo,
-			final PreferencePage page) {
+	public static void addIntegerRangeValidationListener(final Text textBox, final int infimo,
+			final int supremo, final PreferencePage page) {
 		textBox.addFocusListener(new FocusListener() {
+
 			public void focusGained(FocusEvent event) {
-				final List<String> mensajesDeValidacion = Validations.rango(textBox.getText(), infimo, supremo);
+				final List<String> mensajesDeValidacion = Validations.rango(textBox.getText(),
+						infimo, supremo);
 				boolean vacio = StringUtils.isBlank(textBox.getText());
 				boolean fueraDeRango = !mensajesDeValidacion.isEmpty();
 				if (!vacio && fueraDeRango) {
@@ -165,9 +148,11 @@ public abstract class ListenerHelper {
 		});
 
 		textBox.addModifyListener(new ModifyListener() {
+
 			public void modifyText(ModifyEvent event) {
 				boolean vacio = StringUtils.isBlank(textBox.getText());
-				final List<String> mensajesDeValidacion = Validations.rango(textBox.getText(), infimo, supremo);
+				final List<String> mensajesDeValidacion = Validations.rango(textBox.getText(),
+						infimo, supremo);
 				boolean fueraDeRango = !mensajesDeValidacion.isEmpty();
 				if (!vacio && fueraDeRango) {
 					page.setErrorMessage(mensajesDeValidacion.get(0));
@@ -182,10 +167,13 @@ public abstract class ListenerHelper {
 		});
 	}
 
-	public static void addIntegerMayorValidationListener(final Text textBox, final int infimo, final PreferencePage page) {
+	public static void addIntegerMayorValidationListener(final Text textBox, final int infimo,
+			final PreferencePage page) {
 		textBox.addFocusListener(new FocusListener() {
+
 			public void focusGained(FocusEvent event) {
-				final List<String> mensajesDeValidacion = Validations.mayor(textBox.getText(), infimo);
+				final List<String> mensajesDeValidacion = Validations.mayor(textBox.getText(),
+						infimo);
 				boolean vacio = StringUtils.isBlank(textBox.getText());
 				boolean fueraDeRango = !mensajesDeValidacion.isEmpty();
 				if (!vacio && fueraDeRango) {
@@ -203,9 +191,11 @@ public abstract class ListenerHelper {
 		});
 
 		textBox.addModifyListener(new ModifyListener() {
+
 			public void modifyText(ModifyEvent event) {
 				boolean vacio = StringUtils.isBlank(textBox.getText());
-				final List<String> mensajesDeValidacion = Validations.mayor(textBox.getText(), infimo);
+				final List<String> mensajesDeValidacion = Validations.mayor(textBox.getText(),
+						infimo);
 				boolean fueraDeRango = !mensajesDeValidacion.isEmpty();
 				if (!vacio && fueraDeRango) {
 					page.setErrorMessage(mensajesDeValidacion.get(0));
@@ -222,6 +212,7 @@ public abstract class ListenerHelper {
 
 	public static Text addMultilineFieldTabListener(Text textBox) {
 		Listener listener = new Listener() {
+
 			public void handleEvent(Event event) {
 				if (event.detail == SWT.TRAVERSE_TAB_NEXT) {
 					event.doit = true;
@@ -235,6 +226,7 @@ public abstract class ListenerHelper {
 	public static void addNotAsciiPrintableCharacterListener(final Text textBox) {
 		final String errMsg = "El campo no puede contener caracteres no imprimibles";
 		ModifyListener listener = new ModifyListener() {
+
 			public void modifyText(ModifyEvent event) {
 				boolean condicion = SbaStringUtils.isPrintable(textBox.getText())
 						|| SbaStringUtils.containsSpecialCharacter(textBox.getText())
@@ -255,6 +247,7 @@ public abstract class ListenerHelper {
 	public static void addNotNullValidationListener(final Text textBox, final PreferencePage page) {
 		final String errMsg = "El campo no puede ser nulo";
 		textBox.addFocusListener(new FocusListener() {
+
 			public void focusGained(FocusEvent event) {
 				if (StringUtils.isBlank(textBox.getText())) {
 					page.setMessage(errMsg, IMessageProvider.INFORMATION);
@@ -269,6 +262,7 @@ public abstract class ListenerHelper {
 		});
 
 		textBox.addModifyListener(new ModifyListener() {
+
 			public void modifyText(ModifyEvent event) {
 				if (StringUtils.isBlank(textBox.getText())) {
 					page.setMessage(errMsg, IMessageProvider.INFORMATION);
@@ -308,6 +302,7 @@ public abstract class ListenerHelper {
 		});
 
 		textBox.addModifyListener(new ModifyListener() {
+
 			public void modifyText(ModifyEvent event) {
 				List<String> result = Validations.email(textBox.getText());
 				if (result.isEmpty()) {
@@ -329,9 +324,11 @@ public abstract class ListenerHelper {
 
 	public static void addDateKeyListener(final Text textBox) {
 		KeyListener keyListener = new KeyAdapter() {
+
 			@Override
 			public void keyPressed(KeyEvent event) {
-				boolean isNumeric = org.apache.commons.lang.StringUtils.isNumeric(String.valueOf(event.character));
+				boolean isNumeric = org.apache.commons.lang.StringUtils.isNumeric(String
+						.valueOf(event.character));
 				if (!isNumeric && !SbaStringUtils.isDateSeparatorCharacter(event.character)
 						&& !SbaStringUtils.isSpecialKey(event.keyCode)
 						&& !SbaStringUtils.isSpecialCharacter(event.character)) {
@@ -344,6 +341,7 @@ public abstract class ListenerHelper {
 
 	public static void addDateModifyListener(final Text textBox) {
 		ModifyListener modifyListener = new ModifyListener() {
+
 			public void modifyText(ModifyEvent event) {
 				String message = Validations.validateDate(textBox.getText());
 				if (message != null) {
@@ -374,11 +372,13 @@ public abstract class ListenerHelper {
 
 	public static void addNormalizerFormatValidationListener(final Text textBox) {
 		textBox.addModifyListener(new ModifyListener() {
+
 			public void modifyText(ModifyEvent event) {
 				String temp = normalizarCadena(textBox.getText());
 				if (!textBox.getText().equals(temp)) {
 					textBox.setText(temp);
-					textBox.setSelection(textBox.getText().length()); // hace que el cursor se coloque al final del
+					textBox.setSelection(textBox.getText().length()); // hace que el cursor se
+																		// coloque al final del
 																		// texto ingresado
 				}
 			}
@@ -403,8 +403,10 @@ public abstract class ListenerHelper {
 		cadenaNormalizada = cadenaNormalizada.replaceAll("Ñ", "N");
 
 		// se utilizó esta función y no sun.text.Normalizer, para evitar problemas de compatibilidad
-		// para java 1.5 -> cadenaNormalizada = Normalizer.normalize(cadenaNormalizada, Normalizer.DECOMP, 0).replaceAll("[^\\p{ASCII}]", "").toUpperCase();
-		// para java 1.6 -> cadenaNormalizada = Normalizer.normalize(cadenaNormalizada, Form.NFD			).replaceAll("[^\\p{ASCII}]", "").toUpperCase();
+		// para java 1.5 -> cadenaNormalizada = Normalizer.normalize(cadenaNormalizada,
+		// Normalizer.DECOMP, 0).replaceAll("[^\\p{ASCII}]", "").toUpperCase();
+		// para java 1.6 -> cadenaNormalizada = Normalizer.normalize(cadenaNormalizada, Form.NFD
+		// ).replaceAll("[^\\p{ASCII}]", "").toUpperCase();
 
 		return cadenaNormalizada.toUpperCase();
 

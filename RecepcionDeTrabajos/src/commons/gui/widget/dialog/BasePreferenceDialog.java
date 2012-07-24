@@ -1,7 +1,3 @@
-/*
- * $Id: BasePreferenceDialog.java,v 1.11 2009/01/12 18:45:22 cvstursi Exp $
- */
-
 package commons.gui.widget.dialog;
 
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -30,32 +26,32 @@ public abstract class BasePreferenceDialog extends PreferenceDialog {
 
 	@Override
 	protected void createButtonsForButtonBar(Composite parent) {
-		if(readOnly) {
-			closeButton = createButton(parent, IDialogConstants.CLOSE_ID, IDialogConstants.CLOSE_LABEL, true);
+		if (readOnly) {
+			closeButton = createButton(parent, IDialogConstants.CLOSE_ID,
+					IDialogConstants.CLOSE_LABEL, true);
 			getShell().setDefaultButton(closeButton);
-		}else {
+		} else {
 			super.createButtonsForButtonBar(parent);
 		}
 	}
 
 	@Override
 	public void updateButtons() {
-		if(readOnly) {
+		if (readOnly) {
 			closeButton.setEnabled(isCurrentPageValid());
-		}else {
+		} else {
 			super.updateButtons();
 		}
 	}
 
 	@Override
 	protected void buttonPressed(int buttonId) {
-		if(buttonId == IDialogConstants.CLOSE_ID) {
+		if (buttonId == IDialogConstants.CLOSE_ID) {
 			cancelPressed();
 			return;
 		}
 		super.buttonPressed(buttonId);
 	}
-
 
 	@Override
 	protected void configureShell(Shell shell) {
@@ -75,6 +71,7 @@ public abstract class BasePreferenceDialog extends PreferenceDialog {
 	@Override
 	protected void okPressed() {
 		SafeRunnable.run(new SafeRunnable() {
+
 			public void run() {
 				if (performOK()) {
 					close();
