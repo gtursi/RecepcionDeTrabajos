@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturacion" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="557" leftMargin="18" rightMargin="20" topMargin="40" bottomMargin="20" whenResourceMissingType="Empty" uuid="93f1320a-f245-4f43-bada-ce4d49232f8f">
+	<property name="ireport.scriptlethandling" value="0"/>
+	<property name="ireport.encoding" value="UTF-8"/>
+	<property name="ireport.zoom" value="1.6105100000000014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<import value="net.sf.jasperreports.engine.*"/>
+	<import value="java.util.*"/>
+	<import value="net.sf.jasperreports.engine.data.*"/>
+	<parameter name="NUMERO_PEDIDO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[10]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT p.numero as numero_pedido, c.codigo as cliente_codigo, c.denominacion as cliente, c.direccion as cliente_domicilio, p.fecha as fecha, pi.cantidad, pi.detalle, pi.observaciones FROM PEDIDO P JOIN CLIENTE C ON P.CODIGO_CLIENTE=C.CODIGO LEFT JOIN PEDIDO_ITEM PI ON P.NUMERO=PI.PEDIDO_NUMERO
+    WHERE P.NUMERO = $P{NUMERO_PEDIDO}
+	ORDER BY PI.ORDEN]]>
+	</queryString>
+	<field name="NUMERO_PEDIDO" class="java.math.BigDecimal"/>
+	<field name="CLIENTE_CODIGO" class="java.math.BigDecimal"/>
+	<field name="CLIENTE" class="java.lang.String"/>
+	<field name="CLIENTE_DOMICILIO" class="java.lang.String"/>
+	<field name="FECHA" class="java.sql.Date"/>
+	<field name="CANTIDAD" class="java.math.BigDecimal"/>
+	<field name="DETALLE" class="java.lang.String"/>
+	<field name="OBSERVACIONES" class="java.lang.String"/>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="121" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="af00f075-fcd9-4b0c-9cea-38c9961a0fa8" x="1" y="0" width="555" height="74"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="af00f075-fcd9-4b0c-9cea-38c9961a0fa8" x="1" y="75" width="555" height="46"/>
+			</rectangle>
+			<textField isBlankWhenNull="false">
+				<reportElement uuid="82a6d2fa-ce11-458f-8eca-74f5e3649291" key="textField" x="20" y="98" width="308" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="8" isBold="true" pdfFontName="Courier-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DIREC: "+$F{CLIENTE_DOMICILIO}]]></textFieldExpression>
+			</textField>
+			<elementGroup>
+				<rectangle>
+					<reportElement uuid="8019489b-1669-45e2-aec3-c20320a1178e" key="rectangle" x="239" y="1" width="70" height="48"/>
+				</rectangle>
+				<textField isBlankWhenNull="false">
+					<reportElement uuid="e6307dbb-134b-47e3-92ca-a85a6ba9884a" key="textField" x="247" y="0" width="60" height="49"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Documento no válido como factura"]]></textFieldExpression>
+				</textField>
+			</elementGroup>
+			<line direction="BottomUp">
+				<reportElement uuid="c9993e37-2437-4bc0-88e7-1450b441e278" key="line" x="277" y="49" width="1" height="26"/>
+			</line>
+			<textField>
+				<reportElement uuid="10ca73a9-3e03-4270-b8ea-abe559aab950" x="20" y="81" width="309" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="10" isBold="true" pdfFontName="Courier-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["SR./ES: "+$F{CLIENTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1e563d94-bde3-4703-8b96-09cac038cf67" x="348" y="83" width="196" height="10"/>
+				<textElement>
+					<font fontName="Courier New" size="8" isBold="true" pdfFontName="Courier-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["NRO.CLIENTE: "+$F{CLIENTE_CODIGO}.toString()]]></textFieldExpression>
+			</textField>
+			<elementGroup/>
+			<textField pattern="0000-00000000" isBlankWhenNull="false">
+				<reportElement uuid="3a5aef68-4c35-46e2-b6c7-b38377d054c7" x="312" y="13" width="231" height="24"/>
+				<textElement>
+					<font fontName="Courier New" size="10" isBold="true" pdfFontName="Courier-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Fecha de Recepción: " + $F{FECHA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a821bef7-bcb8-45bc-8306-17afcef9cc0b" x="15" y="33" width="191" height="40"/>
+				<textElement textAlignment="Center" markup="none">
+					<font fontName="Courier New" size="7" isBold="true" pdfFontName="Courier-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Meljaz - La Pampa 5000" +
+"Ciudad Autónoma de Buenos Aires" +
+"Tel:(15)4937-7481" +
+"E-Mail: meljaz@hotmail.com "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="070cd8e7-1d91-4f07-8ac7-9f5780746517" mode="Transparent" x="15" y="7" width="191" height="26"/>
+				<textElement textAlignment="Center">
+					<font size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Meljaz"]]></textFieldExpression>
+			</textField>
+			<textField pattern="0000-00000000" isBlankWhenNull="false">
+				<reportElement uuid="cc943094-cf07-4976-af11-d78c25aed4fb" mode="Transparent" x="315" y="37" width="231" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Courier New" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Courier-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Nro. Pedido: " + $F{NUMERO_PEDIDO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="33" splitType="Stretch">
+			<line>
+				<reportElement uuid="d8d00a4e-175d-4d43-8099-ffff7a04a140" key="line" x="2" y="32" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="b553bba5-692f-4962-8774-3894f4f0f314" key="staticText" x="348" y="12" width="196" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[OBSEVACIONES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="bb4312cb-b895-4ce7-a774-d01b20264186" key="staticText" x="14" y="12" width="41" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b553bba5-692f-4962-8774-3894f4f0f314" key="staticText" x="72" y="12" width="233" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[DETALLE]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="d8f418a6-f4a7-4845-9573-9a8e5d627285" x="557" y="0" width="1" height="31"/>
+			</line>
+			<line>
+				<reportElement uuid="c57063b2-1069-4d6b-86d3-be652d81a784" x="1" y="0" width="1" height="31"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="346">
+			<textField>
+				<reportElement uuid="bfea7c54-ea26-449d-a1fa-0ed2ec78eb75" x="11" y="11" width="45" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="4d7fde59-34c6-4e7b-bb46-b774b1c6e9bc" x="328" y="0" width="1" height="187"/>
+			</line>
+			<line>
+				<reportElement uuid="b88111b0-951f-466c-a26b-9242ed7784e9" x="63" y="0" width="1" height="198"/>
+			</line>
+			<textField>
+				<reportElement uuid="dee421fb-d3f2-4b3e-b712-8978e293e7fc" x="88" y="11" width="228" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{DETALLE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="42fb32d9-9a68-422a-a159-8bf08b0b14dc" x="349" y="11" width="142" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{OBSERVACIONES}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="b88111b0-951f-466c-a26b-9242ed7784e9" x="1" y="0" width="1" height="198"/>
+			</line>
+			<line>
+				<reportElement uuid="b88111b0-951f-466c-a26b-9242ed7784e9" x="557" y="0" width="1" height="198"/>
+			</line>
+		</band>
+	</detail>
+</jasperReport>
