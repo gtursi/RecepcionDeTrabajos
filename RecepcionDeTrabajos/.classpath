@@ -20,6 +20,10 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/jasperreports-3.7.6.jar"/>
+	<classpathentry kind="lib" path="lib/poi/commons-beanutils-1.8.0.jar"/>
+	<classpathentry kind="lib" path="lib/poi/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/poi/commons-digester-1.7.jar"/>
+	<classpathentry kind="lib" path="lib/poi/iText-2.1.7.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/swt_jface/swt.jar" sourcepath="lib/swt_jface/swt_src.zip">
 		<attributes>

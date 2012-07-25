@@ -8,6 +8,7 @@ create table cliente (
 codigo number(18) PRIMARY KEY,
 denominacion varchar2(100),
 direccion varchar2(100),
+telefono varchar2(100),
 email varchar2(100)
 );
 
