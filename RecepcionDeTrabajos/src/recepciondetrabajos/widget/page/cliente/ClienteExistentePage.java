@@ -46,6 +46,7 @@ public class ClienteExistentePage extends BasePreferencesPage<recepciondetrabajo
 		LabelHelper.createReadOnlyField(parent, String.valueOf(codigo), "codigo");
 		createText(parent, cliente, "denominacion", cliente.getDenominacion());
 		createText(parent, cliente, "direccion", cliente.getDireccion());
+		createText(parent, cliente, "telefono", cliente.getTelefono());
 		createText(parent, cliente, "email", cliente.getEmail());
 	}
 

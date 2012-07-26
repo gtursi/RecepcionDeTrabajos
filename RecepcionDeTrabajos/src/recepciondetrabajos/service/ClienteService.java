@@ -30,18 +30,19 @@ public abstract class ClienteService {
 	}
 
 	private static void insertar(Cliente cliente) {
-		Object[] args = { cliente.getDenominacion(), cliente.getDireccion(), cliente.getEmail() };
+		Object[] args = { cliente.getDenominacion(), cliente.getDireccion(), cliente.getTelefono(),
+				cliente.getEmail() };
 		simpleJdbcTemplate
-				.update("insert into cliente (codigo, denominacion, direccion, email) values ((select nvl((select max(codigo) from cliente),0) + 1 from dual),?,?,?)",
+				.update("insert into cliente (codigo, denominacion, direccion, telefono, email) values ((select nvl((select max(codigo) from cliente),0) + 1 from dual),?,?,?,?)",
 						args);
 	}
 
 	private static void actualizar(Cliente cliente) {
-		Object[] args = { cliente.getDenominacion(), cliente.getDireccion(), cliente.getEmail(),
-				cliente.getCodigo() };
-		simpleJdbcTemplate.update(
-				"update cliente set denominacion = ?, direccion = ?, email = ? where codigo = ?",
-				args);
+		Object[] args = { cliente.getDenominacion(), cliente.getDireccion(), cliente.getTelefono(),
+				cliente.getEmail(), cliente.getCodigo() };
+		simpleJdbcTemplate
+				.update("update cliente set denominacion = ?, direccion = ?, telefono = ?, email = ? where codigo = ?",
+						args);
 	}
 
 	public static void eliminar(Cliente cliente) {

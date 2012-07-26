@@ -19,10 +19,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
+import recepciondetrabajos.formulario.FormularioServiceImpl;
+import recepciondetrabajos.service.ApplicationContext;
 import recepciondetrabajos.widget.composite.queries.clientes.ClienteQueryComposite;
 import recepciondetrabajos.widget.composite.queries.pedidos.PedidoQueryComposite;
-
 
 import commons.gui.thread.CustomUncaughtExceptionHandler;
 import commons.gui.util.PageHelper;
@@ -33,7 +35,14 @@ public class MainWindow extends ApplicationWindow {
 
 	public static void main(String[] args) {
 		AppLogger.getLogger().log(Level.INFO, "Iniciando aplicación...");
+		init();
 		getInstance().run();
+	}
+
+	private static void init() {
+		FormularioServiceImpl.init();
+		ApplicationContext.getInstance().getBean(SimpleJdbcTemplate.class)
+				.queryForInt("select count(*) from cliente");
 	}
 
 	public void run() {

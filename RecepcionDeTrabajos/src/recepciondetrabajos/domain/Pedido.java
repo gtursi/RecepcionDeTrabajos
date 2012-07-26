@@ -1,5 +1,6 @@
 package recepciondetrabajos.domain;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -14,13 +15,13 @@ public class Pedido {
 		super();
 	}
 
-	private Calendar fecha;
+	private Date fecha;
 
 	private List<PedidoItem> items = new ArrayList<PedidoItem>();
 
 	public Pedido(Cliente cliente) {
 		setCliente(cliente);
-		setFecha(Calendar.getInstance());
+		setFecha(new Date(Calendar.getInstance().getTimeInMillis()));
 	}
 
 	public Cliente getCliente() {
@@ -39,11 +40,11 @@ public class Pedido {
 		this.numero = numero;
 	}
 
-	public Calendar getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Calendar fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 

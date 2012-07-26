@@ -14,8 +14,6 @@ import recepciondetrabajos.domain.Cliente;
 import recepciondetrabajos.domain.Pedido;
 import recepciondetrabajos.domain.PedidoItem;
 
-import commons.util.DateUtils;
-
 public class PedidoService {
 
 	public static void crearPedido(Pedido nuevoPedido) {
@@ -45,7 +43,7 @@ public class PedidoService {
 								cliente.setDenominacion(rs.getString("denominacion"));
 								Pedido pedido = new Pedido(cliente);
 								pedido.setNumero(rs.getLong("numero"));
-								pedido.setFecha(DateUtils.toCalendar(rs.getDate("fecha")));
+								pedido.setFecha(rs.getDate("fecha"));
 								return pedido;
 							}
 						});

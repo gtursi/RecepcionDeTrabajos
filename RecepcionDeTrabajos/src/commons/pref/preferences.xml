@@ -2,10 +2,11 @@
 <preferences version="4.1">
 	<tables>
 		<table name="Clientes" order="codigo">
-			<column name="codigo" alignment="LEFT" width="280"/>
+			<column name="codigo" alignment="LEFT" width="200"/>
 			<column name="denominacion" alignment="LEFT" width="280"/>
 			<column name="direccion" alignment="LEFT" width="280"/>
-			<column name="email" alignment="LEFT" width="280"/>
+			<column name="telefono" alignment="LEFT" width="200"/>
+			<column name="email" alignment="LEFT" width="200"/>
 		</table>
 		<table name="Pedidos" order="numero">
 			<column name="numero" alignment="LEFT" width="80"/>

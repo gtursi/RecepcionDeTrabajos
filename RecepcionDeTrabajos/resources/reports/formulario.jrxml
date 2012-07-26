@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturacion" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="557" leftMargin="18" rightMargin="20" topMargin="40" bottomMargin="20" whenResourceMissingType="Empty" uuid="93f1320a-f245-4f43-bada-ce4d49232f8f">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturacion" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="557" leftMargin="18" rightMargin="20" topMargin="40" bottomMargin="20" whenResourceMissingType="Empty" uuid="0ac505d9-2be0-4b65-bcca-1fb61425b759">
 	<property name="ireport.scriptlethandling" value="0"/>
 	<property name="ireport.encoding" value="UTF-8"/>
-	<property name="ireport.zoom" value="1.6105100000000014"/>
+	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<import value="net.sf.jasperreports.engine.*"/>
 	<import value="java.util.*"/>
 	<import value="net.sf.jasperreports.engine.data.*"/>
-	<parameter name="NUMERO_PEDIDO" class="java.lang.Integer">
-		<defaultValueExpression><![CDATA[10]]></defaultValueExpression>
+	<parameter name="NUMERO_PEDIDO" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[1L]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT p.numero as numero_pedido, c.codigo as cliente_codigo, c.denominacion as cliente, c.direccion as cliente_domicilio, p.fecha as fecha, pi.cantidad, pi.detalle, pi.observaciones FROM PEDIDO P JOIN CLIENTE C ON P.CODIGO_CLIENTE=C.CODIGO LEFT JOIN PEDIDO_ITEM PI ON P.NUMERO=PI.PEDIDO_NUMERO
+		<![CDATA[SELECT p.numero as numero_pedido, c.codigo as cliente_codigo, c.denominacion as cliente, c.direccion as cliente_domicilio, c.telefono as cliente_telefono, c.email as cliente_email, p.fecha as fecha, pi.cantidad, pi.detalle, pi.observaciones FROM PEDIDO P JOIN CLIENTE C ON P.CODIGO_CLIENTE=C.CODIGO LEFT JOIN PEDIDO_ITEM PI ON P.NUMERO=PI.PEDIDO_NUMERO
     WHERE P.NUMERO = $P{NUMERO_PEDIDO}
 	ORDER BY PI.ORDEN]]>
 	</queryString>
@@ -20,6 +20,8 @@
 	<field name="CLIENTE_CODIGO" class="java.math.BigDecimal"/>
 	<field name="CLIENTE" class="java.lang.String"/>
 	<field name="CLIENTE_DOMICILIO" class="java.lang.String"/>
+	<field name="CLIENTE_TELEFONO" class="java.lang.String"/>
+	<field name="CLIENTE_EMAIL" class="java.lang.String"/>
 	<field name="FECHA" class="java.sql.Date"/>
 	<field name="CANTIDAD" class="java.math.BigDecimal"/>
 	<field name="DETALLE" class="java.lang.String"/>
@@ -28,26 +30,27 @@
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="121" splitType="Stretch">
+		<band height="116" splitType="Stretch">
 			<rectangle>
-				<reportElement uuid="af00f075-fcd9-4b0c-9cea-38c9961a0fa8" x="1" y="0" width="555" height="74"/>
+				<reportElement uuid="fde64667-d0e8-4b70-a129-b96f16726588" x="1" y="0" width="554" height="75"/>
 			</rectangle>
 			<rectangle>
-				<reportElement uuid="af00f075-fcd9-4b0c-9cea-38c9961a0fa8" x="1" y="75" width="555" height="46"/>
+				<reportElement uuid="5afcc622-4e06-41ae-84ad-b725d716d569" x="1" y="75" width="554" height="40"/>
 			</rectangle>
-			<textField isBlankWhenNull="false">
-				<reportElement uuid="82a6d2fa-ce11-458f-8eca-74f5e3649291" key="textField" x="20" y="98" width="308" height="15"/>
-				<textElement>
-					<font fontName="Courier New" size="8" isBold="true" pdfFontName="Courier-Bold"/>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="e2d7723c-11e7-4df5-a278-0c55675f94d7" key="textField" mode="Transparent" x="8" y="96" width="269" height="15" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="Courier New" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Courier-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA["DIREC: "+$F{CLIENTE_DOMICILIO}]]></textFieldExpression>
 			</textField>
 			<elementGroup>
 				<rectangle>
-					<reportElement uuid="8019489b-1669-45e2-aec3-c20320a1178e" key="rectangle" x="239" y="1" width="70" height="48"/>
+					<reportElement uuid="6a5e0b11-8699-4252-9217-6deffd44bee4" key="rectangle" x="239" y="1" width="70" height="48"/>
 				</rectangle>
 				<textField isBlankWhenNull="false">
-					<reportElement uuid="e6307dbb-134b-47e3-92ca-a85a6ba9884a" key="textField" x="247" y="0" width="60" height="49"/>
+					<reportElement uuid="d0b18b2b-a9d9-4a05-8a2b-a3709900540f" key="textField" x="247" y="0" width="60" height="49"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
 					</textElement>
@@ -55,32 +58,25 @@
 				</textField>
 			</elementGroup>
 			<line direction="BottomUp">
-				<reportElement uuid="c9993e37-2437-4bc0-88e7-1450b441e278" key="line" x="277" y="49" width="1" height="26"/>
+				<reportElement uuid="126e85f0-06bf-4cd5-858e-f6cd59ff8655" key="line" x="274" y="49" width="1" height="26"/>
 			</line>
 			<textField>
-				<reportElement uuid="10ca73a9-3e03-4270-b8ea-abe559aab950" x="20" y="81" width="309" height="15"/>
+				<reportElement uuid="cdbfd7ea-e12a-43d8-9913-547918022cb4" x="8" y="81" width="269" height="15"/>
 				<textElement>
 					<font fontName="Courier New" size="10" isBold="true" pdfFontName="Courier-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA["SR./ES: "+$F{CLIENTE}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement uuid="1e563d94-bde3-4703-8b96-09cac038cf67" x="348" y="83" width="196" height="10"/>
-				<textElement>
-					<font fontName="Courier New" size="8" isBold="true" pdfFontName="Courier-Bold"/>
-				</textElement>
-				<textFieldExpression><![CDATA["NRO.CLIENTE: "+$F{CLIENTE_CODIGO}.toString()]]></textFieldExpression>
-			</textField>
 			<elementGroup/>
 			<textField pattern="0000-00000000" isBlankWhenNull="false">
-				<reportElement uuid="3a5aef68-4c35-46e2-b6c7-b38377d054c7" x="312" y="13" width="231" height="24"/>
+				<reportElement uuid="988b66af-4ac7-486f-90fd-48fbfcc4c9d9" x="321" y="12" width="231" height="24"/>
 				<textElement>
 					<font fontName="Courier New" size="10" isBold="true" pdfFontName="Courier-Bold"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Fecha de Recepción: " + $F{FECHA}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="a821bef7-bcb8-45bc-8306-17afcef9cc0b" x="15" y="33" width="191" height="40"/>
+				<reportElement uuid="0425b0b8-0b99-4c05-a8d3-72d53a6e3666" x="15" y="33" width="191" height="40"/>
 				<textElement textAlignment="Center" markup="none">
 					<font fontName="Courier New" size="7" isBold="true" pdfFontName="Courier-Bold"/>
 				</textElement>
@@ -90,85 +86,136 @@
 "E-Mail: meljaz@hotmail.com "]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="070cd8e7-1d91-4f07-8ac7-9f5780746517" mode="Transparent" x="15" y="7" width="191" height="26"/>
+				<reportElement uuid="196a6b66-e6a0-415e-9290-7cdf4f8558a2" mode="Transparent" x="15" y="7" width="191" height="26"/>
 				<textElement textAlignment="Center">
 					<font size="20"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Meljaz"]]></textFieldExpression>
 			</textField>
 			<textField pattern="0000-00000000" isBlankWhenNull="false">
-				<reportElement uuid="cc943094-cf07-4976-af11-d78c25aed4fb" mode="Transparent" x="315" y="37" width="231" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<reportElement uuid="22fc0f8d-b3d3-4b28-97a9-2b77432e6577" mode="Transparent" x="321" y="36" width="231" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
 				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
 					<font fontName="Courier New" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Courier-Bold" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
-					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Nro. Pedido: " + $F{NUMERO_PEDIDO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Nro. Pedido: " + $F{NUMERO_PEDIDO}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cdbfd7ea-e12a-43d8-9913-547918022cb4" x="293" y="81" width="237" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="10" isBold="true" pdfFontName="Courier-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Teléfono: "+$F{CLIENTE_TELEFONO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cdbfd7ea-e12a-43d8-9913-547918022cb4" x="293" y="96" width="237" height="15"/>
+				<textElement>
+					<font fontName="Courier New" size="10" isBold="true" pdfFontName="Courier-Bold"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Email: "+$F{CLIENTE_EMAIL}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="33" splitType="Stretch">
-			<line>
-				<reportElement uuid="d8d00a4e-175d-4d43-8099-ffff7a04a140" key="line" x="2" y="32" width="555" height="1"/>
-			</line>
+		<band height="21" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="b553bba5-692f-4962-8774-3894f4f0f314" key="staticText" x="348" y="12" width="196" height="16"/>
+				<reportElement uuid="6c7dc754-e859-4a00-b19a-66880e09c7c6" key="staticText" x="334" y="1" width="196" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[OBSEVACIONES]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="bb4312cb-b895-4ce7-a774-d01b20264186" key="staticText" x="14" y="12" width="41" height="16"/>
+				<reportElement uuid="5de26824-3bab-45e2-a430-34f0f1d93e49" key="staticText" x="0" y="1" width="41" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[CANTIDAD ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b553bba5-692f-4962-8774-3894f4f0f314" key="staticText" x="72" y="12" width="233" height="16"/>
+				<reportElement uuid="b2f5dedc-09b7-4e74-b827-144d86e9477c" key="staticText" x="58" y="1" width="233" height="16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="6" isBold="true" pdfFontName="Helvetica-Bold"/>
 				</textElement>
 				<text><![CDATA[DETALLE]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="d8f418a6-f4a7-4845-9573-9a8e5d627285" x="557" y="0" width="1" height="31"/>
+				<reportElement uuid="370d0f06-d35a-4f8d-a10a-00df07591a50" x="555" y="0" width="1" height="20"/>
 			</line>
 			<line>
-				<reportElement uuid="c57063b2-1069-4d6b-86d3-be652d81a784" x="1" y="0" width="1" height="31"/>
+				<reportElement uuid="062b5714-b6c3-440f-b2e3-00d37e146f37" x="1" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="17229658-c880-4324-b616-dd95884d11df" x="41" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="17229658-c880-4324-b616-dd95884d11df" x="327" y="0" width="1" height="20"/>
+			</line>
+			<line>
+				<reportElement uuid="c9733158-a9c0-431b-8adc-2ca3f983e61c" x="1" y="20" width="554" height="1"/>
 			</line>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="346">
+		<band height="23">
 			<textField>
-				<reportElement uuid="bfea7c54-ea26-449d-a1fa-0ed2ec78eb75" x="11" y="11" width="45" height="20"/>
+				<reportElement uuid="018ad932-1b3f-4122-a230-9473888c9706" x="6" y="5" width="28" height="15"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{CANTIDAD}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CANTIDAD}.toString()]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement uuid="4d7fde59-34c6-4e7b-bb46-b774b1c6e9bc" x="328" y="0" width="1" height="187"/>
+				<reportElement uuid="319ddd30-0b13-4177-a8dd-cd5fa5264991" x="327" y="0" width="1" height="23"/>
 			</line>
 			<line>
-				<reportElement uuid="b88111b0-951f-466c-a26b-9242ed7784e9" x="63" y="0" width="1" height="198"/>
+				<reportElement uuid="17229658-c880-4324-b616-dd95884d11df" x="41" y="0" width="1" height="23"/>
 			</line>
 			<textField>
-				<reportElement uuid="dee421fb-d3f2-4b3e-b712-8978e293e7fc" x="88" y="11" width="228" height="20"/>
+				<reportElement uuid="9cec4f83-788b-45f4-85d4-693548fca2fa" x="58" y="5" width="258" height="15"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{DETALLE}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="42fb32d9-9a68-422a-a159-8bf08b0b14dc" x="349" y="11" width="142" height="20"/>
+				<reportElement uuid="b4f31c73-9ab7-4844-9a0f-0afea2c3110e" x="348" y="5" width="195" height="15"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{OBSERVACIONES}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement uuid="b88111b0-951f-466c-a26b-9242ed7784e9" x="1" y="0" width="1" height="198"/>
+				<reportElement uuid="4757784e-e71b-4b89-bc3a-d6746677e2fa" x="1" y="0" width="1" height="23"/>
 			</line>
 			<line>
-				<reportElement uuid="b88111b0-951f-466c-a26b-9242ed7784e9" x="557" y="0" width="1" height="198"/>
+				<reportElement uuid="7db3fb16-8ec0-43f2-b8ac-ceabb77b0afb" x="555" y="0" width="1" height="23"/>
+			</line>
+			<line>
+				<reportElement uuid="e42388f2-e096-4627-8a1b-97cb80c2d589" x="1" y="22" width="554" height="1"/>
 			</line>
 		</band>
 	</detail>
+	<columnFooter>
+		<band height="25">
+			<rectangle>
+				<reportElement uuid="2c57a1f5-3e47-4384-aa38-559a61011a9b" x="8" y="1" width="535" height="20"/>
+			</rectangle>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="83">
+			<rectangle radius="10">
+				<reportElement uuid="635b3fdb-05f0-4762-9f0b-fc6555ca273f" x="0" y="4" width="555" height="68"/>
+			</rectangle>
+			<staticText>
+				<reportElement uuid="5e9499f2-cf77-4af9-ab66-0df0782abe72" x="15" y="6" width="528" height="66"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Recibimos los productos detallados en este formulario para su posterior reparación.
+Todas las reparaciones están condicionadas a la disponibilidad de repuestos.
+Pasados 60 días de no retirado el producto, el mismo pasará a disponibilidad de la empresa.
+La empresa no se responsabiliza por pérdidas de información.
+La empresa no se responsabiliza por la procedencia de la mercadería ingresada.
+La empresa no se responsabiliza por robo, daño o pérdida de los artículos recibidos.
+
+
+]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
 </jasperReport>

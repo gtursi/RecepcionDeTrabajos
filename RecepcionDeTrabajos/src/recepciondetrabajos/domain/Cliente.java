@@ -8,6 +8,8 @@ public class Cliente {
 
 	private String direccion;
 
+	private String telefono;
+
 	private String email;
 
 	public Cliente() {
@@ -40,6 +42,14 @@ public class Cliente {
 
 	public String getEmail() {
 		return email;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 
 	public void setEmail(String email) {
