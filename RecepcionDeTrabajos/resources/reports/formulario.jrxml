@@ -26,6 +26,9 @@
 	<field name="CANTIDAD" class="java.math.BigDecimal"/>
 	<field name="DETALLE" class="java.lang.String"/>
 	<field name="OBSERVACIONES" class="java.lang.String"/>
+	<background>
+		<band height="50"/>
+	</background>
 	<title>
 		<band splitType="Stretch"/>
 	</title>
