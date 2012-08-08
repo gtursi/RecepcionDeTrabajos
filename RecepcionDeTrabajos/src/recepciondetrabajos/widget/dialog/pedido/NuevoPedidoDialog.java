@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 import recepciondetrabajos.domain.Pedido;
-import recepciondetrabajos.formulario.FormularioServiceImpl;
+import recepciondetrabajos.formulario.PdfGenerator;
 import recepciondetrabajos.service.PedidoService;
 import recepciondetrabajos.widget.page.pedido.NuevoPedidoPage;
 
@@ -60,7 +60,7 @@ public class NuevoPedidoDialog extends BasePreferenceDialog {
 
 			@Override
 			public void widgetSelected(SelectionEvent event) {
-				FormularioServiceImpl.imprimirFormulario(pedido);
+				PdfGenerator.generate(pedido);
 			}
 		};
 	}
