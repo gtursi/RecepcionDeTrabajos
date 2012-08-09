@@ -52,7 +52,7 @@ public class NuevoPedidoPage extends BasePreferencesPage<Pedido> {
 		};
 
 		new PedidoItemCRUDTable(parent, PedidoItem.class, Constants.CONSULTA_PEDIDO_ITEMS,
-				Labels.getLabels(), this.rowSelectionHandler, true, super.readOnly);
+				Labels.getLabels(), this.rowSelectionHandler, false, super.readOnly);
 	}
 
 }

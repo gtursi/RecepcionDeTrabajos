@@ -21,7 +21,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
-import recepciondetrabajos.formulario.FormularioServiceImpl;
 import recepciondetrabajos.service.ApplicationContext;
 import recepciondetrabajos.widget.composite.queries.clientes.ClienteQueryComposite;
 import recepciondetrabajos.widget.composite.queries.pedidos.PedidoQueryComposite;
@@ -40,7 +39,6 @@ public class MainWindow extends ApplicationWindow {
 	}
 
 	private static void init() {
-		FormularioServiceImpl.init();
 		ApplicationContext.getInstance().getBean(SimpleJdbcTemplate.class)
 				.queryForInt("select count(*) from cliente");
 	}

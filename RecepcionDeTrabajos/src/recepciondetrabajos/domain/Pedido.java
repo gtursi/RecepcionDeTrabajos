@@ -1,8 +1,8 @@
 package recepciondetrabajos.domain;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Pedido {
@@ -17,7 +17,7 @@ public class Pedido {
 
 	private Date fecha;
 
-	private List<PedidoItem> items = new ArrayList<PedidoItem>();
+	private List<PedidoItem> items = new LinkedList();
 
 	public Pedido(Cliente cliente) {
 		setCliente(cliente);

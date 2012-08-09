@@ -25,7 +25,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class PedidoDocument {
 
-	private static final int MAX_ROWS = 7;
+	private static final int MAX_ROWS = 3;
 
 	/** The resulting PDF file. */
 	public static final String RESULT = "pedido-prueba.pdf";
@@ -60,8 +60,7 @@ public class PedidoDocument {
 		closeFile();
 		this.pedido = pedido;
 		Document document = new Document();
-		PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filename));
-		writer.setViewerPreferences(PdfWriter.HideToolbar);
+		PdfWriter.getInstance(document, new FileOutputStream(filename));
 		document.open();
 		PdfPTable table = mainTable();
 		Element footer = footer();

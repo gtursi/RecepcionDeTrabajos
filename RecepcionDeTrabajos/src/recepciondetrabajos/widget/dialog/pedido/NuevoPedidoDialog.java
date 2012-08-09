@@ -60,6 +60,7 @@ public class NuevoPedidoDialog extends BasePreferenceDialog {
 
 			@Override
 			public void widgetSelected(SelectionEvent event) {
+				performOK();
 				PdfGenerator.generate(pedido);
 			}
 		};

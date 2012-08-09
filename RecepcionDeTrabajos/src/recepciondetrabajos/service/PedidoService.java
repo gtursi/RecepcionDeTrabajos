@@ -55,7 +55,7 @@ public class PedidoService {
 				ParameterizedBeanPropertyRowMapper.newInstance(Pedido.class), numero);
 		pedido.setCliente(ClienteService.consultarCliente(codigoCliente));
 		List<PedidoItem> items = jdbcTemplate.query(
-				"select * from pedido_item where pedido_numero = ?",
+				"select * from pedido_item where pedido_numero = ? order by orden",
 				ParameterizedBeanPropertyRowMapper.newInstance(PedidoItem.class), numero);
 		pedido.setItems(items);
 		return pedido;
