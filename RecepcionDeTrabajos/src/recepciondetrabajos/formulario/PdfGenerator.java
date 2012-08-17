@@ -1,7 +1,5 @@
 package recepciondetrabajos.formulario;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -13,8 +11,7 @@ import org.eclipse.swt.widgets.Shell;
 import recepciondetrabajos.MainWindow;
 import recepciondetrabajos.domain.Pedido;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.PageSize;
+import com.itextpdf.text.Document;
 import commons.gui.util.FileHelper;
 
 public class PdfGenerator implements IRunnableWithProgress {

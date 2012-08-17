@@ -1,4 +1,4 @@
-<project name="CliyCtas" basedir=".">
+<project name="RecepcionDeTrabajos" basedir=".">
 	<description>
         Build file de la GUI del Sistema Recepción de Trabajos.
     </description>
@@ -7,27 +7,9 @@
 	<property file="./deploy/properties/deploy-${env}.properties" />
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
 	
-	<echo message="despliegue.dir=${despliegue.dir}" />
-	
-	<fail unless="despliegue.dir" message="No se encontro el archivo de despliegue" />
-
 	<target name="deploy"
-	        depends="reemplazar,subirGUI"
+	        depends="generarMainJar,prepararJars,generarJnlp"
 	        description="Despliega la GUI en el ambiente pasado como parametro">
-	</target>
-
-	<target name="reemplazar"
-	        description="reemplaza las propiedades para el ambiente pasado como parametro">
-	</target>
-
-	<target name="subirGUI" depends="generarMainJar,prepararJars,generarJnlp">
-		<copy todir="${work.dir}" overwrite="true">
-			<fileset dir="${deploy.dir}" includes="cajval_logo.jpg" />
-		</copy>
-		<delete dir="${despliegue.dir}/${env}" />
-		<copy todir="${despliegue.dir}/${env}">
-			<fileset dir="${work.dir}" />
-		</copy>
 	</target>
 
 	<target name="compilar">
@@ -48,7 +30,7 @@
 		<mkdir dir="${work.dir}" />
 	</target>
 
-	<target name="generarMainJar" depends="limpiarTemporales, reemplazar">
+	<target name="generarMainJar" depends="limpiarTemporales">
 		<echo>Generando jar del codigo fuente...</echo>
 		<echo>##Directorios del jar del codigo fuente... ${work.dir}/${main.file}</echo>
 		<jar destfile="${work.dir}/${main.file}" basedir="${bin.dir}" />
