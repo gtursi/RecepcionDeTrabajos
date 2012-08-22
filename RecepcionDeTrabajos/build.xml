@@ -1,14 +1,13 @@
-<project name="RecepcionDeTrabajos" basedir=".">
+<project name="RecepcionDeTrabajos" basedir="." default="build">
 	<description>
         Build file de la GUI del Sistema Recepción de Trabajos.
     </description>
 
-	<property file="./deploy/properties/build.properties" />
-	<property file="./deploy/properties/deploy-${env}.properties" />
-	<taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+	<property file="./build/properties/build.properties" />
+	<property file="./build/properties/deploy-${env}.properties" />
 	
-	<target name="deploy"
-	        depends="generarMainJar,prepararJars,generarJnlp"
+	<target name="build"
+	        depends="copiarJars,generarMainJar"
 	        description="Despliega la GUI en el ambiente pasado como parametro">
 	</target>
 
@@ -26,60 +25,46 @@
 
 	<target name="limpiarTemporales">
 		<echo>Limpiando archivos temporales...</echo>
-		<delete dir="${work.dir}" />
-		<mkdir dir="${work.dir}" />
+		<delete dir="${executable.dir}/${main.jar}" />
+		<delete dir="${executable.lib.dir}" />
+		<mkdir dir="${executable.lib.dir}" />
 	</target>
 
-	<target name="generarMainJar" depends="limpiarTemporales">
-		<echo>Generando jar del codigo fuente...</echo>
-		<echo>##Directorios del jar del codigo fuente... ${work.dir}/${main.file}</echo>
-		<jar destfile="${work.dir}/${main.file}" basedir="${bin.dir}" />
+	<target name="generarMainJar" >
+		<echo>Generando jar del codigo fuente (${executable.dir}/${main.jar})</echo>
+		<jar destfile="${executable.dir}/${main.jar}" basedir="${bin.dir}">
+		     <manifest>
+		       <attribute name="Main-Class" value="recepciondetrabajos.MainWindow"/>
+		       <attribute name="Class-Path" value="${manifest.classpath}"/>
+		     </manifest>
+		</jar>
 	</target>
 
-	<target name="prepararJars">
-		<echo>Copiando librerias a ${work.dir}...</echo>
-		<copy todir="${work.dir}">
-			<fileset dir="${lib.dir}" includes="**/*.jar" />
+	<target name="copiarJars" depends="limpiarTemporales">
+		<echo>Copiando librerias a ${executable.lib.dir}...</echo>
+		<copy todir="${executable.lib.dir}">
+			<fileset dir="${lib.dir}" includes="*.jar" />
 		</copy>
-		<echo>Firmando librerias...</echo>
-		<signjar alias="${sign.alias}"
-		         storepass="${storepass}"
-		         keystore="${keystore}"
-		         keypass="${dummypass}">
-			<fileset dir="${work.dir}" includes="**/*.jar" />
-		</signjar>
-		<chmod perm="-x" type="file">
-			<fileset dir="${work.dir}">
-				<include name="*.jar" />
-			</fileset>
-		</chmod>
+		<copy todir="${executable.lib.dir}">
+			<fileset dir="${lib.dir}/swt_jface" includes="*.jar" />
+		</copy>		
 	</target>
+	
+	<path id="build.classpath">
+	  <fileset dir="${executable.lib.dir}">
+	     <include name="*.jar"/>
+	  </fileset>
+	</path>
 
-	<target name="generarJnlp">
-		<copy todir="${work.dir}" overwrite="true">
-			<fileset dir="${deploy.dir}" includes="${jnlp.file}" />
-		</copy>
-		<replace file="${work.dir}/${jnlp.file}"
-		         token="CODEBASE"
-		         value="${despliegue.url}"
-		         casesensitive="true" />
-		<replace file="${work.dir}/${jnlp.file}"
-		         token="@jars@"
-		         value="&lt;jar href=&quot;${main.file}&quot; main=&quot;true&quot;/&gt;${line.separator}        @jars@" />
-		<foreach target="escribirJarEnJnlp" param="file.sign">
-			<path>
-				<fileset dir="${work.dir}" includes="*.jar" excludes="${main.file}" />
-			</path>
-		</foreach>
-		<replace file="${work.dir}/${jnlp.file}" token="@jars@" value="" />
-	</target>
-
-	<target name="escribirJarEnJnlp">
-		<basename property="file.sign.name" file="${file.sign}" />
-		<echo>Escribiendo jar en jnlp: ${file.sign.name}</echo>
-		<replace file="${work.dir}/${jnlp.file}"
-		         token="@jars@"
-		         value="&lt;jar href=&quot;${file.sign.name}&quot;/&gt;${line.separator}        @jars@" />
-	</target>
+	<pathconvert property="manifest.classpath" pathsep=" ">
+	  <path refid="build.classpath"/>
+	  <mapper>
+	    <chainedmapper>
+	       <flattenmapper/>
+	       <globmapper from="*.jar" to="lib/*.jar"/>
+	    </chainedmapper>
+	  </mapper>
+	</pathconvert>
+	
 
 </project>
