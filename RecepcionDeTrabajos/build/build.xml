@@ -1,10 +1,9 @@
-<project name="RecepcionDeTrabajos" basedir="." default="build">
+<project name="RecepcionDeTrabajos" basedir=".." default="build">
 	<description>
         Build file de la GUI del Sistema Recepción de Trabajos.
     </description>
 
-	<property file="./build/properties/build.properties" />
-	<property file="./build/properties/deploy-${env}.properties" />
+	<property file="./build/build.properties" />
 	
 	<target name="build"
 	        depends="copiarJars,generarMainJar"
