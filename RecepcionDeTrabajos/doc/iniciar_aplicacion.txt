@@ -1,0 +1,4 @@
+Correr el build.xml
+Verificar que se haya generado correctamente el build/ejecutable/main.jar 
+Verificar que se haya generado correctamente la carpeta build/ejecutable/lib
+Ejecutar el exe RecepcionDeTrabajos.exe
