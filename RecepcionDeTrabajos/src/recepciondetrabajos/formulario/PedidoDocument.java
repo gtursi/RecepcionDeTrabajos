@@ -128,7 +128,7 @@ public class PedidoDocument {
 		PdfPCell cell;
 		cell = new PdfPCell(
 				new Phrase(
-						"La Pampa 5000\nCiudad Autonoma de Bs.As.\nTel: 4444-4444\nEmail: meljaz@hotmail.com",
+						"La Pampa 5195 - C1431CQM\nCiudad Autonoma de Bs.As.\nTel: (15)-4937-7481\nEmail: meljazpc2@hotmail.com",
 						pequeña));
 		cell.setColspan(2);
 		cell.setRowspan(2);
