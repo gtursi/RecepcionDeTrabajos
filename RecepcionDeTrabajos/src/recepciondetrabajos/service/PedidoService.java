@@ -34,9 +34,8 @@ public class PedidoService {
 	@SuppressWarnings("unchecked")
 	public static List<Pedido> consultarPedidos(Integer codigoCliente, String denominacionCliente) {
 		return jdbcTemplate
-				.query("select p.*, c.codigo, c.denominacion from pedido p join cliente c on p.codigo_cliente = c.codigo",
+				.query("select p.*, c.codigo, c.denominacion from pedido p join cliente c on p.codigo_cliente = c.codigo where lower(c.denominacion) like ?",
 						new ParameterizedRowMapper() {
-
 							public Pedido mapRow(ResultSet rs, int rowNum) throws SQLException {
 								Cliente cliente = new Cliente();
 								cliente.setCodigo(rs.getLong("codigo"));
@@ -46,8 +45,7 @@ public class PedidoService {
 								pedido.setFecha(rs.getDate("fecha"));
 								return pedido;
 							}
-						});
-
+						}, "%" + denominacionCliente.trim().toLowerCase() + "%");
 	}
 
 	public static Pedido obtenerPedido(Long numero, Long codigoCliente) {

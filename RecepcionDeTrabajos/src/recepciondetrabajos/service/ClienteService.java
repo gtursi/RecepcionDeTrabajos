@@ -17,8 +17,8 @@ public abstract class ClienteService {
 
 	@SuppressWarnings("unchecked")
 	public static List<Cliente> consultarClientesPorDenominacion(String denominacion) {
-		return simpleJdbcTemplate.query("select * from cliente",
-				ParameterizedBeanPropertyRowMapper.newInstance(Cliente.class));
+		return simpleJdbcTemplate.query("select * from cliente where lower(denominacion) like ?",
+				ParameterizedBeanPropertyRowMapper.newInstance(Cliente.class), "%" + denominacion.trim().toLowerCase() + "%");
 	}
 
 	public static void persistir(Cliente cliente) {

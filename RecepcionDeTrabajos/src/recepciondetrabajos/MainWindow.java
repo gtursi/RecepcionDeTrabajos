@@ -86,7 +86,7 @@ public class MainWindow extends ApplicationWindow {
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
-		shell.setMaximized(false);
+		shell.setMaximized(true);
 		shell.setText(shellTitleText);
 		shell.setBackground(shell.getDisplay().getSystemColor(SWT.COLOR_GRAY));
 		PageHelper.init(shell);

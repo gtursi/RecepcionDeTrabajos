@@ -24,7 +24,7 @@
 		<property name="driverClass" value="org.h2.Driver"/>
 		<property name="jdbcUrl" value="jdbc:h2:tcp://localhost:9092/recepcionTrabajos;IFEXISTS=TRUE"/>
 		<property name="user" value="faby"/>
-		<property name="password" value="qwerty"/>
+		<property name="password" value=""/>
 		<property name="minPoolSize" value="1"/>
 		<property name="maxPoolSize" value="2"/>
 		<property name="initialPoolSize" value="1"/>

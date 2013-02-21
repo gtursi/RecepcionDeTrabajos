@@ -81,7 +81,7 @@ public class ClienteQueryComposite extends QueryComposite {
 
 			@Override
 			public void widgetSelected(SelectionEvent event) {
-				denominacionCliente = null;
+				denominacionCliente = "";
 				if (StringUtils.isNotBlank(denominacionClienteText.getText().trim())) {
 					denominacionCliente = denominacionClienteText.getText().trim();
 				}
@@ -299,6 +299,6 @@ public class ClienteQueryComposite extends QueryComposite {
 
 	protected Button botonAgregarPedido;
 
-	protected String denominacionCliente = null;
+	protected String denominacionCliente = "";
 
 }
