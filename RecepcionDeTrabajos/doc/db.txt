@@ -1,0 +1,4 @@
+Copiar la carpeta db a una carpeta local.
+Ejecutar start_db.bat para iniciar.
+Ejecutar stop_db.bat para finalizar.
+Hacer backups de la base de datos (recepcionTrabajos.h2.db).
