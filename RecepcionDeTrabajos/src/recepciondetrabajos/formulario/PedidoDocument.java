@@ -22,6 +22,7 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import commons.util.DateUtils;
 
 public class PedidoDocument {
 
@@ -149,8 +150,7 @@ public class PedidoDocument {
 	}
 
 	private void addFecha(PdfPTable table) {
-		PdfPCell cell = new PdfPCell(new Phrase("Fecha de recepción: "
-				+ DatetimeHelper.getDateAsString(), normal));
+		PdfPCell cell = new PdfPCell(new Phrase("Fecha de recepción: " + getFechaPedido(), normal));
 		cell.setBorder(RIGHT | TOP);
 		cell.setPadding(9f);
 		table.addCell(cell);
@@ -168,6 +168,10 @@ public class PedidoDocument {
 
 	private String getNroPedidoFormatted() {
 		return String.format("%05d", pedido.getNumero());
+	}
+
+	private String getFechaPedido() {
+		return DateUtils.formatDate(pedido.getFecha());
 	}
 
 	private void addLeyendaNoFactura(PdfPTable table) {
