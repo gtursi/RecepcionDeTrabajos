@@ -44,4 +44,6 @@ public abstract class Constants {
 
 	public static final String ELIMINAR_CLIENTE_BUTTON_TEXT = "Eliminar Cliente";
 
+	public static final String ELIMINAR_PEDIDO_BUTTON_TEXT = "Eliminar Pedido";
+
 }

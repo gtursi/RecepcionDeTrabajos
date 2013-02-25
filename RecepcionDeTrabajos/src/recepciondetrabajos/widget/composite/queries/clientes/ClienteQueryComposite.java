@@ -265,8 +265,10 @@ public class ClienteQueryComposite extends QueryComposite {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				Cliente cliente = (Cliente) getTable().getSelectedElement();
-				NuevoPedidoDialog dialog = new NuevoPedidoDialog(new Pedido(cliente));
-				dialog.open();
+				if (cliente != null) {
+					NuevoPedidoDialog dialog = new NuevoPedidoDialog(new Pedido(cliente));
+					dialog.open();
+				}
 			}
 		};
 	}

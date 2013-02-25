@@ -36,6 +36,7 @@ public class PedidoService {
 		return jdbcTemplate
 				.query("select p.*, c.codigo, c.denominacion from pedido p join cliente c on p.codigo_cliente = c.codigo where lower(c.denominacion) like ?",
 						new ParameterizedRowMapper() {
+
 							public Pedido mapRow(ResultSet rs, int rowNum) throws SQLException {
 								Cliente cliente = new Cliente();
 								cliente.setCodigo(rs.getLong("codigo"));
@@ -57,6 +58,11 @@ public class PedidoService {
 				ParameterizedBeanPropertyRowMapper.newInstance(PedidoItem.class), numero);
 		pedido.setItems(items);
 		return pedido;
+	}
+
+	public static void eliminar(Pedido pedido) {
+		Object[] args = { pedido.getNumero() };
+		jdbcTemplate.update("delete pedido where numero = ?", args);
 	}
 
 	public static final SimpleJdbcTemplate jdbcTemplate = ApplicationContext.getInstance().getBean(

@@ -160,6 +160,7 @@ public class PedidoQueryComposite extends QueryComposite {
 			public void selectionChanged(SelectionChangedEvent event) {
 				boolean hayAlgoSeleccionado = getTable().getSelectedElements().size() != 0;
 				botonEditar.setEnabled(hayAlgoSeleccionado);
+				botonEliminarPedido.setEnabled(hayAlgoSeleccionado);
 			}
 		};
 	}
@@ -180,6 +181,8 @@ public class PedidoQueryComposite extends QueryComposite {
 
 		this.botonEditar = createButton(panelBotones, getEditarButtonSelectionListener(),
 				Constants.CONSULTAS_EDITAR_BUTTON_TEXT);
+		this.botonEliminarPedido = createButton(panelBotones,
+				getEliminarPedidoButtonSelectionListener(), Constants.ELIMINAR_PEDIDO_BUTTON_TEXT);
 
 	}
 
@@ -198,10 +201,24 @@ public class PedidoQueryComposite extends QueryComposite {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				Pedido pedido = (Pedido) getTable().getSelectedElement();
-				pedido = PedidoService.obtenerPedido(pedido.getNumero(), pedido.getCliente()
-						.getCodigo());
-				NuevoPedidoDialog dialog = new NuevoPedidoDialog(pedido);
-				dialog.open();
+				if (pedido != null) {
+					pedido = PedidoService.obtenerPedido(pedido.getNumero(), pedido.getCliente()
+							.getCodigo());
+					NuevoPedidoDialog dialog = new NuevoPedidoDialog(pedido);
+					dialog.open();
+				}
+			}
+		};
+	}
+
+	private SelectionListener getEliminarPedidoButtonSelectionListener() {
+		return new SelectionAdapter() {
+
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+				Pedido pedido = (Pedido) getTable().getSelectedElement();
+				PedidoService.eliminar(pedido);
+				reset();
 			}
 		};
 	}
@@ -227,6 +244,8 @@ public class PedidoQueryComposite extends QueryComposite {
 	private GenericTable pedidoQueryTable;
 
 	protected Button botonEditar;
+
+	protected Button botonEliminarPedido;
 
 	protected String denominacionCliente = "";
 
