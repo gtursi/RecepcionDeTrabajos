@@ -2,7 +2,7 @@ drop table cliente cascade constraints;
 drop table pedido cascade constraints;
 drop table pedido_item cascade constraints;
 
-CREATE USER faby PASSWORD 'qwerty';
+CREATE USER IF NOT EXISTS  faby PASSWORD 'qwerty' ADMIN
 
 create table cliente (
 codigo number(18) PRIMARY KEY,

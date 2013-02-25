@@ -1,0 +1,2 @@
+https://pl5.projectlocker.com/Meljaz/recepcionTrabajos/svn/RecepcionDeTrabajos
+Root: https://pl5.projectlocker.com/Meljaz/recepcionTrabajos/svn
