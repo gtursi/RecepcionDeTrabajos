@@ -62,6 +62,7 @@ public class PedidoService {
 
 	public static void eliminar(Pedido pedido) {
 		Object[] args = { pedido.getNumero() };
+		jdbcTemplate.update("delete pedido_item where pedido_numero = ?", args);
 		jdbcTemplate.update("delete pedido where numero = ?", args);
 	}
 
