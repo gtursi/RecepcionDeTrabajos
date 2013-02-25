@@ -3,8 +3,5 @@
 	ya que esto puede traer inconvenientes
 -Revisar tema de dll. No deben quedar duplicadas en el jar.
 -Revisar el look&feel de la aplicación sobre todo al arrancar. (Se puede poner un 
-	splash screen e/o íconos tipo escritorio de windows)
--Terminar la ayuda al usuario.
--Debería haber un filtro por cada columna que aparece en las consultas.
+	splash screen y/o íconos tipo escritorio de windows)
 -Tratar de ELIMINAR las cosas hardcodeadas y pasar todo a properties.
--Eliminar acoplamiento entre nombre del atributo y label key en preferences.xml
