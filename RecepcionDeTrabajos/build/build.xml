@@ -31,6 +31,7 @@
 
 	<target name="generarMainJar" >
 		<echo>Generando jar del codigo fuente (${executable.dir}/${main.jar})</echo>
+		<echo>${manifest.classpath}</echo>
 		<jar destfile="${executable.dir}/${main.jar}" basedir="${bin.dir}">
 		     <manifest>
 		       <attribute name="Main-Class" value="recepciondetrabajos.MainWindow"/>
