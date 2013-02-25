@@ -9,12 +9,12 @@
 		http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
 
 	<!--
-	<bean id="org.h2.tools.Server"
-            class="org.h2.tools.Server"
-            factory-method="createTcpServer"
-            init-method="start"
-            destroy-method="stop">
-    	<constructor-arg value="-tcp,-web,-browser,-baseDir,db" />
+	<bean id = "org.h2.tools.Server"
+            	class="org.h2.tools.Server"
+            	factory-method="createTcpServer"
+            	init-method="start"
+        	    destroy-method="stop">
+    	<constructor-arg value="-tcp,-tcpAllowOthers,-web,-baseDir,/workspace/RecepcionDeTrabajos/db" />
 	</bean>
 	-->
 	
