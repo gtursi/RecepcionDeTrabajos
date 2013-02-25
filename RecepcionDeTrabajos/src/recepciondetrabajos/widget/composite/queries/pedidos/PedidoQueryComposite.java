@@ -59,7 +59,7 @@ public class PedidoQueryComposite extends QueryComposite {
 	}
 
 	protected void agregarFiltroDenominacionCliente(Composite composite) {
-		TextFieldMetainfo metainfo = TextFieldMetainfo.create(composite, "denominacion",
+		TextFieldMetainfo metainfo = TextFieldMetainfo.create(composite, "cliente",
 				new StringValueMetaInfo(""), false, null, false);
 		this.denominacionClienteText = (Text) TextFieldHelper.createTextField(metainfo);
 		GridData gridData = new GridData(SWT.FILL, SWT.BEGINNING, false, false);
