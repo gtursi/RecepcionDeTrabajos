@@ -8,15 +8,13 @@
 		http://www.springframework.org/schema/jee
 		http://www.springframework.org/schema/jee/spring-jee-2.5.xsd">
 
-	<!--
 	<bean id = "org.h2.tools.Server"
             	class="org.h2.tools.Server"
             	factory-method="createTcpServer"
             	init-method="start"
         	    destroy-method="stop">
-    	<constructor-arg value="-tcp,-tcpAllowOthers,-web,-baseDir,/workspace/RecepcionDeTrabajos/db" />
+    	<constructor-arg value="-tcp,-baseDir,db" />
 	</bean>
-	-->
 	
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close"
@@ -32,7 +30,7 @@
 		<property name="acquireIncrement" value="1"/>
 		<property name="maxStatements" value="10"/>
 		<property name="idleConnectionTestPeriod" value="60"/>
-		<property name="acquireRetryAttempts" value="10"/>
+		<property name="acquireRetryAttempts" value="5"/>
 	</bean>
 
 
