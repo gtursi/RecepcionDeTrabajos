@@ -6,8 +6,45 @@
 	<property file="./build/build.properties" />
 	
 	<target name="build"
-	        depends="copiarJars,generarMainJar"
+	        depends="copiarJars,generarMainJar,copiarBase"
 	        description="Despliega la GUI en el ambiente pasado como parametro">
+	</target>
+
+	<target name="copiarJars" depends="limpiarTemporales">
+		<echo>Copiando librerias a ${executable.lib.dir}...</echo>
+		<copy todir="${executable.lib.dir}">
+			<fileset dir="${lib.dir}" includes="*.jar" />
+		</copy>
+		<copy todir="${executable.lib.dir}">
+			<fileset dir="${lib.dir}/swt_jface" includes="*.jar" />
+		</copy>		
+	</target>
+				
+	<target name="limpiarTemporales">
+		<echo>Limpiando archivos temporales...</echo>
+		<delete dir="${executable.dir}/${main.jar}" />
+		<delete dir="${db.target.dir}" />
+		<delete dir="${executable.lib.dir}" />
+		<mkdir dir="${executable.lib.dir}" />
+	</target>
+
+	<target name="generarMainJar">
+		<echo>Generando jar del codigo fuente (${executable.dir}/${main.jar})</echo>
+		<echo>Classpath: ${manifest.classpath}</echo>
+		<jar destfile="${executable.dir}/${main.jar}" basedir="${bin.dir}">
+		     <manifest>
+		       <attribute name="Main-Class" value="recepciondetrabajos.MainWindow"/>
+		       <attribute name="Class-Path" value="${manifest.classpath}"/>
+		     </manifest>
+		</jar>
+	</target>
+
+	<target name="copiarBase">
+		<echo>Copiando base de datos...</echo>
+		<mkdir dir="${db.target.dir}" />
+		<copy todir="${db.target.dir}">
+			<fileset dir="${db.source.dir}" includes="${db.filename}" />
+		</copy>
 	</target>
 
 	<target name="compilar">
@@ -22,34 +59,6 @@
 		</javac>
 	</target>
 
-	<target name="limpiarTemporales">
-		<echo>Limpiando archivos temporales...</echo>
-		<delete dir="${executable.dir}/${main.jar}" />
-		<delete dir="${executable.lib.dir}" />
-		<mkdir dir="${executable.lib.dir}" />
-	</target>
-
-	<target name="generarMainJar" >
-		<echo>Generando jar del codigo fuente (${executable.dir}/${main.jar})</echo>
-		<echo>${manifest.classpath}</echo>
-		<jar destfile="${executable.dir}/${main.jar}" basedir="${bin.dir}">
-		     <manifest>
-		       <attribute name="Main-Class" value="recepciondetrabajos.MainWindow"/>
-		       <attribute name="Class-Path" value="${manifest.classpath}"/>
-		     </manifest>
-		</jar>
-	</target>
-
-	<target name="copiarJars" depends="limpiarTemporales">
-		<echo>Copiando librerias a ${executable.lib.dir}...</echo>
-		<copy todir="${executable.lib.dir}">
-			<fileset dir="${lib.dir}" includes="*.jar" />
-		</copy>
-		<copy todir="${executable.lib.dir}">
-			<fileset dir="${lib.dir}/swt_jface" includes="*.jar" />
-		</copy>		
-	</target>
-	
 	<path id="build.classpath">
 	  <fileset dir="${executable.lib.dir}">
 	     <include name="*.jar"/>
