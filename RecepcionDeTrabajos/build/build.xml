@@ -1,6 +1,6 @@
 <project name="RecepcionDeTrabajos" basedir=".." default="build">
 	<description>
-        Build file de la GUI del Sistema Recepción de Trabajos.
+        Build file de la GUI del Sistema Clientes y Pedidos.
     </description>
 
 	<property file="./build/build.properties" />
@@ -16,22 +16,22 @@
 			<fileset dir="${lib.dir}" includes="*.jar" />
 		</copy>
 		<copy todir="${executable.lib.dir}">
-			<fileset dir="${lib.dir}/swt_jface" includes="*.jar" />
+			<fileset dir="${lib.dir}/swt_jface" includes="*.jar *.dll" />
 		</copy>		
 	</target>
 				
 	<target name="limpiarTemporales">
 		<echo>Limpiando archivos temporales...</echo>
-		<delete dir="${executable.dir}/${main.jar}" />
+		<delete dir="${executable.lib.dir}/${main.jar}" />
 		<delete dir="${db.target.dir}" />
 		<delete dir="${executable.lib.dir}" />
 		<mkdir dir="${executable.lib.dir}" />
 	</target>
 
 	<target name="generarMainJar">
-		<echo>Generando jar del codigo fuente (${executable.dir}/${main.jar})</echo>
+		<echo>Generando jar del codigo fuente (${executable.lib.dir}/${main.jar})</echo>
 		<echo>Classpath: ${manifest.classpath}</echo>
-		<jar destfile="${executable.dir}/${main.jar}" basedir="${bin.dir}">
+		<jar destfile="${executable.lib.dir}/${main.jar}" basedir="${bin.dir}">
 		     <manifest>
 		       <attribute name="Main-Class" value="recepciondetrabajos.MainWindow"/>
 		       <attribute name="Class-Path" value="${manifest.classpath}"/>
