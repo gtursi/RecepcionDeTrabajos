@@ -194,5 +194,5 @@ public class MainWindow extends ApplicationWindow {
 
 	private static MainWindow instance;
 
-	private String shellTitleText = "Recepción de Trabajos";
+	private String shellTitleText = "Clientes y Pedidos";
 }

@@ -2,9 +2,9 @@ package recepciondetrabajos;
 
 public abstract class Constants {
 
-	public static final String APP_CODENAME = "recepcionDeTrabajos";
+	public static final String APP_CODENAME = "clientesypedidos";
 
-	public static final String APP_NAME = "Recepción de Trabajos";
+	public static final String APP_NAME = "Clientes y Pedidos";
 
 	public static final String MESSAGES_RESOURCE_BUNDLE = "messages";
 
