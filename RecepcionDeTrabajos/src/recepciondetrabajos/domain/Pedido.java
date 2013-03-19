@@ -1,5 +1,6 @@
 package recepciondetrabajos.domain;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -11,17 +12,41 @@ public class Pedido {
 
 	private Long numero;
 
-	public Pedido() {
-		super();
-	}
-
 	private Date fecha;
 
 	private List<PedidoItem> items = new LinkedList();
 
+	public Pedido() {
+		super();
+	}
+
 	public Pedido(Cliente cliente) {
 		setCliente(cliente);
 		setFecha(new Date(Calendar.getInstance().getTimeInMillis()));
+	}
+
+	public BigDecimal getGanancia() {
+		return getPrecio().subtract(getCosto());
+	}
+
+	private BigDecimal getPrecio() {
+		BigDecimal precio = BigDecimal.ZERO;
+		for (PedidoItem item : getItems()) {
+			if ((item != null) && (item.getPrecio() != null)) {
+				precio = precio.add(item.getPrecio());
+			}
+		}
+		return precio;
+	}
+
+	private BigDecimal getCosto() {
+		BigDecimal costo = BigDecimal.ZERO;
+		for (PedidoItem item : getItems()) {
+			if ((item != null) && (item.getCosto() != null)) {
+				costo = costo.add(item.getCosto());
+			}
+		}
+		return costo;
 	}
 
 	public Cliente getCliente() {

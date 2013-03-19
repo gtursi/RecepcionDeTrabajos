@@ -36,6 +36,8 @@ public abstract class Constants {
 
 	public static final String CONSULTA_PEDIDOS = "Pedidos";
 
+	public static final String CONSULTA_GANANCIA_MENSUAL = "Balance";
+
 	public static final String CONSULTA_PEDIDO_ITEMS = "Items";
 
 	public static final String CONSULTAS_EDITAR_BUTTON_TEXT = "Ver/Editar...";

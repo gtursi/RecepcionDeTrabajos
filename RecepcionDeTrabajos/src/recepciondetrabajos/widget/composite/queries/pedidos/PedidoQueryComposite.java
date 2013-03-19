@@ -117,7 +117,7 @@ public class PedidoQueryComposite extends QueryComposite {
 
 			@Override
 			protected List doQuery() {
-				return PedidoService.consultarPedidos(null, denominacionCliente);
+				return PedidoService.consultarPedidos(denominacionCliente);
 			}
 		};
 	}

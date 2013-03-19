@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 import recepciondetrabajos.domain.Cliente;
+import recepciondetrabajos.domain.GananciaMensual;
 import recepciondetrabajos.domain.Pedido;
 import recepciondetrabajos.domain.PedidoItem;
 
@@ -32,7 +33,7 @@ public class PedidoService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static List<Pedido> consultarPedidos(Integer codigoCliente, String denominacionCliente) {
+	public static List<Pedido> consultarPedidos(String denominacionCliente) {
 		return jdbcTemplate
 				.query("select p.*, c.codigo, c.denominacion from pedido p join cliente c on p.codigo_cliente = c.codigo where lower(c.denominacion) like ?",
 						new ParameterizedRowMapper() {
@@ -66,6 +67,20 @@ public class PedidoService {
 		jdbcTemplate.update("delete pedido where numero = ?", args);
 	}
 
+	@SuppressWarnings("unchecked")
+	public static List<GananciaMensual> gananciaMensualizada() {
+		return jdbcTemplate.query(GANANCIA_MENSUALIZADA, new ParameterizedRowMapper() {
+
+			public GananciaMensual mapRow(ResultSet rs, int rowNum) throws SQLException {
+				GananciaMensual ganancia = new GananciaMensual();
+				ganancia.setAño(rs.getInt("año"));
+				ganancia.setMes(rs.getInt("mes"));
+				ganancia.setGanancia(rs.getBigDecimal("ganancia"));
+				return ganancia;
+			}
+		}, (Map) null);
+	}
+
 	public static final SimpleJdbcTemplate jdbcTemplate = ApplicationContext.getInstance().getBean(
 			SimpleJdbcTemplate.class);
 
@@ -77,15 +92,21 @@ public class PedidoService {
 			argsItem.put("cantidad", item.getCantidad());
 			argsItem.put("detalle", item.getDetalle());
 			argsItem.put("observaciones", item.getObservaciones());
+			argsItem.put("costo", item.getCosto());
+			argsItem.put("precio", item.getPrecio());
 			jdbcTemplate.getNamedParameterJdbcOperations().update(INSERT_PEDIDO_ITEM, argsItem);
 		}
 	}
+
+	private static final String GANANCIA_MENSUALIZADA = "SELECT YEAR(p.fecha) as año, MONTH(p.fecha) as mes, IFNULL(sum(precio-costo),0) as ganancia "
+			+ "FROM PEDIDO_ITEM pi join pedido p on pi.pedido_numero  = p.numero "
+			+ "group by year(p.fecha), MONTH(p.fecha) order by 1 desc,2 desc";
 
 	private static final String NUEVO_NRO_PEDIDO = "select nvl((select max(numero) from pedido),0) + 1 from dual";
 
 	private static final String INSERT_PEDIDO = "insert into pedido (numero, codigo_cliente, fecha) values (?,?,?)";
 
-	private static final String INSERT_PEDIDO_ITEM = "insert into pedido_item (pedido_numero, orden, cantidad, detalle, observaciones) values (:numero_pedido, :orden, :cantidad, :detalle, :observaciones)";
+	private static final String INSERT_PEDIDO_ITEM = "insert into pedido_item (pedido_numero, orden, cantidad, detalle, observaciones, costo, precio) values (:numero_pedido, :orden, :cantidad, :detalle, :observaciones, :costo, :precio)";
 
 	private static final String DELETE_PEDIDO_ITEM = "delete from pedido_item where pedido_numero = ?";
 

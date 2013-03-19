@@ -19,5 +19,10 @@
 			<column name="detalle" alignment="LEFT" width="100"/>
 			<column name="observaciones" alignment="LEFT" width="200"/>
 		</table>
+		<table name="Balance" order="orden">
+			<column name="año" alignment="LEFT" width="80"/>
+			<column name="mes" alignment="LEFT" width="80"/>
+			<column name="ganancia" alignment="LEFT" width="100"/>
+		</table>
 	</tables>
 </preferences>

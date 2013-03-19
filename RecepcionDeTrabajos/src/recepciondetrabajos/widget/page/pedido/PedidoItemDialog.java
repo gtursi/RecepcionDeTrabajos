@@ -71,6 +71,16 @@ public class PedidoItemDialog extends TrayDialog implements Openable<PedidoItem>
 		metainfo = TextFieldMetainfo.create(parent, "observaciones", new StringValueMetaInfo(item,
 				"observaciones"), this.readOnly, 250, true);
 		TextFieldHelper.createTextField(metainfo);
+
+		metainfo = TextFieldMetainfo.create(parent, "costo",
+				new StringValueMetaInfo(item, "costo"), this.readOnly, 10, false);
+		metainfo.addListeners(TextFieldListenerType.NUMBER_FIELD_LISTENER);
+		TextFieldHelper.createTextField(metainfo);
+
+		metainfo = TextFieldMetainfo.create(parent, "precio", new StringValueMetaInfo(item,
+				"precio"), this.readOnly, 10, false);
+		metainfo.addListeners(TextFieldListenerType.INTEGER_FIELD_LISTENER);
+		TextFieldHelper.createTextField(metainfo);
 		return parent;
 	}
 

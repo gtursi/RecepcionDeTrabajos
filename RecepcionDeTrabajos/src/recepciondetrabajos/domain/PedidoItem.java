@@ -1,5 +1,7 @@
 package recepciondetrabajos.domain;
 
+import java.math.BigDecimal;
+
 /**
  * 
  * @author Gabriel Tursi
@@ -15,6 +17,10 @@ public class PedidoItem implements Cloneable {
 
 	private String observaciones;
 
+	private BigDecimal costo;
+
+	private BigDecimal precio;
+
 	public PedidoItem() {
 		super();
 	}
@@ -23,16 +29,20 @@ public class PedidoItem implements Cloneable {
 		pedido.getItems().add(this);
 	}
 
-	private PedidoItem(Integer orden, Integer cantidad, String detalle, String observaciones) {
+	private PedidoItem(Integer orden, Integer cantidad, String detalle, String observaciones,
+			BigDecimal costo, BigDecimal precio) {
 		super();
 		this.orden = orden;
 		this.cantidad = cantidad;
 		this.detalle = detalle;
 		this.observaciones = observaciones;
+		this.costo = costo;
+		this.precio = precio;
 	}
 
 	public PedidoItem(PedidoItem item) {
-		this(item.getOrden(), item.getCantidad(), item.getDetalle(), item.getObservaciones());
+		this(item.getOrden(), item.getCantidad(), item.getDetalle(), item.getObservaciones(), item
+				.getCosto(), item.getPrecio());
 	}
 
 	public Integer getOrden() {
@@ -65,6 +75,22 @@ public class PedidoItem implements Cloneable {
 
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
+	}
+
+	public BigDecimal getCosto() {
+		return costo;
+	}
+
+	public void setCosto(BigDecimal costo) {
+		this.costo = costo;
+	}
+
+	public BigDecimal getPrecio() {
+		return precio;
+	}
+
+	public void setPrecio(BigDecimal precio) {
+		this.precio = precio;
 	}
 
 }

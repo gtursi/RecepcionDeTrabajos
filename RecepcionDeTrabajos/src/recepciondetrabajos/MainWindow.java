@@ -23,6 +23,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 import recepciondetrabajos.service.ApplicationContext;
 import recepciondetrabajos.widget.composite.queries.clientes.ClienteQueryComposite;
+import recepciondetrabajos.widget.composite.queries.pedidos.GananciaMensualQueryComposite;
 import recepciondetrabajos.widget.composite.queries.pedidos.PedidoQueryComposite;
 
 import commons.gui.thread.CustomUncaughtExceptionHandler;
@@ -130,6 +131,8 @@ public class MainWindow extends ApplicationWindow {
 				ClienteQueryComposite.class);
 		agregarMenuWithQueryComposite(menu, "&Pedidos... @CTRL+P", Constants.CONSULTA_PEDIDOS,
 				PedidoQueryComposite.class);
+		agregarMenuWithQueryComposite(menu, "&Balance... @CTRL+B",
+				Constants.CONSULTA_GANANCIA_MENSUAL, GananciaMensualQueryComposite.class);
 	}
 
 	protected void agregarMenuWithQueryComposite(MenuManager menu, String menuText,
