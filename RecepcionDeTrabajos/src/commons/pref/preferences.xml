@@ -15,6 +15,7 @@
 			<column name="fecha" alignment="LEFT" width="300"/>
 		</table>
 		<table name="Items" order="orden">
+			<column name="entregado" alignment="CENTER" width="80" style="32"/>
 			<column name="cantidad" alignment="LEFT" width="80"/>
 			<column name="detalle" alignment="LEFT" width="100"/>
 			<column name="observaciones" alignment="LEFT" width="200"/>

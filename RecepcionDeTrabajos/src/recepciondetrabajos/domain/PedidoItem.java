@@ -11,11 +11,15 @@ public class PedidoItem implements Cloneable {
 
 	private Integer orden;
 
+	private boolean entregado = false;
+
 	private Integer cantidad = 1;
 
 	private String detalle;
 
 	private String observaciones;
+
+	private String comentarios;
 
 	private BigDecimal costo;
 
@@ -29,20 +33,22 @@ public class PedidoItem implements Cloneable {
 		pedido.getItems().add(this);
 	}
 
-	private PedidoItem(Integer orden, Integer cantidad, String detalle, String observaciones,
-			BigDecimal costo, BigDecimal precio) {
+	private PedidoItem(Integer orden, Integer cantidad, boolean entregado, String detalle,
+			String observaciones, String comentarios, BigDecimal costo, BigDecimal precio) {
 		super();
 		this.orden = orden;
+		this.entregado = entregado;
 		this.cantidad = cantidad;
 		this.detalle = detalle;
 		this.observaciones = observaciones;
+		this.comentarios = comentarios;
 		this.costo = costo;
 		this.precio = precio;
 	}
 
 	public PedidoItem(PedidoItem item) {
-		this(item.getOrden(), item.getCantidad(), item.getDetalle(), item.getObservaciones(), item
-				.getCosto(), item.getPrecio());
+		this(item.getOrden(), item.getCantidad(), item.isEntregado(), item.getDetalle(), item
+				.getObservaciones(), item.getComentarios(), item.getCosto(), item.getPrecio());
 	}
 
 	public Integer getOrden() {
@@ -51,6 +57,14 @@ public class PedidoItem implements Cloneable {
 
 	public void setOrden(Integer orden) {
 		this.orden = orden;
+	}
+
+	public boolean isEntregado() {
+		return entregado;
+	}
+
+	public void setEntregado(boolean entregado) {
+		this.entregado = entregado;
 	}
 
 	public Integer getCantidad() {
@@ -75,6 +89,14 @@ public class PedidoItem implements Cloneable {
 
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
+	}
+
+	public String getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(String comentarios) {
+		this.comentarios = comentarios;
 	}
 
 	public BigDecimal getCosto() {

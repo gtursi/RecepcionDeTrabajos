@@ -16,6 +16,7 @@
 package recepciondetrabajos.widget.page.pedido;
 
 import org.eclipse.jface.dialogs.TrayDialog;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -25,6 +26,8 @@ import recepciondetrabajos.domain.PedidoItem;
 import commons.gui.Openable;
 import commons.gui.util.TextFieldHelper;
 import commons.gui.widget.creation.TextFieldListenerType;
+import commons.gui.widget.creation.metainfo.BooleanBindingInfo;
+import commons.gui.widget.creation.metainfo.BooleanFieldMetainfo;
 import commons.gui.widget.creation.metainfo.StringValueMetaInfo;
 import commons.gui.widget.creation.metainfo.TextFieldMetainfo;
 
@@ -45,7 +48,6 @@ public class PedidoItemDialog extends TrayDialog implements Openable<PedidoItem>
 
 	public boolean open(PedidoItem item) {
 		this.item = item;
-		// setBindings();
 		int result = super.open();
 		return result == OK;
 	}
@@ -58,6 +60,12 @@ public class PedidoItemDialog extends TrayDialog implements Openable<PedidoItem>
 
 	@Override
 	protected Control createDialogArea(Composite parent) {
+		((GridData) parent.getLayoutData()).verticalIndent = 10;
+		((GridData) parent.getLayoutData()).horizontalIndent = 10;
+
+		BooleanFieldMetainfo booleanFieldMetainfo = BooleanFieldMetainfo.create(parent,
+				"entregado", new BooleanBindingInfo(item, "entregado"), false);
+		TextFieldHelper.createBooleanField(booleanFieldMetainfo);
 
 		TextFieldMetainfo metainfo = TextFieldMetainfo.create(parent, "cantidad",
 				new StringValueMetaInfo(item, "cantidad"), this.readOnly, 5, false);
@@ -70,6 +78,10 @@ public class PedidoItemDialog extends TrayDialog implements Openable<PedidoItem>
 
 		metainfo = TextFieldMetainfo.create(parent, "observaciones", new StringValueMetaInfo(item,
 				"observaciones"), this.readOnly, 250, true);
+		TextFieldHelper.createTextField(metainfo);
+
+		metainfo = TextFieldMetainfo.create(parent, "comentarios", new StringValueMetaInfo(item,
+				"comentarios"), this.readOnly, 250, true);
 		TextFieldHelper.createTextField(metainfo);
 
 		metainfo = TextFieldMetainfo.create(parent, "costo",

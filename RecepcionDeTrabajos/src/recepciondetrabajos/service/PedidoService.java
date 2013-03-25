@@ -89,9 +89,11 @@ public class PedidoService {
 			Map<String, Object> argsItem = new HashMap<String, Object>();
 			argsItem.put("numero_pedido", pedido.getNumero());
 			argsItem.put("orden", pedido.getItems().indexOf(item));
+			argsItem.put("entregado", item.isEntregado());
 			argsItem.put("cantidad", item.getCantidad());
 			argsItem.put("detalle", item.getDetalle());
 			argsItem.put("observaciones", item.getObservaciones());
+			argsItem.put("comentarios", item.getComentarios());
 			argsItem.put("costo", item.getCosto());
 			argsItem.put("precio", item.getPrecio());
 			jdbcTemplate.getNamedParameterJdbcOperations().update(INSERT_PEDIDO_ITEM, argsItem);
@@ -100,13 +102,15 @@ public class PedidoService {
 
 	private static final String GANANCIA_MENSUALIZADA = "SELECT YEAR(p.fecha) as año, MONTH(p.fecha) as mes, IFNULL(sum(precio-costo),0) as ganancia "
 			+ "FROM PEDIDO_ITEM pi join pedido p on pi.pedido_numero  = p.numero "
-			+ "group by year(p.fecha), MONTH(p.fecha) order by 1 desc,2 desc";
+			+ "WHERE entregado = 1 "
+			+ "GROUP BY year(p.fecha), MONTH(p.fecha) "
+			+ "HAVING ganancia > 0 " + "ORDER BY 1 desc,2 desc";
 
 	private static final String NUEVO_NRO_PEDIDO = "select nvl((select max(numero) from pedido),0) + 1 from dual";
 
 	private static final String INSERT_PEDIDO = "insert into pedido (numero, codigo_cliente, fecha) values (?,?,?)";
 
-	private static final String INSERT_PEDIDO_ITEM = "insert into pedido_item (pedido_numero, orden, cantidad, detalle, observaciones, costo, precio) values (:numero_pedido, :orden, :cantidad, :detalle, :observaciones, :costo, :precio)";
+	private static final String INSERT_PEDIDO_ITEM = "insert into pedido_item (pedido_numero, orden, entregado, cantidad, detalle, observaciones, comentarios, costo, precio) values (:numero_pedido, :orden, :entregado, :cantidad, :detalle, :observaciones, :comentarios, :costo, :precio)";
 
 	private static final String DELETE_PEDIDO_ITEM = "delete from pedido_item where pedido_numero = ?";
 

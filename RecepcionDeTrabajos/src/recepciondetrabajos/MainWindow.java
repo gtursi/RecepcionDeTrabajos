@@ -19,10 +19,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.springframework.jdbc.BadSqlGrammarException;
-import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
-import recepciondetrabajos.service.ApplicationContext;
 import recepciondetrabajos.widget.composite.queries.clientes.ClienteQueryComposite;
 import recepciondetrabajos.widget.composite.queries.pedidos.GananciaMensualQueryComposite;
 import recepciondetrabajos.widget.composite.queries.pedidos.PedidoQueryComposite;
@@ -41,26 +38,7 @@ public class MainWindow extends ApplicationWindow {
 	}
 
 	private static void init() {
-		SimpleJdbcTemplate jdbcTemplate = ApplicationContext.getInstance().getBean(
-				SimpleJdbcTemplate.class);
-		long dbVersion;
-		try {
-			dbVersion = jdbcTemplate.queryForLong(SELECT_DB_VERSION_SQL);
-		} catch (BadSqlGrammarException exc) {
-			jdbcTemplate.getJdbcOperations().execute(
-					"create table property (name varchar2(50) PRIMARY KEY, value varchar2(100))");
-			jdbcTemplate.getJdbcOperations().update(
-					"insert into property (name,value) values ('db_version','20130306')");
-			dbVersion = jdbcTemplate.queryForLong(SELECT_DB_VERSION_SQL);
-		}
-		if (dbVersion != 20130319L) {
-			jdbcTemplate.getJdbcOperations().execute(
-					"alter table pedido_item add costo number(18,2)");
-			jdbcTemplate.getJdbcOperations().execute(
-					"alter table pedido_item add precio number(18,2)");
-			jdbcTemplate.getJdbcOperations().update(
-					"update property set value='20130319' where name='db_version'");
-		}
+		DatabaseUpdater.updateDatabase();
 	}
 
 	public void run() {
@@ -217,7 +195,5 @@ public class MainWindow extends ApplicationWindow {
 	private static MainWindow instance;
 
 	private String shellTitleText = "Clientes y Pedidos";
-
-	private static final String SELECT_DB_VERSION_SQL = "select value from property where name = 'db_version'";
 
 }
