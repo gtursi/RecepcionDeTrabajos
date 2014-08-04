@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -20,12 +23,16 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
 import recepciondetrabajos.Constants;
+import recepciondetrabajos.MainWindow;
 import recepciondetrabajos.domain.Cliente;
 import recepciondetrabajos.domain.Pedido;
 import recepciondetrabajos.service.ClienteService;
+import recepciondetrabajos.widget.composite.queries.pedidos.PedidoQueryComposite;
 import recepciondetrabajos.widget.dialog.cliente.ClienteDetailUpdateDialog;
 import recepciondetrabajos.widget.dialog.pedido.NuevoPedidoDialog;
 
@@ -41,7 +48,8 @@ public class ClienteQueryComposite extends QueryComposite {
 
 	public static ClienteQueryComposite getInstance(Composite parent) {
 		if (instance == null) {
-			instance = new ClienteQueryComposite(parent, Constants.CONSULTA_CLIENTES);
+			instance = new ClienteQueryComposite(parent,
+					Constants.CONSULTA_CLIENTES);
 		}
 		instance.doQuery();
 		return instance;
@@ -61,9 +69,11 @@ public class ClienteQueryComposite extends QueryComposite {
 	}
 
 	protected void agregarFiltroDenominacionCliente(Composite composite) {
-		TextFieldMetainfo metainfo = TextFieldMetainfo.create(composite, "denominacion",
-				new StringValueMetaInfo(""), false, null, false);
-		this.denominacionClienteText = (Text) TextFieldHelper.createTextField(metainfo);
+		TextFieldMetainfo metainfo = TextFieldMetainfo
+				.create(composite, "denominacion", new StringValueMetaInfo(""),
+						false, null, false);
+		this.denominacionClienteText = (Text) TextFieldHelper
+				.createTextField(metainfo);
 		GridData gridData = new GridData(SWT.FILL, SWT.BEGINNING, false, false);
 		this.denominacionClienteText.setLayoutData(gridData);
 	}
@@ -82,8 +92,10 @@ public class ClienteQueryComposite extends QueryComposite {
 			@Override
 			public void widgetSelected(SelectionEvent event) {
 				denominacionCliente = "";
-				if (StringUtils.isNotBlank(denominacionClienteText.getText().trim())) {
-					denominacionCliente = denominacionClienteText.getText().trim();
+				if (StringUtils.isNotBlank(denominacionClienteText.getText()
+						.trim())) {
+					denominacionCliente = denominacionClienteText.getText()
+							.trim();
 				}
 				doQuery();
 			}
@@ -104,16 +116,37 @@ public class ClienteQueryComposite extends QueryComposite {
 
 	@Override
 	protected void agregarTabla(Composite parent) {
-		setTable(new GenericTable(parent, Cliente.class, instanceKey, null, true));
-		IDoubleClickListener tableDoubleClickListener = this.getTableDoubleClickListener();
+		setTable(new GenericTable(parent, Cliente.class, instanceKey, null,
+				true));
+		IDoubleClickListener tableDoubleClickListener = this
+				.getTableDoubleClickListener();
 		if (tableDoubleClickListener != null) {
 			getTable().addDoubleClickListener(tableDoubleClickListener);
 		}
 		ISelectionChangedListener selectionChangedListener = this
 				.getTableSelectionChangedListener();
 		if (selectionChangedListener != null) {
-			getTable().addPostSelectionChangedListener(selectionChangedListener);
+			getTable()
+					.addPostSelectionChangedListener(selectionChangedListener);
 		}
+		agregarMenuContextual();
+
+	}
+
+	private void agregarMenuContextual() {
+		final MenuManager popManager = new MenuManager();
+		IAction menuAction = new Action("Ver pedidos...") {
+			public void run() {
+				Cliente cliente = (Cliente) getTable().getSelectedElement();
+				PedidoQueryComposite.getInstance(getParent())
+						.setFiltroCodigoCliente(cliente.getCodigo());
+				MainWindow.getInstance().showQueryPedidos(popManager);
+			}
+		};
+		popManager.add(menuAction);
+		Table table = getTable().getTable();
+		Menu menu = popManager.createContextMenu(table);
+		table.setMenu(menu);
 	}
 
 	@Override
@@ -122,7 +155,8 @@ public class ClienteQueryComposite extends QueryComposite {
 
 			@Override
 			protected List doQuery() {
-				return ClienteService.consultarClientesPorDenominacion(denominacionCliente);
+				return ClienteService
+						.consultarClientesPorDenominacion(denominacionCliente);
 			}
 		};
 	}
@@ -142,9 +176,9 @@ public class ClienteQueryComposite extends QueryComposite {
 	}
 
 	/**
-	 * Define la acción desencadenada por un doble click en un ítem de la lista de Clientes. Por
-	 * defecto, esta implementación no realiza nada, las subclases deberán implementarlo si así lo
-	 * necesitan.
+	 * Define la acción desencadenada por un doble click en un ítem de la lista
+	 * de Clientes. Por defecto, esta implementación no realiza nada, las
+	 * subclases deberán implementarlo si así lo necesitan.
 	 * 
 	 * @param clienteVDWrapper
 	 *            los datos del ítem Cliente seleccionado.
@@ -159,11 +193,21 @@ public class ClienteQueryComposite extends QueryComposite {
 		};
 	}
 
+	protected IDoubleClickListener getTableRightClickListener() {
+		return new IDoubleClickListener() {
+
+			public void doubleClick(DoubleClickEvent event) {
+				botonAgregarPedido.notifyListeners(SWT.Selection, null);
+			}
+		};
+	}
+
 	protected ISelectionChangedListener getTableSelectionChangedListener() {
 		return new ISelectionChangedListener() {
 
 			public void selectionChanged(SelectionChangedEvent event) {
-				boolean hayAlgoSeleccionado = getTable().getSelectedElements().size() != 0;
+				boolean hayAlgoSeleccionado = getTable().getSelectedElements()
+						.size() != 0;
 				botonEditarCliente.setEnabled(hayAlgoSeleccionado);
 				botonEliminarCliente.setEnabled(hayAlgoSeleccionado);
 				botonAgregarPedido.setEnabled(hayAlgoSeleccionado);
@@ -173,8 +217,8 @@ public class ClienteQueryComposite extends QueryComposite {
 
 	@Override
 	protected void agregarBotones() {
-		SimpleComposite parent = new SimpleComposite(this.getTable().getControl().getParent(),
-				false, 1);
+		SimpleComposite parent = new SimpleComposite(this.getTable()
+				.getControl().getParent(), false, 1);
 		parent.setLayout(new GridLayout(1, false));
 		GridData gridData = new GridData();
 		gridData.horizontalAlignment = SWT.CENTER;
@@ -185,21 +229,24 @@ public class ClienteQueryComposite extends QueryComposite {
 		layout.spacing = 5;
 		panelBotones.setLayout(layout);
 
-		this.botonNuevo = createButton(panelBotones, getNuevoClienteButtonSelectionListener(),
-				"Nuevo");
+		this.botonNuevo = createButton(panelBotones,
+				getNuevoClienteButtonSelectionListener(), "Nuevo");
 		botonNuevo.setEnabled(true);
 		this.botonEditarCliente = createButton(panelBotones,
-				getEditarClienteButtonSelectionListener(), Constants.CONSULTAS_EDITAR_BUTTON_TEXT);
+				getEditarClienteButtonSelectionListener(),
+				Constants.CONSULTAS_EDITAR_BUTTON_TEXT);
 		this.botonEliminarCliente = createButton(panelBotones,
-				getEliminarClienteButtonSelectionListener(), Constants.ELIMINAR_CLIENTE_BUTTON_TEXT);
+				getEliminarClienteButtonSelectionListener(),
+				Constants.ELIMINAR_CLIENTE_BUTTON_TEXT);
 		this.botonAgregarPedido = createButton(panelBotones,
-				getAgregarPedidoButtonSelectionListener(), Constants.AGREGAR_PEDIDO_BUTTON_TEXT);
+				getAgregarPedidoButtonSelectionListener(),
+				Constants.AGREGAR_PEDIDO_BUTTON_TEXT);
 	}
 
 	/**
-	 * Con este método se indica si se permite el botón "Editar". El valor por defecto es
-	 * <code>true</code>. Si se desea otro comportamiento, este método deberá ser sobreescrito por
-	 * las subclases.
+	 * Con este método se indica si se permite el botón "Editar". El valor por
+	 * defecto es <code>true</code>. Si se desea otro comportamiento, este
+	 * método deberá ser sobreescrito por las subclases.
 	 * 
 	 * @return <code>true</code>, valor por defecto.
 	 */
@@ -207,8 +254,8 @@ public class ClienteQueryComposite extends QueryComposite {
 		return true;
 	}
 
-	private Button createButton(Composite panelBotones, SelectionListener buttonSelectionListener,
-			String buttonText) {
+	private Button createButton(Composite panelBotones,
+			SelectionListener buttonSelectionListener, String buttonText) {
 		Button button = new Button(panelBotones, SWT.CENTER);
 		button.setText(buttonText);
 		button.addSelectionListener(buttonSelectionListener);
@@ -254,7 +301,8 @@ public class ClienteQueryComposite extends QueryComposite {
 	}
 
 	private void abrirClienteDetailUpdateDialog(Cliente cliente) {
-		ClienteDetailUpdateDialog dialog = new ClienteDetailUpdateDialog(cliente, false);
+		ClienteDetailUpdateDialog dialog = new ClienteDetailUpdateDialog(
+				cliente, false);
 		dialog.open();
 
 	}
@@ -266,7 +314,8 @@ public class ClienteQueryComposite extends QueryComposite {
 			public void widgetSelected(SelectionEvent event) {
 				Cliente cliente = (Cliente) getTable().getSelectedElement();
 				if (cliente != null) {
-					NuevoPedidoDialog dialog = new NuevoPedidoDialog(new Pedido(cliente));
+					NuevoPedidoDialog dialog = new NuevoPedidoDialog(
+							new Pedido(cliente));
 					dialog.open();
 				}
 			}

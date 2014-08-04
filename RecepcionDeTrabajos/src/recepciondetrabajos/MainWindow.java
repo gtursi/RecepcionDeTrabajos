@@ -112,9 +112,12 @@ public class MainWindow extends ApplicationWindow {
 		super(null);
 		setShellStyle(SWT.MIN | SWT.MAX | SWT.RESIZE | SWT.CLOSE);
 		Image[] images = {
-				ImageDescriptor.createFromFile(MainWindow.class, "/images/16x16.png").createImage(),
-				ImageDescriptor.createFromFile(MainWindow.class, "/images/32x32.png").createImage(),
-				ImageDescriptor.createFromFile(MainWindow.class, "/images/48x48.png").createImage() };
+				ImageDescriptor.createFromFile(MainWindow.class,
+						"/images/16x16.png").createImage(),
+				ImageDescriptor.createFromFile(MainWindow.class,
+						"/images/32x32.png").createImage(),
+				ImageDescriptor.createFromFile(MainWindow.class,
+						"/images/48x48.png").createImage() };
 		setDefaultImages(images);
 		addMenuBar();
 		addStatusLine();
@@ -124,58 +127,54 @@ public class MainWindow extends ApplicationWindow {
 		MenuManager menu = new MenuManager("&Consultas");
 		menuManager.add(menu);
 
-		agregarMenuWithQueryComposite(menu, "C&lientes... @CTRL+L", Constants.CONSULTA_CLIENTES,
-				ClienteQueryComposite.class);
-		agregarMenuWithQueryComposite(menu, "&Pedidos... @CTRL+P", Constants.CONSULTA_PEDIDOS,
-				PedidoQueryComposite.class);
+		agregarMenuWithQueryComposite(menu, "C&lientes... @CTRL+L",
+				Constants.CONSULTA_CLIENTES, ClienteQueryComposite.class);
+		agregarMenuWithQueryComposite(menu, "&Pedidos... @CTRL+P",
+				Constants.CONSULTA_PEDIDOS, PedidoQueryComposite.class);
 		agregarMenuWithQueryComposite(menu, "&Balance... @CTRL+B",
-				Constants.CONSULTA_GANANCIA_MENSUAL, GananciaMensualQueryComposite.class);
+				Constants.CONSULTA_GANANCIA_MENSUAL,
+				GananciaMensualQueryComposite.class);
 	}
 
-	protected void agregarMenuWithQueryComposite(MenuManager menu, String menuText,
-			final String tabItemText, final Class<? extends QueryComposite> queryCompositeClass) {
+	protected void agregarMenuWithQueryComposite(MenuManager menu,
+			String menuText, final String tabItemText,
+			final Class<? extends QueryComposite> queryCompositeClass) {
 		Action action = new Action(menuText) {
 
 			@Override
 			public void run() {
-				CTabItem tabItem = getTabItem(tabItemText);
-				QueryComposite queryComposite;
-				if (tabItem == null) {
-					tabItem = new CTabItem(mainTabFolder, SWT.CLOSE);
-					queryComposite = getQueryCompositeInstance();
-					tabItem.setControl(queryComposite);
-					tabItem.setText(tabItemText);
-				} else {
-					// Limpío los filtros que ya tuviera
-					queryComposite = (QueryComposite) tabItem.getControl();
-					queryComposite.reset();
-				}
-				mainTabFolder.setSelection(tabItem);
-				mainTabFolder.setVisible(true);
+				showPedidosRunAction(tabItemText, queryCompositeClass);
 			}
 
-			private QueryComposite getQueryCompositeInstance() {
-				QueryComposite queryComposite = null;
-				try {
-					Method getInstanceMethod = queryCompositeClass.getMethod("getInstance",
-							new Class[] { Composite.class });
-					queryComposite = (QueryComposite) getInstanceMethod.invoke(null,
-							new Object[] { mainTabFolder });
-					if (!(queryCompositeClass.isInstance(queryComposite))) {
-						AppLogger.getLogger().severe(
-								"La clase instanciada no es la esparada "
-										+ queryComposite.getClass().getSimpleName());
-					}
-				} catch (Exception ex) {
-					AppLogger.getLogger().log(
-							Level.SEVERE,
-							"No se ha podido instanciar el siguiente QueryComposite: "
-									+ queryCompositeClass.getSimpleName(), ex);
-				}
-				return queryComposite;
-			}
 		};
 		menu.add(action);
+	}
+
+	public void showQueryPedidos(MenuManager menu) {
+		showPedidosRunAction(Constants.CONSULTA_PEDIDOS,
+				PedidoQueryComposite.class);
+	}
+
+	private QueryComposite getQueryCompositeInstance(
+			Class<? extends QueryComposite> queryCompositeClass) {
+		QueryComposite queryComposite = null;
+		try {
+			Method getInstanceMethod = queryCompositeClass.getMethod(
+					"getInstance", new Class[] { Composite.class });
+			queryComposite = (QueryComposite) getInstanceMethod.invoke(null,
+					new Object[] { mainTabFolder });
+			if (!(queryCompositeClass.isInstance(queryComposite))) {
+				AppLogger.getLogger().severe(
+						"La clase instanciada no es la esparada "
+								+ queryComposite.getClass().getSimpleName());
+			}
+		} catch (Exception ex) {
+			AppLogger.getLogger().log(
+					Level.SEVERE,
+					"No se ha podido instanciar el siguiente QueryComposite: "
+							+ queryCompositeClass.getSimpleName(), ex);
+		}
+		return queryComposite;
 	}
 
 	private CTabItem getTabItem(String tabItemText) {
@@ -186,6 +185,24 @@ public class MainWindow extends ApplicationWindow {
 			}
 		}
 		return tabItem;
+	}
+
+	private void showPedidosRunAction(final String tabItemText,
+			final Class<? extends QueryComposite> queryCompositeClass) {
+		CTabItem tabItem = getTabItem(tabItemText);
+		QueryComposite queryComposite;
+		if (tabItem == null) {
+			tabItem = new CTabItem(mainTabFolder, SWT.CLOSE);
+			queryComposite = getQueryCompositeInstance(queryCompositeClass);
+			tabItem.setControl(queryComposite);
+			tabItem.setText(tabItemText);
+		} else {
+			// Limpío los filtros que ya tuviera
+			queryComposite = (QueryComposite) tabItem.getControl();
+			// queryComposite.reset();
+		}
+		mainTabFolder.setSelection(tabItem);
+		mainTabFolder.setVisible(true);
 	}
 
 	public PreferencePage currentPreferencePage;

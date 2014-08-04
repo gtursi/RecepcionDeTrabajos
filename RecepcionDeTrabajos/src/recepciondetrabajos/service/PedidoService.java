@@ -20,8 +20,8 @@ public class PedidoService {
 	public static void crearPedido(Pedido nuevoPedido) {
 		long numeroPedido = jdbcTemplate.queryForLong(NUEVO_NRO_PEDIDO);
 		nuevoPedido.setNumero(numeroPedido);
-		Object[] argsPedido = { numeroPedido, nuevoPedido.getCliente().getCodigo(),
-				nuevoPedido.getFecha() };
+		Object[] argsPedido = { numeroPedido,
+				nuevoPedido.getCliente().getCodigo(), nuevoPedido.getFecha() };
 		jdbcTemplate.update(INSERT_PEDIDO, argsPedido);
 		insertarPedidoItems(nuevoPedido);
 	}
@@ -33,30 +33,43 @@ public class PedidoService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static List<Pedido> consultarPedidos(String denominacionCliente) {
+	public static List<Pedido> consultarPedidos(String denominacionCliente,
+			String codigoCliente) {
+		if (codigoCliente == null
+				|| !org.apache.commons.lang.math.NumberUtils
+						.isNumber(codigoCliente)) {
+			codigoCliente = "-1";
+		}
 		return jdbcTemplate
-				.query("select p.*, c.codigo, c.denominacion from pedido p join cliente c on p.codigo_cliente = c.codigo where lower(c.denominacion) like ?",
+				.query("select p.*, c.codigo, c.denominacion from pedido p join cliente c on p.codigo_cliente = c.codigo where lower(c.denominacion) like ? and (? = -1 or c.codigo = ?)",
 						new ParameterizedRowMapper() {
 
-							public Pedido mapRow(ResultSet rs, int rowNum) throws SQLException {
+							public Pedido mapRow(ResultSet rs, int rowNum)
+									throws SQLException {
 								Cliente cliente = new Cliente();
 								cliente.setCodigo(rs.getLong("codigo"));
-								cliente.setDenominacion(rs.getString("denominacion"));
+								cliente.setDenominacion(rs
+										.getString("denominacion"));
 								Pedido pedido = new Pedido(cliente);
 								pedido.setNumero(rs.getLong("numero"));
 								pedido.setFecha(rs.getDate("fecha"));
 								return pedido;
 							}
-						}, "%" + denominacionCliente.trim().toLowerCase() + "%");
+						},
+						"%" + denominacionCliente.trim().toLowerCase() + "%",
+						codigoCliente, codigoCliente);
 	}
 
 	public static Pedido obtenerPedido(Long numero, Long codigoCliente) {
-		Pedido pedido = jdbcTemplate.queryForObject("select * from pedido where numero=?",
-				ParameterizedBeanPropertyRowMapper.newInstance(Pedido.class), numero);
+		Pedido pedido = jdbcTemplate.queryForObject(
+				"select * from pedido where numero=?",
+				ParameterizedBeanPropertyRowMapper.newInstance(Pedido.class),
+				numero);
 		pedido.setCliente(ClienteService.consultarCliente(codigoCliente));
-		List<PedidoItem> items = jdbcTemplate.query(
-				"select * from pedido_item where pedido_numero = ? order by orden",
-				ParameterizedBeanPropertyRowMapper.newInstance(PedidoItem.class), numero);
+		List<PedidoItem> items = jdbcTemplate
+				.query("select * from pedido_item where pedido_numero = ? order by orden",
+						ParameterizedBeanPropertyRowMapper
+								.newInstance(PedidoItem.class), numero);
 		pedido.setItems(items);
 		return pedido;
 	}
@@ -69,20 +82,22 @@ public class PedidoService {
 
 	@SuppressWarnings("unchecked")
 	public static List<GananciaMensual> gananciaMensualizada() {
-		return jdbcTemplate.query(GANANCIA_MENSUALIZADA, new ParameterizedRowMapper() {
+		return jdbcTemplate.query(GANANCIA_MENSUALIZADA,
+				new ParameterizedRowMapper() {
 
-			public GananciaMensual mapRow(ResultSet rs, int rowNum) throws SQLException {
-				GananciaMensual ganancia = new GananciaMensual();
-				ganancia.setAño(rs.getInt("año"));
-				ganancia.setMes(rs.getInt("mes"));
-				ganancia.setGanancia(rs.getBigDecimal("ganancia"));
-				return ganancia;
-			}
-		}, (Map) null);
+					public GananciaMensual mapRow(ResultSet rs, int rowNum)
+							throws SQLException {
+						GananciaMensual ganancia = new GananciaMensual();
+						ganancia.setAño(rs.getInt("año"));
+						ganancia.setMes(rs.getInt("mes"));
+						ganancia.setGanancia(rs.getBigDecimal("ganancia"));
+						return ganancia;
+					}
+				}, (Map) null);
 	}
 
-	public static final SimpleJdbcTemplate jdbcTemplate = ApplicationContext.getInstance().getBean(
-			SimpleJdbcTemplate.class);
+	public static final SimpleJdbcTemplate jdbcTemplate = ApplicationContext
+			.getInstance().getBean(SimpleJdbcTemplate.class);
 
 	private static void insertarPedidoItems(Pedido pedido) {
 		for (PedidoItem item : pedido.getItems()) {
@@ -96,7 +111,8 @@ public class PedidoService {
 			argsItem.put("comentarios", item.getComentarios());
 			argsItem.put("costo", item.getCosto());
 			argsItem.put("precio", item.getPrecio());
-			jdbcTemplate.getNamedParameterJdbcOperations().update(INSERT_PEDIDO_ITEM, argsItem);
+			jdbcTemplate.getNamedParameterJdbcOperations().update(
+					INSERT_PEDIDO_ITEM, argsItem);
 		}
 	}
 
