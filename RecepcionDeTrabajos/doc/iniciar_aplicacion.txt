@@ -1,5 +1,5 @@
 Correr el build.xml
 Verificar que se haya generado correctamente la carpeta build/ejecutable/lib
 Verificar que se haya generado correctamente el build/ejecutable/main.jar (ver si se completó el classpath en el manifest.mf)
-Levantar la base de datos (ver levantar_db_server.txt)
+Levantar la base de datos (ver db.txt)
 Ejecutar el exe RecepcionDeTrabajos.exe
