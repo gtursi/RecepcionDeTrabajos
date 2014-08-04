@@ -27,7 +27,7 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="GUI/lib/swt_jface"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/swt_jface/jface.jar" sourcepath="lib/swt_jface/jface_src.zip"/>
+	<classpathentry kind="lib" path="lib/swt_jface/jface.jar" sourcepath="lib_src/jface_src.zip"/>
 	<classpathentry kind="lib" path="lib/swt_jface/equinox_common.jar" sourcepath="lib/swt_jface/equinox_common_src.zip"/>
 	<classpathentry kind="lib" path="lib/swt_jface/core_commands.jar" sourcepath="lib/swt_jface/core_commands_src.zip"/>
 	<classpathentry kind="lib" path="lib/swt_jface/osgi.jar" sourcepath="lib/swt_jface/osgi_src.zip"/>
