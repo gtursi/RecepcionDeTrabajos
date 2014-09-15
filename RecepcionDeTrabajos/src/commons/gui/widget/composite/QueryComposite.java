@@ -98,6 +98,9 @@ public abstract class QueryComposite extends Composite {
 	 */
 	private void agregarSelectionListener(List<Control> controls) {
 		for (Control control : controls) {
+			if (control == null) {
+				throw new RuntimeException("Control nulo!!!");
+			}
 			KeyListener filterButtonListener = new KeyAdapter() {
 
 				@Override

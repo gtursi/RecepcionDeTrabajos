@@ -16,9 +16,11 @@ public abstract class ClienteService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static List<Cliente> consultarClientesPorDenominacion(String denominacion) {
-		return simpleJdbcTemplate.query("select * from cliente where lower(denominacion) like ?",
-				ParameterizedBeanPropertyRowMapper.newInstance(Cliente.class), "%" + denominacion.trim().toLowerCase() + "%");
+	public static List<Cliente> consultarClientes(String denominacion, String direccion) {
+		return simpleJdbcTemplate
+				.query("select * from cliente where lower(denominacion) like ? and lower(direccion) like ?",
+						ParameterizedBeanPropertyRowMapper.newInstance(Cliente.class),
+						stringToSearch(denominacion), stringToSearch(direccion));
 	}
 
 	public static void persistir(Cliente cliente) {
@@ -48,6 +50,10 @@ public abstract class ClienteService {
 	public static void eliminar(Cliente cliente) {
 		Object[] args = { cliente.getCodigo() };
 		simpleJdbcTemplate.update("delete cliente where codigo = ?", args);
+	}
+
+	private static String stringToSearch(String string) {
+		return "%" + string.trim().toLowerCase() + "%";
 	}
 
 	private static final SimpleJdbcTemplate simpleJdbcTemplate = ApplicationContext.getInstance()
