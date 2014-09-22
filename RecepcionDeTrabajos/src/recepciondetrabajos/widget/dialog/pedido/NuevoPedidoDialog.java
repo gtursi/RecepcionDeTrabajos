@@ -10,6 +10,7 @@ import org.eclipse.swt.widgets.Control;
 import recepciondetrabajos.domain.Pedido;
 import recepciondetrabajos.formulario.PdfGenerator;
 import recepciondetrabajos.service.PedidoService;
+import recepciondetrabajos.widget.composite.queries.pedidos.PedidoQueryComposite;
 import recepciondetrabajos.widget.page.pedido.NuevoPedidoPage;
 
 import commons.gui.widget.dialog.BasePreferenceDialog;
@@ -43,6 +44,7 @@ public class NuevoPedidoDialog extends BasePreferenceDialog {
 			PedidoService.crearPedido(pedido);
 		} else {
 			PedidoService.actualizarPedido(pedido);
+			PedidoQueryComposite.getInstance(null).refresh();
 		}
 
 		return true;

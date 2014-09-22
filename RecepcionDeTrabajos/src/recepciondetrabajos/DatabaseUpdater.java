@@ -77,6 +77,14 @@ public class DatabaseUpdater {
 		versions.put(3L, new String[] { "alter table pedido_item add comentarios varchar2(255)",
 				"alter table pedido_item add entregado boolean DEFAULT false not null",
 				"update pedido_item set entregado = true" });
+		versions.put(
+				4L,
+				new String[] {
+						"alter table pedido add entregado boolean DEFAULT false not null",
+						"update pedido set entregado = false",
+						"update pedido set entregado = true where not exists (select 1 from pedido_item pi where pedido_numero = numero and pi.entregado = false)",
+						"alter table pedido add primer_item varchar2(250)",
+						"update pedido set primer_item = (select detalle from pedido_item where orden = 0 and pedido_numero = numero) where primer_item is null" });
 	}
 
 	private static final String SELECT_DB_VERSION_SQL = "select value from property where name = 'db_version'";

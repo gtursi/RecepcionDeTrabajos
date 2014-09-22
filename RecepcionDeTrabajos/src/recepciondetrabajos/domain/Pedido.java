@@ -14,7 +14,11 @@ public class Pedido {
 
 	private Date fecha;
 
+	private boolean entregado = false;
+
 	private List<PedidoItem> items = new LinkedList();
+
+	private String primerItem;
 
 	public Pedido() {
 		super();
@@ -73,6 +77,14 @@ public class Pedido {
 		this.fecha = fecha;
 	}
 
+	public void setEntregado(boolean entregado) {
+		this.entregado = entregado;
+	}
+
+	public boolean isEntregado() {
+		return entregado;
+	}
+
 	public List<PedidoItem> getItems() {
 		return items;
 	}
@@ -83,6 +95,14 @@ public class Pedido {
 
 	public boolean nuevo() {
 		return getNumero() == null;
+	}
+
+	public String getPrimerItem() {
+		return primerItem;
+	}
+
+	public void setPrimerItem(String primerItem) {
+		this.primerItem = primerItem;
 	}
 
 }

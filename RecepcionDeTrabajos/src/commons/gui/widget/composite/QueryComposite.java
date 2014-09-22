@@ -192,6 +192,13 @@ public abstract class QueryComposite extends Composite {
 		if (cleanUpListener != null) {
 			cleanUpListener.widgetSelected(null);
 		}
+		refresh();
+	}
+
+	/**
+	 * Actualiza la consulta sin limpiar los filtros.
+	 */
+	public void refresh() {
 		// Simulo el filtrado
 		SelectionListener filterListener = this.getFilterListener();
 		if (filterListener != null) {

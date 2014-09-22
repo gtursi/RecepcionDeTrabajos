@@ -9,10 +9,12 @@
 			<column name="email" alignment="LEFT" width="200"/>
 		</table>
 		<table name="Pedidos" order="numero">
-			<column name="numero" alignment="LEFT" width="80"/>
-			<column name="cliente.codigo" alignment="LEFT" width="100"/>
+			<column name="numero" alignment="LEFT" width="70"/>
+			<column name="cliente.codigo" alignment="LEFT" width="70"/>
 			<column name="cliente.denominacion" alignment="LEFT" width="200"/>
-			<column name="fecha" alignment="LEFT" width="300"/>
+			<column name="fecha" alignment="LEFT" width="70"/>
+			<column name="entregado" alignment="LEFT" width="70"/>
+			<column name="primerItem" alignment="LEFT" width="600"/>
 		</table>
 		<table name="Items" order="orden">
 			<column name="entregado" alignment="CENTER" width="80" style="32"/>
