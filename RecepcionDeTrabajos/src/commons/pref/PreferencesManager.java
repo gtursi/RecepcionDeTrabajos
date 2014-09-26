@@ -29,6 +29,13 @@ public class PreferencesManager {
 		return instance;
 	}
 
+	public void deleteUserPreferences() {
+		File preferencesFile = new File(userPreferenceFileName);
+		if (preferencesFile.exists()) {
+			preferencesFile.delete();
+		}
+	}
+
 	public TableInfo getTableInfo(String tableName) {
 		return this.defaultPreferences.getTableInfo(tableName);
 	}

@@ -38,13 +38,18 @@ public class PedidoService {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static List<Pedido> consultarPedidos(String denominacionCliente, String codigoCliente) {
+	public static List<Pedido> consultarPedidos(String denominacionCliente, String codigoCliente,
+			String numeroPedido) {
 		if (codigoCliente == null
 				|| !org.apache.commons.lang.math.NumberUtils.isNumber(codigoCliente)) {
 			codigoCliente = "-1";
 		}
+		if (numeroPedido == null
+				|| !org.apache.commons.lang.math.NumberUtils.isNumber(numeroPedido)) {
+			numeroPedido = "-1";
+		}
 		return jdbcTemplate
-				.query("select p.*, c.codigo, c.denominacion from pedido p join cliente c on p.codigo_cliente = c.codigo where lower(c.denominacion) like ? and (? = -1 or c.codigo = ?)",
+				.query("select p.*, c.codigo, c.denominacion from pedido p join cliente c on p.codigo_cliente = c.codigo where lower(c.denominacion) like ? and (? = -1 or c.codigo = ?) and (? = -1 or p.numero = ?)",
 						new ParameterizedRowMapper() {
 
 							public Pedido mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -59,7 +64,7 @@ public class PedidoService {
 								return pedido;
 							}
 						}, "%" + denominacionCliente.trim().toLowerCase() + "%", codigoCliente,
-						codigoCliente);
+						codigoCliente, numeroPedido, numeroPedido);
 	}
 
 	public static Pedido obtenerPedido(Long numero, Long codigoCliente) {

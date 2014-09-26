@@ -30,10 +30,10 @@ public abstract class FileHelper {
 	static {
 		// Lista de directorios en orden de preferencia
 		final String[] dirs = {
-				// User's application data directory (only under MS-Windows)
-				System.getenv("APPDATA"),
 				// User's home directory
 				System.getProperty("user.home"),
+				// User's application data directory (only under MS-Windows)
+				System.getenv("APPDATA"),
 				// User's current working directory
 				System.getProperty("user.dir"),
 				// Default temp file path

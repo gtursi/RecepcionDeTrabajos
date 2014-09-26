@@ -44,9 +44,8 @@ public class NuevoPedidoDialog extends BasePreferenceDialog {
 			PedidoService.crearPedido(pedido);
 		} else {
 			PedidoService.actualizarPedido(pedido);
-			PedidoQueryComposite.getInstance(null).refresh();
 		}
-
+		PedidoQueryComposite.getInstance(null).refresh();
 		return true;
 	}
 

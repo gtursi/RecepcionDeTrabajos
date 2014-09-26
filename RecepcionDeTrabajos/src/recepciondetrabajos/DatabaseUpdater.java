@@ -23,6 +23,8 @@ import org.springframework.jdbc.core.simple.SimpleJdbcTemplate;
 
 import recepciondetrabajos.service.ApplicationContext;
 
+import commons.pref.PreferencesManager;
+
 /**
  * 
  * @author Gabriel Tursi
@@ -44,6 +46,7 @@ public class DatabaseUpdater {
 				}
 				jdbcTemplate.update("update property set value=? where name='db_version'",
 						version.getKey());
+				PreferencesManager.getInstance().deleteUserPreferences();
 			}
 		}
 	}
