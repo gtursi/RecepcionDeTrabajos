@@ -24,8 +24,9 @@
 		<echo>Limpiando archivos temporales...</echo>
 		<delete dir="${executable.lib.dir}/${main.jar}" />
 		<delete dir="${db.target.dir}" />
-		<delete dir="${executable.lib.dir}" />
-		<mkdir dir="${executable.lib.dir}" />
+		<delete includeemptydirs="true">
+			<fileset dir="${executable.lib.dir}" includes="**/*" defaultexcludes="false"/>
+		</delete>		
 	</target>
 
 	<target name="generarMainJar">
