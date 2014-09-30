@@ -127,9 +127,10 @@ public class PedidoService {
 
 	private static final String GANANCIA_MENSUALIZADA = "SELECT YEAR(p.fecha) as año, MONTH(p.fecha) as mes, IFNULL(sum(precio-costo),0) as ganancia "
 			+ "FROM PEDIDO_ITEM pi join pedido p on pi.pedido_numero  = p.numero "
-			+ "WHERE entregado = 1 "
+			+ "WHERE p.entregado = 1 or pi.entregado = 1 "
 			+ "GROUP BY year(p.fecha), MONTH(p.fecha) "
-			+ "HAVING ganancia > 0 " + "ORDER BY 1 desc,2 desc";
+			+ "HAVING ganancia > 0 "
+			+ "ORDER BY 1 desc,2 desc";
 
 	private static final String NUEVO_NRO_PEDIDO = "select nvl((select max(numero) from pedido),0) + 1 from dual";
 
